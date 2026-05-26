@@ -2,108 +2,61 @@ package fsutil
 
 import (
 	"bufio"
-	"errors"
 	"io"
-	"os"
 	"text/scanner"
-
-	"github.com/gookit/goutil/x/basefn"
 )
 
 // NewIOReader instance by input file path or io.Reader
 func NewIOReader(in any) (r io.Reader, err error) {
-	switch typIn := in.(type) {
-	case string: // as file path
-		return OpenReadFile(typIn)
-	case io.Reader:
-		return typIn, nil
-	}
-	return nil, errors.New("invalid input type, allow: string, io.Reader")
+	_ = "STUB: not implemented"
+	return *new(io.Reader), nil
 }
+
+// as file path
 
 // DiscardReader anything from the reader
-func DiscardReader(src io.Reader) {
-	_, _ = io.Copy(io.Discard, src)
-}
+func DiscardReader(src io.Reader) { _ = "STUB: not implemented"; return }
 
 // ReadFile read file contents, will panic on error
-func ReadFile(filePath string) []byte { return MustReadFile(filePath) }
+func ReadFile(filePath string) []byte { _ = "STUB: not implemented"; return nil }
 
 // MustReadFile read file contents, will panic on error
-func MustReadFile(filePath string) []byte {
-	bs, err := os.ReadFile(filePath)
-	if err != nil {
-		panic(err)
-	}
-	return bs
-}
+func MustReadFile(filePath string) []byte { _ = "STUB: not implemented"; return nil }
 
 // ReadReader read contents from io.Reader, will panic on error
-func ReadReader(r io.Reader) []byte { return MustReadReader(r) }
+func ReadReader(r io.Reader) []byte { _ = "STUB: not implemented"; return nil }
 
 // MustReadReader read contents from io.Reader, will panic on error
-func MustReadReader(r io.Reader) []byte {
-	bs, err := io.ReadAll(r)
-	if err != nil {
-		panic(err)
-	}
-	return bs
-}
+func MustReadReader(r io.Reader) []byte { _ = "STUB: not implemented"; return nil }
 
 // ReadString read contents from path or io.Reader, will panic on in type error
-func ReadString(in any) string { return string(GetContents(in)) }
+func ReadString(in any) string { _ = "STUB: not implemented"; return "" }
 
 // ReadStringOrErr read contents from path or io.Reader, will panic on in type error
-func ReadStringOrErr(in any) (string, error) {
-	r, err := NewIOReader(in)
-	if err != nil {
-		return "", err
-	}
-
-	bs, err := io.ReadAll(r)
-	if err != nil {
-		return "", err
-	}
-	return string(bs), nil
-}
+func ReadStringOrErr(in any) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ReadAll read contents from path or io.Reader, will panic on in type error
-func ReadAll(in any) []byte { return MustRead(in) }
+func ReadAll(in any) []byte {
+	_ = "STUB: not implemented"
 
-// GetContents read contents from path or io.Reader, will panic on in type error
-func GetContents(in any) []byte { return MustRead(in) }
-
-// MustRead read contents from path or io.Reader, will panic on in type error
-func MustRead(in any) []byte { return basefn.Must(ReadOrErr(in)) }
-
-// ReadOrErr read contents from path or io.Reader, will panic on in type error
-func ReadOrErr(in any) ([]byte, error) {
-	r, err := NewIOReader(in)
-	defer func() {
-		if r != nil {
-			if file, ok := r.(*os.File); ok {
-				err = file.Close()
-			}
-		}
-	}()
-
-	if err != nil {
-		return nil, err
-	}
-	return io.ReadAll(r)
-}
-
-// ReadExistFile read file contents if existed, will panic on error
-func ReadExistFile(filePath string) []byte {
-	if IsFile(filePath) {
-		bs, err := os.ReadFile(filePath)
-		if err != nil {
-			panic(err)
-		}
-		return bs
-	}
+	// GetContents read contents from path or io.Reader, will panic on in type error
 	return nil
 }
+
+func GetContents(in any) []byte {
+	_ = "STUB: not implemented"
+
+	// MustRead read contents from path or io.Reader, will panic on in type error
+	return nil
+}
+
+func MustRead(in any) []byte { _ = "STUB: not implemented"; return nil }
+
+// ReadOrErr read contents from path or io.Reader, will panic on in type error
+func ReadOrErr(in any) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
+
+// ReadExistFile read file contents if existed, will panic on error
+func ReadExistFile(filePath string) []byte { _ = "STUB: not implemented"; return nil }
 
 // TextScanner from filepath or io.Reader, will panic on in type error.
 // Will scan parse text to tokens: Ident, Int, Float, Char, String, RawString, Comment, etc.
@@ -114,17 +67,7 @@ func ReadExistFile(filePath string) []byte {
 //	for tok := s.Scan(); tok != scanner.EOF; tok = s.Scan() {
 //		fmt.Printf("%s: %s\n", s.Position, s.TokenText())
 //	}
-func TextScanner(in any) *scanner.Scanner {
-	var s scanner.Scanner
-	r, err := NewIOReader(in)
-	if err != nil {
-		panic(err)
-	}
-
-	s.Init(r)
-	s.Filename = "text-scanner"
-	return &s
-}
+func TextScanner(in any) *scanner.Scanner { _ = "STUB: not implemented"; return nil }
 
 // LineScanner create from filepath or io.Reader, will panic on in type error.
 // Will scan and parse text to lines.
@@ -133,10 +76,4 @@ func TextScanner(in any) *scanner.Scanner {
 //	for s.Scan() {
 //		fmt.Println(s.Text())
 //	}
-func LineScanner(in any) *bufio.Scanner {
-	r, err := NewIOReader(in)
-	if err != nil {
-		panic(err)
-	}
-	return bufio.NewScanner(r)
-}
+func LineScanner(in any) *bufio.Scanner { _ = "STUB: not implemented"; return nil }

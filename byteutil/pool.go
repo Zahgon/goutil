@@ -19,45 +19,31 @@ type ChanPool struct {
 
 // NewChanPool instance
 func NewChanPool(chSize int, width int, capWidth int) *ChanPool {
-	return &ChanPool{
-		c:    make(chan []byte, chSize),
-		w:    width,
-		wcap: capWidth,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get gets a []byte from the BytePool, or creates a new one if none are
 // available in the pool.
-func (bp *ChanPool) Get() (b []byte) {
-	select {
-	case b = <-bp.c: // reuse existing buffer
-	default:
-		// create new buffer
-		if bp.wcap > 0 {
-			b = make([]byte, bp.w, bp.wcap)
-		} else {
-			b = make([]byte, bp.w)
-		}
-	}
-	return
-}
+func (bp *ChanPool) Get() (b []byte) { _ = "STUB: not implemented"; return nil }
+
+// reuse existing buffer
+
+// create new buffer
 
 // Put returns the given Buffer to the BytePool.
-func (bp *ChanPool) Put(b []byte) {
-	select {
-	case bp.c <- b:
-		// buffer went back into pool
-	default:
-		// buffer didn't go back into pool, just discard
-	}
-}
+func (bp *ChanPool) Put(b []byte) { _ = "STUB: not implemented"; return }
+
+// buffer went back into pool
+
+// buffer didn't go back into pool, just discard
 
 // Width returns the width of the byte arrays in this pool.
 func (bp *ChanPool) Width() (n int) {
-	return bp.w
+	_ = "STUB: not implemented"
+
+	// WidthCap returns the cap width of the byte arrays in this pool.
+	return 0
 }
 
-// WidthCap returns the cap width of the byte arrays in this pool.
-func (bp *ChanPool) WidthCap() (n int) {
-	return bp.wcap
-}
+func (bp *ChanPool) WidthCap() (n int) { _ = "STUB: not implemented"; return 0 }

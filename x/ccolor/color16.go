@@ -1,10 +1,5 @@
 package ccolor
 
-import (
-	"fmt"
-	"strconv"
-)
-
 // Color Color16, 16 color value type
 // 3(2^3=8) OR 4(2^4=16) bite color.
 type Color uint8
@@ -151,7 +146,7 @@ const (
  *************************************************************/
 
 // Text render a text message
-func (c Color) Text(message string) string { return RenderString(c.String(), message) }
+func (c Color) Text(message string) string { _ = "STUB: not implemented"; return "" }
 
 // Render messages by color setting
 //
@@ -159,7 +154,7 @@ func (c Color) Text(message string) string { return RenderString(c.String(), mes
 //
 //	green := ccolor.FgGreen.Render
 //	fmt.Println(green("message"))
-func (c Color) Render(a ...any) string { return RenderCode(c.String(), a...) }
+func (c Color) Render(a ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Renderln messages by color setting.
 // like fmt.Println, will add spaces for each argument
@@ -168,10 +163,10 @@ func (c Color) Render(a ...any) string { return RenderCode(c.String(), a...) }
 //
 //	green := ccolor.FgGreen.Renderln
 //	fmt.Println(green("message"))
-func (c Color) Renderln(a ...any) string { return RenderWithSpaces(c.String(), a...) }
+func (c Color) Renderln(a ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Sprint render messages by color setting. is alias of the Render()
-func (c Color) Sprint(a ...any) string { return RenderCode(c.String(), a...) }
+func (c Color) Sprint(a ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Sprintf format and render message.
 //
@@ -179,9 +174,7 @@ func (c Color) Sprint(a ...any) string { return RenderCode(c.String(), a...) }
 //
 //		green := ccolor.Green.Sprintf
 //	 	colored := green("message")
-func (c Color) Sprintf(format string, args ...any) string {
-	return RenderString(c.String(), fmt.Sprintf(format, args...))
-}
+func (c Color) Sprintf(format string, args ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Print messages.
 //
@@ -193,21 +186,17 @@ func (c Color) Sprintf(format string, args ...any) string {
 //
 //	green := ccolor.FgGreen.Print
 //	green("message")
-func (c Color) Print(args ...any) {
-	doPrint(c.Code(), fmt.Sprint(args...))
-}
+func (c Color) Print(args ...any) { _ = "STUB: not implemented"; return }
 
 // Printf format and print messages.
 //
 // Usage:
 //
 //	ccolor.Cyan.Printf("string %s", "arg0")
-func (c Color) Printf(format string, a ...any) {
-	doPrint(c.Code(), fmt.Sprintf(format, a...))
-}
+func (c Color) Printf(format string, a ...any) { _ = "STUB: not implemented"; return }
 
 // Println messages with new line
-func (c Color) Println(a ...any) { doPrintln(c.String(), a) }
+func (c Color) Println(a ...any) { _ = "STUB: not implemented"; return }
 
 // Light current color. eg: 36(FgCyan) -> 96(FgLightCyan).
 //
@@ -215,15 +204,9 @@ func (c Color) Println(a ...any) { doPrintln(c.String(), a) }
 //
 //	lightCyan := Cyan.Light()
 //	lightCyan.Print("message")
-func (c Color) Light() Color {
-	val := uint8(c)
-	if val >= 30 && val <= 47 {
-		return Color(val + 60)
-	}
+func (c Color) Light() Color { _ = "STUB: not implemented"; return *new(Color) }
 
-	// don't change
-	return c
-}
+// don't change
 
 // Darken current color. eg. 96(FgLightCyan) -> 36(FgCyan)
 //
@@ -231,63 +214,43 @@ func (c Color) Light() Color {
 //
 //	cyan := LightCyan.Darken()
 //	cyan.Print("message")
-func (c Color) Darken() Color {
-	val := uint8(c)
-	if val >= 90 && val <= 107 {
-		return Color(val - 60)
-	}
+func (c Color) Darken() Color { _ = "STUB: not implemented"; return *new(Color) }
 
-	// don't change
-	return c
-}
+// don't change
 
 // ToFg always convert fg
 func (c Color) ToFg() Color {
-	val := uint8(c)
+	_ = "STUB: not implemented"
+
 	// option code, don't change
-	if val < 10 {
-		return c
-	}
-	return Color(Bg2Fg(val))
+	return *new(Color)
 }
 
 // ToBg always convert bg
 func (c Color) ToBg() Color {
-	val := uint8(c)
+	_ = "STUB: not implemented"
+
 	// option code, don't change
-	if val < 10 {
-		return c
-	}
-	return Color(Fg2Bg(val))
+	return *new(Color)
 }
 
 // Code convert to code string. eg "35"
-func (c Color) Code() string {
-	return strconv.FormatInt(int64(c), 10)
-}
+func (c Color) Code() string { _ = "STUB: not implemented"; return "" }
 
 // String convert to code string. eg "35"
-func (c Color) String() string {
-	return strconv.FormatInt(int64(c), 10)
-}
+func (c Color) String() string { _ = "STUB: not implemented"; return "" }
 
 // IsBg check is background color
-func (c Color) IsBg() bool {
-	val := uint8(c)
-	return val >= bgBase && val <= bgMax || val >= hiBgBase && val <= hiBgMax
-}
+func (c Color) IsBg() bool { _ = "STUB: not implemented"; return false }
 
 // IsFg check is foreground color
-func (c Color) IsFg() bool {
-	val := uint8(c)
-	return val >= fgBase && val <= fgMax || val >= hiFgBase && val <= hiFgMax
-}
+func (c Color) IsFg() bool { _ = "STUB: not implemented"; return false }
 
 // IsOption check is option code: 0-9
-func (c Color) IsOption() bool { return uint8(c) < optMax }
+func (c Color) IsOption() bool { _ = "STUB: not implemented"; return false }
 
 // IsValid color value
-func (c Color) IsValid() bool { return uint8(c) < hiBgMax }
+func (c Color) IsValid() bool { _ = "STUB: not implemented"; return false }
 
 /*************************************************************
  * basic color maps
@@ -356,21 +319,15 @@ var AllOptions = map[string]Color{
 }
 
 // Bg2Fg bg color value to fg value
-func Bg2Fg(val uint8) uint8 {
-	if val >= bgBase && val <= 47 { // is bg
-		val = val - 10
-	} else if val >= hiBgBase && val <= 107 { // is hi bg
-		val = val - 10
-	}
-	return val
-}
+func Bg2Fg(val uint8) uint8 { _ = "STUB: not implemented"; return 0 }
+
+// is bg
+
+// is hi bg
 
 // Fg2Bg fg color value to bg value
-func Fg2Bg(val uint8) uint8 {
-	if val >= fgBase && val <= 37 { // is fg
-		val = val + 10
-	} else if val >= hiFgBase && val <= 97 { // is hi fg
-		val = val + 10
-	}
-	return val
-}
+func Fg2Bg(val uint8) uint8 { _ = "STUB: not implemented"; return 0 }
+
+// is fg
+
+// is hi fg

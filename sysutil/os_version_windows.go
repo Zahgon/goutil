@@ -1,14 +1,5 @@
 package sysutil
 
-import (
-	"fmt"
-	"strings"
-
-	"github.com/gookit/goutil/errorx"
-	"github.com/gookit/goutil/strutil"
-	"golang.org/x/sys/windows"
-)
-
 // OSVersionInfo 结构体用于存储操作系统版本信息
 //
 // NOTE: Windows 10 和 Windows 11 在主版本号和次版本号上是相同的，因此需要通过构建号（win11: DwBuildNumber>=22000）来进一步区分
@@ -27,25 +18,25 @@ type OSVersionInfo struct {
 var stdOv = VersionInfoBySys()
 
 // OsVersion Get operating system version information
-func OsVersion() *OSVersionInfo { return stdOv }
+func OsVersion() *OSVersionInfo {
+	_ = "STUB: not implemented"
 
-// VersionInfoBySys Get Windows system version information by sys/windows
+	// VersionInfoBySys Get Windows system version information by sys/windows
+	return nil
+}
+
 func VersionInfoBySys() *OSVersionInfo {
+	_ = "STUB: not implemented"
 	// Get the Windows Version and Build Number
-	var majorVersion, minorVersion, buildNumber = windows.RtlGetNtVersionNumbers()
-
-	return &OSVersionInfo{
-		MajorVersion: uint16(majorVersion),
-		MinorVersion: uint16(minorVersion),
-		BuildNumber:  buildNumber,
-	}
+	return nil
 }
 
 // OsVersionByParse Get Windows system version information by parse string
 //
 //	cmdOut eg: "Microsoft Windows [Version 10.0.22631.4391]"
 func OsVersionByParse(cmdOut string) (*OSVersionInfo, error) {
-	return parseOsVersionString(cmdOut)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // OsVersionByVerCmd Get Windows system version information
@@ -54,102 +45,39 @@ func OsVersionByParse(cmdOut string) (*OSVersionInfo, error) {
 //
 //	通过 GetVersion, GetVersionEx 函数获取的信息不准确. win11获取到 6.2.9200, 实际是 10.0.22631
 func OsVersionByVerCmd() (*OSVersionInfo, error) {
+	_ = "STUB: not implemented"
 	// Windows cmd 执行 ver 命令
-	out, err := ShellExec("ver", "cmd")
-	if err != nil {
-		return nil, err
-	}
-	return parseOsVersionString(out)
+	return nil, nil
 }
 
 // IsLtWindows7 判断是否小于 Windows 7
-func (ov *OSVersionInfo) IsLtWindows7() bool {
-	return ov.MajorVersion < 6 || (ov.MajorVersion == 6 && ov.MinorVersion < 1)
-}
+func (ov *OSVersionInfo) IsLtWindows7() bool { _ = "STUB: not implemented"; return false }
 
 // IsWindows7 判断是否为 Windows 7
-func (ov *OSVersionInfo) IsWindows7() bool {
-	return ov.MajorVersion == 6 && ov.MinorVersion == 1
-}
+func (ov *OSVersionInfo) IsWindows7() bool { _ = "STUB: not implemented"; return false }
 
 // IsWindows8 判断是否为 Windows 8/8.1
-func (ov *OSVersionInfo) IsWindows8() bool {
-	return ov.MajorVersion == 6 && (ov.MinorVersion == 2 || ov.MinorVersion == 3)
-}
+func (ov *OSVersionInfo) IsWindows8() bool { _ = "STUB: not implemented"; return false }
 
 // IsWindows10 判断是否为 Windows 10
-func (ov *OSVersionInfo) IsWindows10() bool {
-	return ov.MajorVersion == 10 && ov.MinorVersion == 0 && ov.BuildNumber < 22000
-}
+func (ov *OSVersionInfo) IsWindows10() bool { _ = "STUB: not implemented"; return false }
 
 // IsWindows11 判断是否为 Windows 11
-func (ov *OSVersionInfo) IsWindows11() bool {
-	return ov.MajorVersion == 10 && ov.MinorVersion == 0 && ov.BuildNumber >= 22000
-}
+func (ov *OSVersionInfo) IsWindows11() bool { _ = "STUB: not implemented"; return false }
 
 // Name 获取 Windows 通用的版本名称. eg: xp, win7, win8, win10, win11, unknown
-func (ov *OSVersionInfo) Name() string {
-	switch ov.MajorVersion {
-	case 10:
-		if ov.BuildNumber < 22000 {
-			return "win10"
-		} else {
-			return "win11"
-		}
-	case 6:
-		switch ov.MinorVersion {
-		case 0:
-			return "vista"
-		case 1:
-			return "win7"
-		case 2:
-			return "win8"
-		case 3:
-			return "win8.1"
-		}
-	case 5:
-		switch ov.MinorVersion {
-		case 1:
-			return "xp"
-		case 2:
-			return "ws2003" // win server 2003
-		}
-	}
-	return "unknown"
-}
+func (ov *OSVersionInfo) Name() string { _ = "STUB: not implemented"; return "" }
+
+// win server 2003
 
 // String format
-func (ov *OSVersionInfo) String() string {
-	return fmt.Sprintf("%d.%d.%d", ov.MajorVersion, ov.MinorVersion, ov.BuildNumber)
-}
+func (ov *OSVersionInfo) String() string { _ = "STUB: not implemented"; return "" }
 
 func parseOsVersionString(out string) (*OSVersionInfo, error) {
+	_ = "STUB: not implemented"
 	// out eg: Microsoft Windows [Version 10.0.22631.4391] => 10.0.22631.4391
 	// 部分系统会输出中文 eg: Microsoft Windows [版本 10.0.22631.4391]
-	out = strings.TrimSpace(out)
-	ns := strings.SplitN(out, "[", 2)
-	if len(ns) < 2 {
-		return nil, errorx.Rawf("cannot parse version info: %s", out)
-	}
-
-	ns = strutil.SplitByWhitespace(strings.Trim(ns[1], "]"))
-	if len(ns) < 2 {
-		return nil, errorx.Rawf("cannot parse version info2: %s", out)
-	}
-
-	var err error
-	var ovi OSVersionInfo
-	// get like: 10.0.22631.4391 or 10.0.22631
-	verStr := ns[1]
-
-	if strings.Count(verStr, ".") >= 3 {
-		_, err = fmt.Sscanf(verStr, "%d.%d.%d.%d", &ovi.MajorVersion, &ovi.MinorVersion, &ovi.BuildNumber, &ovi.RevisionNumber)
-	} else {
-		_, err = fmt.Sscanf(verStr, "%d.%d.%d", &ovi.MajorVersion, &ovi.MinorVersion, &ovi.BuildNumber)
-	}
-
-	if err != nil {
-		return nil, errorx.Rawf("parse version info %q error: %v", verStr, err)
-	}
-	return &ovi, nil
+	return nil, nil
 }
+
+// get like: 10.0.22631.4391 or 10.0.22631

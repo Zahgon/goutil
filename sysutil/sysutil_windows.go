@@ -4,39 +4,52 @@
 package sysutil
 
 import (
-	"errors"
 	"syscall"
-
-	"golang.org/x/sys/windows"
 )
 
 // OsName system name. like runtime.GOOS. only allow: linux, windows, darwin
 const OsName = Windows
 
 // IsWin system. linux windows darwin
-func IsWin() bool { return true }
+func IsWin() bool {
+	_ = "STUB: not implemented"
 
-// IsWindows system. linux windows darwin
-func IsWindows() bool { return true }
-
-// IsMac system
-func IsMac() bool { return false }
-
-// IsDarwin system
-func IsDarwin() bool { return false }
-
-// IsLinux system
-func IsLinux() bool { return false }
-
-// Kill a process by pid
-func Kill(pid int, signal syscall.Signal) error {
-	return errors.New("not support on Windows")
+	// IsWindows system. linux windows darwin
+	return false
 }
+
+func IsWindows() bool {
+	_ = "STUB: not implemented"
+
+	// IsMac system
+	return false
+}
+
+func IsMac() bool {
+	_ = "STUB: not implemented"
+
+	// IsDarwin system
+	return false
+}
+
+func IsDarwin() bool {
+	_ = "STUB: not implemented"
+
+	// IsLinux system
+	return false
+}
+
+func IsLinux() bool {
+	_ = "STUB: not implemented"
+
+	// Kill a process by pid
+	return false
+}
+
+func Kill(pid int, signal syscall.Signal) error { _ = "STUB: not implemented"; return nil }
 
 // ProcessExists check process exists by pid
-func ProcessExists(pid int) bool {
-	panic("TIP: please use sysutil/process.Exists()")
-}
+func ProcessExists(pid int) bool { _ = "STUB: not implemented"; return false }
 
 // OpenURL Open file or browser URL
 //
@@ -55,6 +68,7 @@ func ProcessExists(pid int) bool {
 //
 //	cmd /c start https://github.com/inhere
 func OpenURL(url string) error {
+	_ = "STUB: not implemented"
 	// return exec.Command("cmd", "/C", "start", URL).Run()
-	return windows.ShellExecute(0, nil, windows.StringToUTF16Ptr(url), nil, nil, windows.SW_SHOWNORMAL)
+	return nil
 }

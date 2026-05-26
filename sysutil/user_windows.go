@@ -3,25 +3,23 @@
 package sysutil
 
 // ChangeUserByName change work user by new username.
-func ChangeUserByName(newUname string) error {
-	return ChangeUserUIDGid(0, 0)
-}
+func ChangeUserByName(newUname string) error { _ = "STUB: not implemented"; return nil }
 
 // ChangeUserUidGid change work user by new username uid,gid
 //
 // Deprecated: use ChangeUserUIDGid instead
-func ChangeUserUidGid(newUid int, newGid int) error {
-	return ChangeUserUIDGid(newUid, newGid)
-}
+func ChangeUserUidGid(newUid int, newGid int) error { _ = "STUB: not implemented"; return nil }
 
 // ChangeUserUIDGid change work user by new username uid,gid
 func ChangeUserUIDGid(newUid int, newGid int) (err error) {
+	_ = "STUB: not implemented"
+
+	// IsAdmin Determine whether the current user is an administrator
 	return nil
 }
 
-// IsAdmin Determine whether the current user is an administrator
 func IsAdmin() bool {
+	_ = "STUB: not implemented"
 	// 执行 net session 判断
-	_, err := ExecCmd("net", []string{"session"})
-	return err == nil
+	return false
 }

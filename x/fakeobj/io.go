@@ -1,8 +1,6 @@
 package fakeobj
 
 import (
-	"errors"
-
 	"github.com/gookit/goutil/byteutil"
 )
 
@@ -14,28 +12,19 @@ type IOWriter struct {
 }
 
 // NewIOWriter instance
-func NewIOWriter() *IOWriter {
-	return &IOWriter{
-		Buf: make([]byte, 0, 1024),
-	}
-}
+func NewIOWriter() *IOWriter { _ = "STUB: not implemented"; return nil }
 
 // Write implements
-func (w *IOWriter) Write(p []byte) (n int, err error) {
-	if w.ErrOnWrite {
-		return 0, errors.New("fake write error")
-	}
-
-	w.Buf = append(w.Buf, p...)
-	return len(p), nil
-}
+func (w *IOWriter) Write(p []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Reset the buffer
 func (w *IOWriter) Reset() {
-	w.Buf = w.Buf[:0]
+	_ = "STUB: not implemented"
+
+	// Reader implements the io.Reader, io.Closer
+	return
 }
 
-// Reader implements the io.Reader, io.Closer
 type Reader struct {
 	byteutil.Buffer
 	// ErrOnRead return error on read, useful for testing
@@ -44,31 +33,23 @@ type Reader struct {
 
 // NewReader instance
 func NewReader() *Reader {
-	return &Reader{}
+	_ = "STUB: not implemented"
+
+	// NewStrReader instance
+	return nil
 }
 
-// NewStrReader instance
-func NewStrReader(s string) *Reader {
-	buf := byteutil.NewBuffer()
-	buf.WriteStr1(s)
-
-	return &Reader{
-		Buffer: *buf,
-	}
-}
+func NewStrReader(s string) *Reader { _ = "STUB: not implemented"; return nil }
 
 // SetErrOnRead mark
 func (r *Reader) SetErrOnRead() {
-	r.ErrOnRead = true
+	_ = "STUB: not implemented"
+
+	// Read implements the io.Reader
+	return
 }
 
-// Read implements the io.Reader
-func (r *Reader) Read(p []byte) (n int, err error) {
-	if r.ErrOnRead {
-		return 0, errors.New("fake read error")
-	}
-	return r.Buffer.Read(p)
-}
+func (r *Reader) Read(p []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Writer implements the io.Writer, stdio.Flusher, io.Closer.
 type Writer struct {
@@ -85,77 +66,41 @@ type Writer struct {
 
 // NewBuffer instance. alias of NewWriter()
 func NewBuffer() *Writer {
-	return NewWriter()
+	_ = "STUB: not implemented"
+
+	// NewWriter instance
+	return nil
 }
 
-// NewWriter instance
 func NewWriter() *Writer {
-	return &Writer{}
+	_ = "STUB: not implemented"
+
+	// SetErrOnWrite method
+	return nil
 }
 
-// SetErrOnWrite method
-func (w *Writer) SetErrOnWrite() *Writer {
-	w.ErrOnWrite = true
-	return w
-}
+func (w *Writer) SetErrOnWrite() *Writer { _ = "STUB: not implemented"; return nil }
 
 // SetErrOnFlush method
-func (w *Writer) SetErrOnFlush() *Writer {
-	w.ErrOnFlush = true
-	return w
-}
+func (w *Writer) SetErrOnFlush() *Writer { _ = "STUB: not implemented"; return nil }
 
 // SetErrOnSync method
-func (w *Writer) SetErrOnSync() *Writer {
-	w.ErrOnSync = true
-	return w
-}
+func (w *Writer) SetErrOnSync() *Writer { _ = "STUB: not implemented"; return nil }
 
 // SetErrOnClose method
-func (w *Writer) SetErrOnClose() *Writer {
-	w.ErrOnClose = true
-	return w
-}
+func (w *Writer) SetErrOnClose() *Writer { _ = "STUB: not implemented"; return nil }
 
 // ResetGet buffer string.
-func (w *Writer) ResetGet() string {
-	s := w.String()
-	w.Reset()
-	return s
-}
+func (w *Writer) ResetGet() string { _ = "STUB: not implemented"; return "" }
 
 // Write implements
-func (w *Writer) Write(p []byte) (n int, err error) {
-	if w.ErrOnWrite {
-		return 0, errors.New("fake write error")
-	}
-	return w.Buffer.Write(p)
-}
+func (w *Writer) Write(p []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Close implements
-func (w *Writer) Close() error {
-	if w.ErrOnClose {
-		return errors.New("fake close error")
-	}
-	return nil
-}
+func (w *Writer) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Flush implements stdio.Flusher
-func (w *Writer) Flush() error {
-	if w.ErrOnFlush {
-		return errors.New("fake flush error")
-	}
-
-	w.Reset()
-	return nil
-}
+func (w *Writer) Flush() error { _ = "STUB: not implemented"; return nil }
 
 // Sync implements stdio.Syncer
-func (w *Writer) Sync() error {
-	if w.ErrOnSync {
-		return errors.New("fake sync error")
-	}
-
-	w.Reset()
-	return nil
-}
+func (w *Writer) Sync() error { _ = "STUB: not implemented"; return nil }

@@ -4,10 +4,6 @@ package textscan
 
 import (
 	"bufio"
-	"bytes"
-	"fmt"
-	"io"
-	"strings"
 )
 
 // ErrScan error on scan or parse contents
@@ -18,9 +14,7 @@ type ErrScan struct {
 }
 
 // Error string
-func (e ErrScan) Error() string {
-	return fmt.Sprintf("%s. line %d: %q", e.Msg, e.Line, e.Text)
-}
+func (e ErrScan) Error() string { _ = "STUB: not implemented"; return "" }
 
 // Matcher interface
 type Matcher interface {
@@ -44,65 +38,34 @@ type TextScanner struct {
 }
 
 // NewScanner instance
-func NewScanner(in any) *TextScanner {
-	ts := &TextScanner{}
-	if in != nil {
-		ts.SetInput(in)
-	}
-	return ts
-}
+func NewScanner(in any) *TextScanner { _ = "STUB: not implemented"; return nil }
 
 // SetInput for scan and parse
 func (s *TextScanner) SetInput(in any) {
+	_ = "STUB: not implemented"
 	// init
-	// if s.ks == nil {
-	// 	s.ks = make(map[Kind]string, len(kinds))
-	// }
-	// for kind, name := range kinds {
-	// 	s.ks[kind] = name
-	// }
-
-	switch typIn := in.(type) {
-	case *bufio.Scanner:
-		s.in = typIn
-	case io.Reader:
-		s.in = bufio.NewScanner(typIn)
-	case []byte:
-		s.in = bufio.NewScanner(bytes.NewReader(typIn))
-	case string:
-		s.in = bufio.NewScanner(strings.NewReader(typIn))
-	default:
-		panic("invalid input data for parse")
-	}
+	//
+	//	if s.ks == nil {
+	//		s.ks = make(map[Kind]string, len(kinds))
+	//	}
+	//
+	//	for kind, name := range kinds {
+	//		s.ks[kind] = name
+	//	}
+	return
 }
 
 // SetSplit set split func on scan
-func (s *TextScanner) SetSplit(fn bufio.SplitFunc) {
-	if s.in == nil {
-		panic("must be set input before set split func")
-	}
-	s.in.Split(fn)
-}
+func (s *TextScanner) SetSplit(fn bufio.SplitFunc) { _ = "STUB: not implemented"; return }
 
 // AddKind register new kind
-func (s *TextScanner) AddKind(k Kind, name string) {
-	if !HasKind(k) {
-		AddKind(k, name)
-	}
-}
+func (s *TextScanner) AddKind(k Kind, name string) { _ = "STUB: not implemented"; return }
 
 // AddMatchers register token matchers
-func (s *TextScanner) AddMatchers(ms ...Matcher) {
-	s.matchers = append(s.matchers, ms...)
-}
+func (s *TextScanner) AddMatchers(ms ...Matcher) { _ = "STUB: not implemented"; return }
 
 // Each every token by given func
-func (s *TextScanner) Each(fn func(t Token)) error {
-	for s.Scan() {
-		fn(s.Token())
-	}
-	return s.err
-}
+func (s *TextScanner) Each(fn func(t Token)) error { _ = "STUB: not implemented"; return nil }
 
 // Scan source input and parsing.
 // Can use Token() get current parsed token value
@@ -115,84 +78,49 @@ func (s *TextScanner) Each(fn func(t Token)) error {
 //		// do something...
 //	}
 //	fmt.Println(ts.Err())
-func (s *TextScanner) Scan() bool {
-	if s.next != "" {
-		return s.matchToken(s.next)
-	}
+func (s *TextScanner) Scan() bool { _ = "STUB: not implemented"; return false }
 
-	if ok, text := s.ScanNext(); ok {
-		return s.matchToken(text)
-	}
+// at end.
 
-	s.tok = nil // at end.
-	return false
-}
+func (s *TextScanner) matchToken(text string) (ok bool) { _ = "STUB: not implemented"; return false }
 
-func (s *TextScanner) matchToken(text string) (ok bool) {
-	for _, m := range s.matchers {
-		s.prevTok = s.tok
-		tok, err := m.Match(text, s.prevTok)
-		if err != nil {
-			s.err = ErrScan{Msg: err.Error(), Line: s.line, Text: text}
-			return false
-		}
+// emtpy line, match next valid token
 
-		if tok != nil {
-			if tok.HasMore() {
-				if err := tok.ScanMore(s); err != nil {
-					s.err = ErrScan{Msg: err.Error(), Line: s.line, Text: text}
-					return false
-				}
-			}
-
-			s.tok = tok
-			return true
-		}
-	}
-
-	// emtpy line, match next valid token
-	if strings.TrimSpace(text) == "" {
-		ok, text := s.ScanNext()
-		if ok {
-			return s.matchToken(text)
-		}
-		return false // end EOF
-	}
-
-	s.err = ErrScan{Msg: "invalid syntax, no matcher available", Line: s.line, Text: text}
-	return false
-}
+// end EOF
 
 // ScanNext advance and fetch next line text
 func (s *TextScanner) ScanNext() (ok bool, text string) {
-	if s.in.Scan() {
-		s.line++
-		return true, s.in.Text()
-	}
-	return
+	_ = "STUB: not implemented"
+	return false, ""
 }
 
 // SetNext text for scan and parse
 func (s *TextScanner) SetNext(text string) {
-	s.next = text
+	_ = "STUB: not implemented"
+
+	// Token get of current scan.
+	return
 }
 
-// Token get of current scan.
 func (s *TextScanner) Token() Token {
-	return s.tok
+	_ = "STUB: not implemented"
+
+	// PrevToken get of previous scan.
+	return *new(Token)
 }
 
-// PrevToken get of previous scan.
 func (s *TextScanner) PrevToken() Token {
-	return s.prevTok
+	_ = "STUB: not implemented"
+
+	// Line on current
+	return *new(Token)
 }
 
-// Line on current
 func (s *TextScanner) Line() int {
-	return s.line
+	_ = "STUB: not implemented"
+
+	// Err get
+	return 0
 }
 
-// Err get
-func (s *TextScanner) Err() error {
-	return s.err
-}
+func (s *TextScanner) Err() error { _ = "STUB: not implemented"; return nil }

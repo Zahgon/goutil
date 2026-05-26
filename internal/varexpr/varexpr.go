@@ -14,10 +14,7 @@
 package varexpr
 
 import (
-	"errors"
-	"os"
 	"regexp"
-	"strings"
 )
 
 const (
@@ -45,11 +42,7 @@ type ParseOpts struct {
 	VarLeft, VarRight string
 }
 
-func (opt *ParseOpts) useDefaultRegex() {
-	opt.Regexp = envRegex
-	opt.VarLeft = VarLeft
-	opt.VarRight = VarRight
-}
+func (opt *ParseOpts) useDefaultRegex() { _ = "STUB: not implemented"; return }
 
 // must add "?" - To ensure that there is no greedy match
 var envRegex = regexp.MustCompile(`\${.+?}`)
@@ -65,20 +58,21 @@ var std = New()
 //
 // see Parser.Parse
 func Parse(val string) (string, error) {
-	return std.Parse(val)
+	_ = "STUB: not implemented"
+	return "",
+
+		// SafeParse parse ENV var value from input string, support default value.
+		//
+		// see Parser.Parse
+		nil
 }
 
-// SafeParse parse ENV var value from input string, support default value.
-//
-// see Parser.Parse
-func SafeParse(val string) string {
-	s, _ := std.Parse(val)
-	return s
-}
+func SafeParse(val string) string { _ = "STUB: not implemented"; return "" }
 
 // ParseWith parse ENV var value from input string, support default value.
 func ParseWith(val string, optFns ...ParseOptFn) (string, error) {
-	return New(optFns...).Parse(val)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Parser parse ENV var value from input string, support default value.
@@ -87,15 +81,7 @@ type Parser struct {
 }
 
 // New create a new Parser
-func New(optFns ...ParseOptFn) *Parser {
-	opts := &ParseOpts{Getter: os.Getenv}
-	opts.useDefaultRegex()
-
-	for _, fn := range optFns {
-		fn(opts)
-	}
-	return &Parser{ParseOpts: *opts}
-}
+func New(optFns ...ParseOptFn) *Parser { _ = "STUB: not implemented"; return nil }
 
 // Parse parse ENV var value from input string, support default value.
 //
@@ -106,61 +92,24 @@ func New(optFns ...ParseOptFn) *Parser {
 //	${var_name | ?error}   With error on value is empty.
 //	${VAR_NAME1}/path/${VAR_NAME2}  Allow multi var name.
 func (p *Parser) Parse(val string) (newVal string, err error) {
-	if p.Regexp == nil {
-		p.useDefaultRegex()
-	}
-
-	times := strings.Count(val, p.VarLeft)
-	if times == 0 {
-		return val, nil
-	}
-
-	// enhance: see https://github.com/gookit/goutil/issues/135
-	if times == 1 && strings.HasPrefix(val, p.VarLeft) && strings.HasSuffix(val, p.VarRight) {
-		return p.parseOne(val)
-	}
-
-	// parse expression
-	newVal = p.Regexp.ReplaceAllStringFunc(val, func(s string) string {
-		if err != nil {
-			return s
-		}
-		s, err = p.parseOne(s)
-		return s
-	})
-	return
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// enhance: see https://github.com/gookit/goutil/issues/135
+
+// parse expression
 
 // parse one node expression.
 func (p *Parser) parseOne(eVar string) (val string, err error) {
-	if p.ParseFn != nil {
-		return p.ParseFn(eVar)
-	}
-
-	// like "${NotExist | defValue}". first remove "${" and "}", then split it
-	ss := strings.SplitN(eVar[2:len(eVar)-1], SepChar, 2)
-	var name, def string
-
-	// with default value.
-	if len(ss) == 2 {
-		name, def = strings.TrimSpace(ss[0]), strings.TrimSpace(ss[1])
-	} else {
-		name = strings.TrimSpace(ss[0])
-	}
-
-	// get ENV value by name
-	val = p.Getter(name)
-	if val == "" && def != "" {
-		// check def is "?error"
-		if def[0] == mustPrefix {
-			msg := "value is required for var: " + name
-			if len(def) > 1 {
-				msg = def[1:]
-			}
-			err = errors.New(msg)
-		} else {
-			val = def
-		}
-	}
-	return
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// like "${NotExist | defValue}". first remove "${" and "}", then split it
+
+// with default value.
+
+// get ENV value by name
+
+// check def is "?error"

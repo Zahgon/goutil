@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/gookit/goutil/cflag"
-	"github.com/gookit/goutil/cliutil"
 )
 
 var opts = struct {
@@ -23,7 +22,4 @@ func main() {
 	cmd.QuickRun()
 }
 
-func handle(c *cflag.CFlags) error {
-	cliutil.Infoln("TODO")
-	return nil
-}
+func handle(c *cflag.CFlags) error { _ = "STUB: not implemented"; return nil }

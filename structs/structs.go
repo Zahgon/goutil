@@ -2,14 +2,7 @@
 package structs
 
 // IsExported field name on struct
-func IsExported(name string) bool {
-	return name[0] >= 'A' && name[0] <= 'Z'
-}
+func IsExported(name string) bool { _ = "STUB: not implemented"; return false }
 
 // IsUnexported field name on struct
-func IsUnexported(name string) bool {
-	if name[0] == '_' {
-		return true
-	}
-	return name[0] >= 'a' && name[0] <= 'z'
-}
+func IsUnexported(name string) bool { _ = "STUB: not implemented"; return false }

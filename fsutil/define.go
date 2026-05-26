@@ -4,7 +4,6 @@ import (
 	"io/fs"
 
 	"github.com/gookit/goutil/comdef"
-	"github.com/gookit/goutil/strutil"
 )
 
 const (
@@ -35,30 +34,23 @@ type entry struct {
 }
 
 // NewEntry create a new Entry instance
-func NewEntry(fPath string, ent fs.DirEntry) Entry {
-	return &entry{
-		path:     fPath,
-		DirEntry: ent,
-	}
-}
+func NewEntry(fPath string, ent fs.DirEntry) Entry { _ = "STUB: not implemented"; return *new(Entry) }
 
 // Path gets full file/dir path. eg: "/path/to/file.go"
 func (e *entry) Path() string {
-	return e.path
+	_ = "STUB: not implemented"
+
+	// Info gets file info, will cache result
+	return ""
 }
 
-// Info gets file info, will cache result
 func (e *entry) Info() (fs.FileInfo, error) {
-	if e.stat == nil {
-		e.stat, e.sErr = e.DirEntry.Info()
-	}
-	return e.stat, e.sErr
+	_ = "STUB: not implemented"
+	return *new(fs.FileInfo), nil
 }
 
 // String get string representation
-func (e *entry) String() string {
-	return strutil.OrCond(e.IsDir(), "dir: ", "file: ") + e.Path()
-}
+func (e *entry) String() string { _ = "STUB: not implemented"; return "" }
 
 // FileInfo extends fs.FileInfo, add some useful methods
 type FileInfo interface {
@@ -74,36 +66,34 @@ type fileInfo struct {
 
 // NewFileInfo create a new FileInfo instance
 func NewFileInfo(fPath string, info fs.FileInfo) FileInfo {
-	return &fileInfo{
-		fullPath: fPath,
-		FileInfo: info,
-	}
+	_ = "STUB: not implemented"
+	return *new(FileInfo)
 }
 
 // Path gets file full path. eg: "/path/to/file.go"
 func (fi *fileInfo) Path() string {
-	return fi.fullPath
+	_ = "STUB: not implemented"
+
+	// FileInfos type for FileInfo slice
+	//
+	// implements sort.Interface:
+	//
+	//	sorts by oldest time modified in the file info.
+	//	eg: [old_220211, old_220212, old_220213]
+	return ""
 }
 
-// FileInfos type for FileInfo slice
-//
-// implements sort.Interface:
-//
-//	sorts by oldest time modified in the file info.
-//	eg: [old_220211, old_220212, old_220213]
 type FileInfos []FileInfo
 
 // Len get length
 func (fis FileInfos) Len() int {
-	return len(fis)
+	_ = "STUB: not implemented"
+
+	// Swap swap values
+	return 0
 }
 
-// Swap swap values
-func (fis FileInfos) Swap(i, j int) {
-	fis[i], fis[j] = fis[j], fis[i]
-}
+func (fis FileInfos) Swap(i, j int) { _ = "STUB: not implemented"; return }
 
 // Less check by mod time
-func (fis FileInfos) Less(i, j int) bool {
-	return fis[j].ModTime().After(fis[i].ModTime())
-}
+func (fis FileInfos) Less(i, j int) bool { _ = "STUB: not implemented"; return false }

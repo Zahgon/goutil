@@ -25,21 +25,15 @@ type StdEncoder struct {
 
 // NewStdEncoder instance
 func NewStdEncoder(encFn BytesEncodeFunc, decFn BytesDecodeFunc) *StdEncoder {
-	return &StdEncoder{
-		encodeFn: encFn,
-		decodeFn: decFn,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Encode input
-func (e *StdEncoder) Encode(src []byte) []byte {
-	return e.encodeFn(src)
-}
+func (e *StdEncoder) Encode(src []byte) []byte { _ = "STUB: not implemented"; return nil }
 
 // Decode input
-func (e *StdEncoder) Decode(src []byte) ([]byte, error) {
-	return e.decodeFn(src)
-}
+func (e *StdEncoder) Decode(src []byte) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 var (
 	// HexEncoder instance

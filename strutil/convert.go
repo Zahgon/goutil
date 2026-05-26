@@ -2,15 +2,10 @@ package strutil
 
 import (
 	"errors"
-	"reflect"
 	"regexp"
-	"strconv"
-	"strings"
 	"time"
-	"unsafe"
 
 	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/mathutil"
 )
 
 var (
@@ -35,103 +30,80 @@ var (
 // strconv.AppendQuoteRune()
 
 // Quote alias of strings.Quote
-func Quote(s string) string { return strconv.Quote(s) }
+func Quote(s string) string { _ = "STUB: not implemented"; return "" }
 
 // Unquote remove start and end quotes by single-quote or double-quote
 //
 // tip: strconv.Unquote cannot unquote single-quote
-func Unquote(s string) string {
-	ln := len(s)
-	if ln < 2 {
-		return s
-	}
+func Unquote(s string) string { _ = "STUB: not implemented"; return "" }
 
-	qs, qe := s[0], s[ln-1]
+// exclude quotes
 
-	var valid bool
-	if qs == '"' && qe == '"' {
-		valid = true
-	} else if qs == '\'' && qe == '\'' {
-		valid = true
-	}
-
-	if valid {
-		s = s[1 : ln-1] // exclude quotes
-	}
-	// strconv.Unquote cannot unquote single-quote
-	// if ns, err := strconv.Unquote(s); err == nil {
-	// 	return ns
-	// }
-	return s
-}
+// strconv.Unquote cannot unquote single-quote
+// if ns, err := strconv.Unquote(s); err == nil {
+// 	return ns
+// }
 
 // Join alias of strings.Join
-func Join(sep string, ss ...string) string { return strings.Join(ss, sep) }
+func Join(sep string, ss ...string) string { _ = "STUB: not implemented"; return "" }
 
 // JoinList alias of strings.Join
-func JoinList(sep string, ss []string) string { return strings.Join(ss, sep) }
+func JoinList(sep string, ss []string) string { _ = "STUB: not implemented"; return "" }
 
 // JoinComma quick join strings by comma
-func JoinComma(ss []string) string { return strings.Join(ss, ",") }
+func JoinComma(ss []string) string { _ = "STUB: not implemented"; return "" }
 
 // JoinAny type to string
-func JoinAny(sep string, parts ...any) string {
-	ss := make([]string, 0, len(parts))
-	for _, part := range parts {
-		ss = append(ss, QuietString(part))
-	}
-
-	return strings.Join(ss, sep)
-}
+func JoinAny(sep string, parts ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Implode alias of strings.Join
-func Implode(sep string, ss ...string) string { return strings.Join(ss, sep) }
+func Implode(sep string, ss ...string) string { _ = "STUB: not implemented"; return "" }
 
 /*************************************************************
  * region value to string
  *************************************************************/
 
 // String convert value to string, return error on failed
-func String(val any) (string, error) { return ToStringWith(val) }
+func String(val any) (string, error) {
+	_ = "STUB: not implemented"
+	return "",
 
-// ToString convert value to string, return error on failed
-func ToString(val any) (string, error) { return ToStringWith(val) }
+		// ToString convert value to string, return error on failed
+		nil
+}
 
-// StringOrErr convert value to string, return error on failed
-func StringOrErr(val any) (string, error) { return ToStringWith(val) }
+func ToString(val any) (string, error) {
+	_ = "STUB: not implemented"
+	return "",
 
-// QuietString convert value to string, will ignore error. same as SafeString()
-func QuietString(val any) string { return SafeString(val) }
+		// StringOrErr convert value to string, return error on failed
+		nil
+}
+
+func StringOrErr(val any) (string, error) {
+	_ = "STUB: not implemented"
+	return "",
+
+		// QuietString convert value to string, will ignore error. same as SafeString()
+		nil
+}
+
+func QuietString(val any) string { _ = "STUB: not implemented"; return "" }
 
 // SafeString convert value to string. Will ignore error
-func SafeString(in any) string {
-	s, _ := AnyToString(in, false)
-	return s
-}
+func SafeString(in any) string { _ = "STUB: not implemented"; return "" }
 
 // StringOrPanic convert value to string, will panic on error
-func StringOrPanic(val any) string { return MustString(val) }
+func StringOrPanic(val any) string { _ = "STUB: not implemented"; return "" }
 
 // MustString convert value to string. will panic on error
-func MustString(val any) string {
-	s, err := ToStringWith(val)
-	if err != nil {
-		panic(err)
-	}
-	return s
-}
+func MustString(val any) string { _ = "STUB: not implemented"; return "" }
 
 // StringOrDefault convert any value to string, return default value on failed
-func StringOrDefault(val any, defVal string) string { return StringOr(val, defVal) }
+func StringOrDefault(val any, defVal string) string { _ = "STUB: not implemented"; return "" }
 
 // StringOr convert any value to string, return default value on failed
-func StringOr(val any, defVal string) string {
-	s, err := ToStringWith(val)
-	if err != nil {
-		return defVal
-	}
-	return s
-}
+func StringOr(val any, defVal string) string { _ = "STUB: not implemented"; return "" }
 
 // AnyToString convert any value to string.
 //
@@ -140,16 +112,14 @@ func StringOr(val any, defVal string) string {
 //   - False  will use fmt.Sprint convert unsupported type
 //   - True   will return error on convert fail.
 func AnyToString(val any, defaultAsErr bool) (s string, err error) {
-	var optFn comfunc.ConvOptionFn
-	if !defaultAsErr {
-		optFn = comfunc.WithUserConvFn(comfunc.StrBySprintFn)
-	}
-	return comfunc.ToStringWith(val, optFn)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // ToStringWith try to convert value to string. can with some option func, more see comfunc.ConvOption.
 func ToStringWith(in any, optFns ...comfunc.ConvOptionFn) (string, error) {
-	return comfunc.ToStringWith(in, optFns...)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 /*************************************************************
@@ -157,182 +127,126 @@ func ToStringWith(in any, optFns ...comfunc.ConvOptionFn) (string, error) {
  *************************************************************/
 
 // ToBool convert string to bool
-func ToBool(s string) (bool, error) {
-	return comfunc.StrToBool(strings.TrimSpace(s))
-}
+func ToBool(s string) (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 // QuietBool convert to bool, will ignore error
-func QuietBool(s string) bool { return SafeBool(s) }
+func QuietBool(s string) bool {
+	_ = "STUB: not implemented"
 
-// SafeBool convert to bool and will ignore error
-func SafeBool(s string) bool {
-	val, _ := comfunc.StrToBool(strings.TrimSpace(s))
-	return val
+	// SafeBool convert to bool and will ignore error
+	return false
 }
+
+func SafeBool(s string) bool { _ = "STUB: not implemented"; return false }
 
 // MustBool convert to bool and will panic on error
-func MustBool(s string) bool {
-	val, err := ToBool(s)
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
+func MustBool(s string) bool { _ = "STUB: not implemented"; return false }
 
 // Bool parse string to bool. like strconv.ParseBool()
-func Bool(s string) (bool, error) {
-	return comfunc.StrToBool(strings.TrimSpace(s))
-}
+func Bool(s string) (bool, error) { _ = "STUB: not implemented"; return false, nil }
 
 /*************************************************************
  * region string value to int
  *************************************************************/
 
 // Int convert string to int, alias of ToInt()
-func Int(s string) (int, error) {
-	return strconv.Atoi(strings.TrimSpace(s))
-}
+func Int(s string) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // ToInt convert string to int, return error on fail
-func ToInt(s string) (int, error) {
-	return strconv.Atoi(strings.TrimSpace(s))
-}
+func ToInt(s string) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // IntOrDefault convert string to int, return default value on fail
-func IntOrDefault(s string, defVal int) int {
-	return IntOr(s, defVal)
-}
+func IntOrDefault(s string, defVal int) int { _ = "STUB: not implemented"; return 0 }
 
 // IntOr convert string to int, return default value on fail
-func IntOr(s string, defVal int) int {
-	val, err := ToInt(s)
-	if err != nil {
-		return defVal
-	}
-	return val
-}
+func IntOr(s string, defVal int) int { _ = "STUB: not implemented"; return 0 }
 
 // SafeInt convert string to int, will ignore error
-func SafeInt(s string) int {
-	val, _ := ToInt(s)
-	return val
-}
+func SafeInt(s string) int { _ = "STUB: not implemented"; return 0 }
 
 // QuietInt convert string to int, will ignore error
-func QuietInt(s string) int { return SafeInt(s) }
+func QuietInt(s string) int {
+	_ = "STUB: not implemented"
 
-// MustInt convert string to int, will panic on error
-func MustInt(s string) int { return IntOrPanic(s) }
+	// MustInt convert string to int, will panic on error
+	return 0
+}
+
+func MustInt(s string) int { _ = "STUB: not implemented"; return 0 }
 
 // IntOrPanic convert value to int, will panic on error
-func IntOrPanic(s string) int {
-	val, err := ToInt(s)
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
+func IntOrPanic(s string) int { _ = "STUB: not implemented"; return 0 }
 
 /*************************************************************
  * region convert string to int64
  *************************************************************/
 
 // Int64 convert string to int, will ignore error
-func Int64(s string) int64 { return SafeInt64(s) }
+func Int64(s string) int64 {
+	_ = "STUB: not implemented"
 
-// QuietInt64 convert string to int, will ignore error
-func QuietInt64(s string) int64 { return SafeInt64(s) }
-
-// SafeInt64 convert string to int, will ignore error
-func SafeInt64(s string) int64 {
-	val, _ := Int64OrErr(s)
-	return val
+	// QuietInt64 convert string to int, will ignore error
+	return 0
 }
+
+func QuietInt64(s string) int64 {
+	_ = "STUB: not implemented"
+
+	// SafeInt64 convert string to int, will ignore error
+	return 0
+}
+
+func SafeInt64(s string) int64 { _ = "STUB: not implemented"; return 0 }
 
 // ToInt64 convert string to int, return error on fail
-func ToInt64(s string) (int64, error) {
-	return strconv.ParseInt(s, 10, 0)
-}
+func ToInt64(s string) (int64, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Int64OrDefault convert string to int, return default value on fail
-func Int64OrDefault(s string, defVal int64) int64 {
-	return Int64Or(s, defVal)
-}
+func Int64OrDefault(s string, defVal int64) int64 { _ = "STUB: not implemented"; return 0 }
 
 // Int64Or convert string to int, return default value on fail
-func Int64Or(s string, defVal int64) int64 {
-	val, err := ToInt64(s)
-	if err != nil {
-		return defVal
-	}
-	return val
-}
+func Int64Or(s string, defVal int64) int64 { _ = "STUB: not implemented"; return 0 }
 
 // Int64OrErr convert string to int, return error on fail
-func Int64OrErr(s string) (int64, error) {
-	return strconv.ParseInt(s, 10, 0)
-}
+func Int64OrErr(s string) (int64, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // MustInt64 convert value to int, will panic on error
-func MustInt64(s string) int64 { return Int64OrPanic(s) }
+func MustInt64(s string) int64 { _ = "STUB: not implemented"; return 0 }
 
 // Int64OrPanic convert value to int, will panic on error
-func Int64OrPanic(s string) int64 {
-	val, err := strconv.ParseInt(s, 10, 0)
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
+func Int64OrPanic(s string) int64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************************************************
  * region string value to uint
  *************************************************************/
 
 // Uint convert string to uint, will ignore error
-func Uint(s string) uint64 { return SafeUint(s) }
+func Uint(s string) uint64 {
+	_ = "STUB: not implemented"
 
-// SafeUint convert string to uint, will ignore error
-func SafeUint(s string) uint64 {
-	val, _ := UintOrErr(s)
-	return val
+	// SafeUint convert string to uint, will ignore error
+	return 0
 }
+
+func SafeUint(s string) uint64 { _ = "STUB: not implemented"; return 0 }
 
 // ToUint convert string to uint, return error on fail. alias of UintOrErr()
-func ToUint(s string) (uint64, error) {
-	return strconv.ParseUint(s, 10, 0)
-}
+func ToUint(s string) (uint64, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // UintOrErr convert string to uint, return error on fail
-func UintOrErr(s string) (uint64, error) {
-	return strconv.ParseUint(s, 10, 0)
-}
+func UintOrErr(s string) (uint64, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // MustUint convert value to uint, will panic on error. alias of UintOrPanic()
-func MustUint(s string) uint64 { return UintOrPanic(s) }
+func MustUint(s string) uint64 { _ = "STUB: not implemented"; return 0 }
 
 // UintOrPanic convert value to uint, will panic on error
-func UintOrPanic(s string) uint64 {
-	val, err := UintOrErr(s)
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
+func UintOrPanic(s string) uint64 { _ = "STUB: not implemented"; return 0 }
 
 // UintOrDefault convert string to uint, return default value on fail
-func UintOrDefault(s string, defVal uint64) uint64 {
-	return UintOr(s, defVal)
-}
+func UintOrDefault(s string, defVal uint64) uint64 { _ = "STUB: not implemented"; return 0 }
 
 // UintOr convert string to uint, return default value on fail
-func UintOr(s string, defVal uint64) uint64 {
-	val, err := UintOrErr(s)
-	if err != nil {
-		return defVal
-	}
-	return val
-}
+func UintOr(s string, defVal uint64) uint64 { _ = "STUB: not implemented"; return 0 }
 
 /*************************************************************
  * region string value to byte
@@ -340,74 +254,52 @@ func UintOr(s string, defVal uint64) uint64 {
  *************************************************************/
 
 // Byte2str convert bytes to string
-func Byte2str(b []byte) string {
-	return *(*string)(unsafe.Pointer(&b))
-}
+func Byte2str(b []byte) string { _ = "STUB: not implemented"; return "" }
 
 // Byte2string convert bytes to string
-func Byte2string(b []byte) string {
-	return *(*string)(unsafe.Pointer(&b))
-}
+func Byte2string(b []byte) string { _ = "STUB: not implemented"; return "" }
 
 // ToBytes convert string to bytes
-func ToBytes(s string) (b []byte) {
-	strh := (*reflect.StringHeader)(unsafe.Pointer(&s))
-
-	sh := (*reflect.SliceHeader)(unsafe.Pointer(&b))
-	sh.Data = strh.Data
-	sh.Len = strh.Len
-	sh.Cap = strh.Len
-	return b
-}
+func ToBytes(s string) (b []byte) { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * region string to int/string slice, time.Time
  *************************************************************/
 
 // Ints alias of the ToIntSlice(). default sep is comma(,)
-func Ints(s string, sep ...string) []int {
-	ints, _ := ToIntSlice(s, sep...)
-	return ints
-}
+func Ints(s string, sep ...string) []int { _ = "STUB: not implemented"; return nil }
 
 // ToInts alias of the ToIntSlice(). default sep is comma(,)
-func ToInts(s string, sep ...string) ([]int, error) { return ToIntSlice(s, sep...) }
+func ToInts(s string, sep ...string) ([]int, error) {
+	_ = "STUB: not implemented"
+	return nil,
 
-// ToIntSlice split string to slice and convert item to int.
-//
-// Default sep is comma
+		// ToIntSlice split string to slice and convert item to int.
+		//
+		// Default sep is comma
+		nil
+}
+
 func ToIntSlice(s string, sep ...string) (ints []int, err error) {
-	ss := ToSlice(s, sep...)
-	for _, item := range ss {
-		iVal, err := mathutil.ToInt(item)
-		if err != nil {
-			return []int{}, err
-		}
-
-		ints = append(ints, iVal)
-	}
-	return
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToArray alias of the ToSlice()
-func ToArray(s string, sep ...string) []string { return ToSlice(s, sep...) }
+func ToArray(s string, sep ...string) []string { _ = "STUB: not implemented"; return nil }
 
 // Strings alias of the ToSlice()
-func Strings(s string, sep ...string) []string { return ToSlice(s, sep...) }
+func Strings(s string, sep ...string) []string { _ = "STUB: not implemented"; return nil }
 
 // ToStrings alias of the ToSlice()
-func ToStrings(s string, sep ...string) []string { return ToSlice(s, sep...) }
+func ToStrings(s string, sep ...string) []string { _ = "STUB: not implemented"; return nil }
 
 // ToSlice split string to array.
-func ToSlice(s string, sep ...string) []string {
-	if len(sep) > 0 {
-		return Split(s, sep[0])
-	}
-	return Split(s, ",")
-}
+func ToSlice(s string, sep ...string) []string { _ = "STUB: not implemented"; return nil }
 
 // ToDuration parses a duration string. such as "300ms", "-1.5h" or "2h45m".
 // Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 func ToDuration(s string) (time.Duration, error) {
-	return comfunc.ToDuration(s)
+	_ = "STUB: not implemented"
+	return *new(time.Duration), nil
 }

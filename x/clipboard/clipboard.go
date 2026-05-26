@@ -3,15 +3,7 @@ package clipboard
 
 import (
 	"bytes"
-	"errors"
 	"io"
-	"os/exec"
-	"strings"
-
-	"github.com/gookit/goutil/cliutil"
-	"github.com/gookit/goutil/errorx"
-	"github.com/gookit/goutil/fsutil"
-	"github.com/gookit/goutil/sysutil"
 )
 
 // Clipboard struct
@@ -33,18 +25,9 @@ type Clipboard struct {
 
 // New instance
 func New() *Clipboard {
+	_ = "STUB: not implemented"
 	// special handle on with args
-	reader, readArgs := parseLine(GetReaderBin())
-	writer, writeArgs := parseLine(GetWriterBin())
-
-	return &Clipboard{
-		readerBin: reader,
-		readArgs:  readArgs,
-		writerBin: writer,
-		writeArgs: writeArgs,
-		readable:  sysutil.HasExecutable(reader),
-		writeable: sysutil.HasExecutable(writer),
-	}
+	return nil
 }
 
 // SetReader for handle clip
@@ -56,171 +39,88 @@ func New() *Clipboard {
 // }
 
 // WithVerbose setting
-func (c *Clipboard) WithVerbose(yn bool) *Clipboard {
-	c.verbose = yn
-	return c
-}
+func (c *Clipboard) WithVerbose(yn bool) *Clipboard { _ = "STUB: not implemented"; return nil }
 
 // Clean the clipboard
-func (c *Clipboard) Clean() error { return c.Reset() }
+func (c *Clipboard) Clean() error {
+	_ = "STUB: not implemented"
 
-// Reset and clean the clipboard
-func (c *Clipboard) Reset() error {
-	if c.buf != nil {
-		c.buf.Reset()
-	}
-
-	// echo empty string for clean clipboard.
-	// run: echo '' | pbcopy
-	return c.WriteFrom(strings.NewReader(""))
+	// Reset and clean the clipboard
+	return nil
 }
+
+func (c *Clipboard) Reset() error { _ = "STUB: not implemented"; return nil }
+
+// echo empty string for clean clipboard.
+// run: echo '' | pbcopy
 
 //
 // ---------------------------------------- write ----------------------------------------
 //
 
 // Write bytes data to buffer. should call Flush() to write to clipboard
-func (c *Clipboard) Write(p []byte) (int, error) {
-	return c.WriteString(string(p))
-}
+func (c *Clipboard) Write(p []byte) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // WriteString data to buffer. should call Flush() to write to clipboard
 func (c *Clipboard) WriteString(s string) (int, error) {
-	// if c.addSlashes {
-	// 	s = strutil.AddSlashes(s)
-	// }
-	return c.buffer().WriteString(s)
+	_ = "STUB: not implemented"
+	//	if c.addSlashes {
+	//		s = strutil.AddSlashes(s)
+	//	}
+	return 0, nil
 }
 
 // Flush buffer contents to clipboard
-func (c *Clipboard) Flush() error {
-	if c.buf == nil || c.buf.Len() == 0 {
-		return errors.New("clipboard: empty contents for write")
-	}
-
-	defer c.buf.Reset()
-	return c.WriteFrom(c.buf)
-}
+func (c *Clipboard) Flush() error { _ = "STUB: not implemented"; return nil }
 
 // WriteFromFile contents to clipboard
-func (c *Clipboard) WriteFromFile(filepath string) error {
-	file, err := fsutil.OpenReadFile(filepath)
-	if err != nil {
-		return err
-	}
-
-	defer file.Close()
-	return c.WriteFrom(file)
-}
+func (c *Clipboard) WriteFromFile(filepath string) error { _ = "STUB: not implemented"; return nil }
 
 // WriteFrom reader data to clipboard
-func (c *Clipboard) WriteFrom(r io.Reader) error {
-	if !c.writeable {
-		return errorx.Rawf("clipboard: write driver %q not found on OS", c.writerBin)
-	}
-
-	cmd := exec.Command(c.writerBin, c.writeArgs...)
-	cmd.Stdin = r
-
-	if c.verbose {
-		cliutil.Yellowf("clipboard> %s\n", cliutil.BuildLine(c.writerBin, c.writeArgs))
-	}
-	return cmd.Run()
-}
+func (c *Clipboard) WriteFrom(r io.Reader) error { _ = "STUB: not implemented"; return nil }
 
 //
 // ---------------------------------------- read ----------------------------------------
 //
 
 // Read bytes contents from clipboard
-func (c *Clipboard) Read() ([]byte, error) {
-	buf, err := c.ReadToBuffer()
-	if err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
+func (c *Clipboard) Read() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ReadToBuffer read clipboard contents to new buffer.
 func (c *Clipboard) ReadToBuffer() (*bytes.Buffer, error) {
-	var buf bytes.Buffer
-	if err := c.ReadTo(&buf); err != nil {
-		return nil, err
-	}
-	return &buf, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SafeString read contents as string from clipboard, will return empty string on error
-func (c *Clipboard) SafeString() string {
-	s, err := c.ReadString()
-	if err != nil {
-		return ""
-	}
-	return s
-}
+func (c *Clipboard) SafeString() string { _ = "STUB: not implemented"; return "" }
 
 // ReadString contents as string from clipboard
-func (c *Clipboard) ReadString() (string, error) {
-	bts, err := c.Read()
-	if err != nil {
-		return "", err
-	}
+func (c *Clipboard) ReadString() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	// fix: at Windows will always return end of the "\r\n"
-	if sysutil.IsWindows() {
-		return string(bytes.TrimRight(bts, "\r\n")), nil
-	}
-	return string(bts), nil
-}
+// fix: at Windows will always return end of the "\r\n"
 
 // ReadToFile dump clipboard data to file
-func (c *Clipboard) ReadToFile(filepath string) error {
-	file, err := fsutil.QuickOpenFile(filepath)
-	if err != nil {
-		return err
-	}
-
-	defer file.Close()
-	return c.ReadTo(file)
-}
+func (c *Clipboard) ReadToFile(filepath string) error { _ = "STUB: not implemented"; return nil }
 
 // ReadTo read clipboard contents to writer
-func (c *Clipboard) ReadTo(w io.Writer) error {
-	if !c.readable {
-		return errorx.Rawf("clipboard: read driver %q not found on OS", c.readerBin)
-	}
-
-	cmd := exec.Command(c.readerBin, c.readArgs...)
-	cmd.Stdout = w
-
-	if c.verbose {
-		cliutil.Yellowf("clipboard> %s\n", cliutil.BuildLine(c.readerBin, c.readArgs))
-	}
-	return cmd.Run()
-}
+func (c *Clipboard) ReadTo(w io.Writer) error { _ = "STUB: not implemented"; return nil }
 
 //
 // ---------------------------------------- help ----------------------------------------
 //
 
 // Available check
-func (c *Clipboard) Available() bool {
-	return c.writeable && c.readable && available()
-}
+func (c *Clipboard) Available() bool { _ = "STUB: not implemented"; return false }
 
 // Writeable check
 func (c *Clipboard) Writeable() bool {
-	return c.writeable
+	_ = "STUB: not implemented"
+
+	// Readable check
+	return false
 }
 
-// Readable check
-func (c *Clipboard) Readable() bool {
-	return c.readable
-}
+func (c *Clipboard) Readable() bool { _ = "STUB: not implemented"; return false }
 
-func (c *Clipboard) buffer() *bytes.Buffer {
-	if c.buf == nil {
-		c.buf = new(bytes.Buffer)
-	}
-	return c.buf
-}
+func (c *Clipboard) buffer() *bytes.Buffer { _ = "STUB: not implemented"; return nil }

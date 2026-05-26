@@ -1,9 +1,7 @@
 package ccolor
 
 import (
-	"fmt"
 	"regexp"
-	"strings"
 )
 
 // output colored text like uses custom tag.
@@ -65,7 +63,7 @@ var colorTags = map[string]string{
 	"normal":   "0;39", // no color
 	"brown":    "0;33", // #A52A2A
 	"yellow":   "0;33",
-	"ylw": "0;33",
+	"ylw":      "0;33",
 	"ylw0":     "0;33",
 	"yellowB":  "1;33", // with bold
 	"ylw1":     "1;33",
@@ -164,23 +162,16 @@ var colorTags = map[string]string{
 //
 //	text := Render("<info>hello</> <cyan>world</>!")
 //	fmt.Println(text)
-func Render(a ...any) string {
-	if len(a) == 0 {
-		return ""
-	}
-	return ReplaceTag(fmt.Sprint(a...))
-}
+func Render(a ...any) string { _ = "STUB: not implemented"; return "" }
 
 // ReplaceTag parse string, replace color tag and return rendered string
-func ReplaceTag(str string) string { return ParseTagByEnv(str) }
+func ReplaceTag(str string) string { _ = "STUB: not implemented"; return "" }
 
 // ParseTagByEnv parse given string. will check package setting.
 func ParseTagByEnv(str string) string {
+	_ = "STUB: not implemented"
 	// disable OR not support color
-	if shouldCleanColor() {
-		return ClearTag(str)
-	}
-	return ParseTag(str)
+	return ""
 }
 
 // ParseTag parse given string, replace color tag and return rendered string
@@ -195,60 +186,39 @@ func ParseTagByEnv(str string) string {
 //   - Not support custom attributes
 //   - Not support c256 or rgb color
 func ParseTag(str string) string {
+	_ = "STUB: not implemented"
 	// not contains color tag
-	if !strings.Contains(str, "</>") {
-		return str
-	}
-
-	// find color tags by regex. str eg: "<fg=white;bg=blue;op=bold>content</>"
-	matched := matchRegex.FindAllStringSubmatch(str, -1)
-
-	// item: 0 full text 1 tag name 2 tag content
-	for _, item := range matched {
-		full, tag, body := item[0], item[1], item[2]
-
-		// use defined color tag name: "<info>content</>" -> tag: "info"
-		if code := colorTags[tag]; len(code) > 0 {
-			str = strings.Replace(str, full, RenderString(code, body), 1)
-		}
-	}
-
-	return str
+	return ""
 }
+
+// find color tags by regex. str eg: "<fg=white;bg=blue;op=bold>content</>"
+
+// item: 0 full text 1 tag name 2 tag content
+
+// use defined color tag name: "<info>content</>" -> tag: "info"
 
 // ClearTag clear-all tag for a string
-func ClearTag(s string) string {
-	if !strings.Contains(s, "</>") {
-		return s
-	}
-	return stripRegex.ReplaceAllString(s, "")
-}
+func ClearTag(s string) string { _ = "STUB: not implemented"; return "" }
 
 /*************************************************************
  * helper methods
  *************************************************************/
 
 // GetTagCode get color code by tag name
-func GetTagCode(name string) string { return colorTags[name] }
+func GetTagCode(name string) string { _ = "STUB: not implemented"; return "" }
 
 // ApplyTag for messages
-func ApplyTag(tag string, a ...any) string {
-	return RenderCode(GetTagCode(tag), a...)
-}
+func ApplyTag(tag string, a ...any) string { _ = "STUB: not implemented"; return "" }
 
 // WrapTag wrap a tag for a string "<tag>content</>"
-func WrapTag(s string, tag string) string {
-	if s == "" || tag == "" {
-		return s
-	}
-	return fmt.Sprintf("<%s>%s</>", tag, s)
-}
+func WrapTag(s string, tag string) string { _ = "STUB: not implemented"; return "" }
 
 // ColorTags get all internal color tags
-func ColorTags() map[string]string { return colorTags }
+func ColorTags() map[string]string {
+	_ = "STUB: not implemented"
 
-// IsDefinedTag is defined tag name
-func IsDefinedTag(name string) bool {
-	_, ok := colorTags[name]
-	return ok
+	// IsDefinedTag is defined tag name
+	return nil
 }
+
+func IsDefinedTag(name string) bool { _ = "STUB: not implemented"; return false }

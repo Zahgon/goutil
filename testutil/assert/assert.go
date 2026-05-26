@@ -3,13 +3,6 @@
 // inspired the package: github.com/stretchr/testify/assert
 package assert
 
-import (
-	"strings"
-
-	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/x/ccolor"
-)
-
 // TestingT is an interface wrapper around *testing.T
 type TestingT interface {
 	Helper()
@@ -31,44 +24,31 @@ var (
 )
 
 // DisableColor render
-func DisableColor() { EnableColor = false }
+func DisableColor() {
+	_ = "STUB: not implemented"
 
-// HideFullPath render
-func HideFullPath() { ShowFullPath = false }
+	// HideFullPath render
+	return
+}
+
+func HideFullPath() { _ = "STUB: not implemented"; return }
 
 // SetFailFast set fail fast
-func SetFailFast(enable bool) { FailFast = enable }
+func SetFailFast(enable bool) {
+	_ = "STUB: not implemented"
 
-// fail reports a failure through
+	// fail reports a failure through
+	return
+}
+
 func fail(t TestingT, failMsg string, fmtAndArgs []any) bool {
-	t.Helper()
-
-	tName := t.Name()
-	if EnableColor {
-		tName = ccolor.Red.Sprint(tName)
-	}
-
-	labeledTexts := []labeledText{
-		{"Test Name", tName},
-		{"Error Pos", strings.Join(callerInfos(), "\n")},
-		{"Error Msg", failMsg},
-	}
-
-	// user custom message
-	if userMsg := comfunc.FormatWithArgs(fmtAndArgs); len(userMsg) > 0 {
-		labeledTexts = append(labeledTexts, labeledText{"User Msg", userMsg})
-	}
-
-	t.Error("\n" + formatLabeledTexts(labeledTexts))
-
-	// fail fast handle
-	if FailFast {
-		if fnr, ok := t.(failNower); ok {
-			fnr.FailNow()
-		}
-	}
+	_ = "STUB: not implemented"
 	return false
 }
+
+// user custom message
+
+// fail fast handle
 
 //
 // -------------------- required --------------------
@@ -81,12 +61,7 @@ func fail(t TestingT, failMsg string, fmtAndArgs []any) bool {
 // Usage:
 //
 //	assert.Must(t, assert.True(false))
-func Must(t TestingT, condition bool, fmtAndArgs ...any) {
-	t.Helper()
-	if !condition {
-		FailNow(t, "Required", fmtAndArgs...)
-	}
-}
+func Must(t TestingT, condition bool, fmtAndArgs ...any) { _ = "STUB: not implemented"; return }
 
 // Require asserts that the given condition is true.
 //
@@ -95,12 +70,7 @@ func Must(t TestingT, condition bool, fmtAndArgs ...any) {
 // Usage:
 //
 //	assert.Require(t, assert.True(false))
-func Require(t TestingT, condition bool, fmtAndArgs ...any) {
-	t.Helper()
-	if !condition {
-		FailNow(t, "Required", fmtAndArgs...)
-	}
-}
+func Require(t TestingT, condition bool, fmtAndArgs ...any) { _ = "STUB: not implemented"; return }
 
 //
 // -------------------- fail --------------------
@@ -108,8 +78,8 @@ func Require(t TestingT, condition bool, fmtAndArgs ...any) {
 
 // Fail reports a failure through
 func Fail(t TestingT, failMsg string, fmtAndArgs ...any) bool {
-	t.Helper()
-	return fail(t, failMsg, fmtAndArgs)
+	_ = "STUB: not implemented"
+	return false
 }
 
 type failNower interface {
@@ -118,11 +88,6 @@ type failNower interface {
 
 // FailNow fails test
 func FailNow(t TestingT, failMsg string, fmtAndArgs ...any) bool {
-	t.Helper()
-	fail(t, failMsg, fmtAndArgs)
-
-	if fnr, ok := t.(failNower); ok {
-		fnr.FailNow()
-	}
+	_ = "STUB: not implemented"
 	return false
 }

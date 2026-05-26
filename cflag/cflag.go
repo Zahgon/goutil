@@ -10,20 +10,9 @@ package cflag
 import (
 	"errors"
 	"flag"
-	"fmt"
-	"io"
-	"os"
-	"path/filepath"
 	"strings"
 
-	"github.com/gookit/goutil/errorx"
-	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/structs"
 	"github.com/gookit/goutil/strutil"
-	"github.com/gookit/goutil/x/basefn"
-	"github.com/gookit/goutil/x/ccolor"
-	"github.com/gookit/goutil/x/stdio"
 )
 
 // CFlags wrap and extends the go flag.FlagSet
@@ -89,11 +78,7 @@ type CFlags struct {
 //	// binding opts and args
 //
 //	cmd.Parse(nil)
-func New(fns ...func(c *CFlags)) *CFlags {
-	return NewEmpty(func(c *CFlags) {
-		c.FlagSet = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
-	}).WithConfigFn(fns...)
-}
+func New(fns ...func(c *CFlags)) *CFlags { _ = "STUB: not implemented"; return nil }
 
 // NewWith create new instance.
 //
@@ -105,86 +90,42 @@ func New(fns ...func(c *CFlags)) *CFlags {
 //
 //	cmd.Parse(nil)
 func NewWith(name, version, desc string, fns ...func(c *CFlags)) *CFlags {
-	return NewEmpty(func(c *CFlags) {
-		c.Desc = desc
-		c.Version = version
-		c.FlagSet = flag.NewFlagSet(name, flag.ContinueOnError)
-	}).WithConfigFn(fns...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewEmpty instance.
-func NewEmpty(fns ...func(c *CFlags)) *CFlags {
-	c := &CFlags{
-		argWidth:  12,
-		shortcuts: make(map[string]string),
-		bindOpts:  make(map[string]*FlagOpt),
-		argNames:  make(map[string]int, 4),
-	}
-
-	return c.WithConfigFn(fns...)
-}
+func NewEmpty(fns ...func(c *CFlags)) *CFlags { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * config command flags
  *************************************************************/
 
 // WithDesc for command
-func WithDesc(desc string) func(c *CFlags) {
-	return func(c *CFlags) { c.Desc = desc }
-}
+func WithDesc(desc string) func(c *CFlags) { _ = "STUB: not implemented"; return nil }
 
 // WithVersion for command
-func WithVersion(version string) func(c *CFlags) {
-	return func(c *CFlags) { c.Version = version }
-}
+func WithVersion(version string) func(c *CFlags) { _ = "STUB: not implemented"; return nil }
 
 // WithConfigFn for command
 func (c *CFlags) WithConfigFn(fns ...func(c *CFlags)) *CFlags {
-	for _, fn := range fns {
-		fn(c)
-	}
-	return c
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddValidator for a flag option
-func (c *CFlags) AddValidator(name string, fn OptCheckFn) {
-	c.ConfigOpt(name, func(opt *FlagOpt) {
-		opt.Validator = fn
-	})
-}
+func (c *CFlags) AddValidator(name string, fn OptCheckFn) { _ = "STUB: not implemented"; return }
 
 // ConfigOpt for a flag option
-func (c *CFlags) ConfigOpt(name string, fn func(opt *FlagOpt)) {
-	if c.Lookup(name) == nil {
-		basefn.Panicf("cflag: option '%s' is not registered", name)
-	}
+func (c *CFlags) ConfigOpt(name string, fn func(opt *FlagOpt)) { _ = "STUB: not implemented"; return }
 
-	// init on not exist
-	if _, ok := c.bindOpts[name]; !ok {
-		c.bindOpts[name] = &FlagOpt{}
-	}
-
-	fn(c.bindOpts[name])
-}
+// init on not exist
 
 // AddShortcuts for option flag
-func (c *CFlags) AddShortcuts(name string, shorts ...string) {
-	c.addShortcuts(name, shorts)
-	c.ConfigOpt(name, func(opt *FlagOpt) {
-		opt.Shortcuts = append(opt.Shortcuts, shorts...)
-	})
-}
+func (c *CFlags) AddShortcuts(name string, shorts ...string) { _ = "STUB: not implemented"; return }
 
 // addShortcuts for option flag
-func (c *CFlags) addShortcuts(name string, shorts []string) {
-	for _, short := range shorts {
-		if regName, ok := c.shortcuts[short]; ok {
-			basefn.Panicf("cflag: shortcut '%s' has been used by option '%s'", short, regName)
-		}
-
-		c.shortcuts[short] = name
-	}
-}
+func (c *CFlags) addShortcuts(name string, shorts []string) { _ = "STUB: not implemented"; return }
 
 // AddArg binding for command, by position
 //
@@ -193,68 +134,43 @@ func (c *CFlags) addShortcuts(name string, shorts []string) {
 //	c.AddArg("name", "desc ...", required: bool, default: any)
 //	c.AddArg("name", "desc ...", required: bool, default: any, isArray: bool)
 func (c *CFlags) AddArg(name, desc string, requireDefaultArrayed ...any) {
-	var required, isArray bool
-	var defValue any
-	if ln := len(requireDefaultArrayed); ln > 0 {
-		bVal, err := comfunc.ToBool(requireDefaultArrayed[0])
-		if err == nil {
-			required = bVal
-		}
-		if ln > 1 { // 2th set default value
-			defValue = requireDefaultArrayed[1]
-		}
-		if ln > 2 { // 3th set isArrayed
-			if bVal, ok := requireDefaultArrayed[2].(bool); ok {
-				isArray = bVal
-			}
-		}
-	}
-
-	arg := &FlagArg{
-		Name:  name,
-		Desc:  desc,
-		Value: structs.NewValue(defValue),
-		// required
-		Required: required,
-		Arrayed:  isArray,
-	}
-
-	c.BindArg(arg)
+	_ = "STUB: not implemented"
+	return
 }
+
+// 2th set default value
+
+// 3th set isArrayed
+
+// required
 
 // BindArg for command
-func (c *CFlags) BindArg(arg *FlagArg) {
-	arg.Index = len(c.bindArgs)
+func (c *CFlags) BindArg(arg *FlagArg) { _ = "STUB: not implemented"; return }
 
-	// check arg info
-	basefn.PanicErr(arg.check())
+// check arg info
 
-	if _, ok := c.argNames[arg.Name]; ok {
-		basefn.Panicf("cflag: arg '%s' have been registered", arg.Name)
-	}
-
-	// register
-	c.bindArgs = append(c.bindArgs, arg)
-	c.argWidth = mathutil.MaxInt(c.argWidth, len(arg.Name))
-	c.argNames[arg.Name] = arg.Index
-}
+// register
 
 /*************************************************************
  * parse command flags
  *************************************************************/
 
 // QuickRun parse OS flags and run command, will auto handle error
-func (c *CFlags) QuickRun() { c.MustParse(nil) }
+func (c *CFlags) QuickRun() {
+	_ = "STUB: not implemented"
 
-// MustRun parse flags and run command. alias of MustParse()
-func (c *CFlags) MustRun(args []string) { c.MustParse(args) }
-
-// MustParse parse flags and run command, will auto handle error
-func (c *CFlags) MustParse(args []string) {
-	if err := c.Parse(args); err != nil {
-		ccolor.Redln("ERROR:", err)
-	}
+	// MustRun parse flags and run command. alias of MustParse()
+	return
 }
+
+func (c *CFlags) MustRun(args []string) {
+	_ = "STUB: not implemented"
+
+	// MustParse parse flags and run command, will auto handle error
+	return
+}
+
+func (c *CFlags) MustParse(args []string) { _ = "STUB: not implemented"; return }
 
 // ErrStopRun error
 var ErrStopRun = errors.New("stop run")
@@ -264,296 +180,102 @@ var ErrStopRun = errors.New("stop run")
 // If args is nil, will parse os.Args
 //
 //   - will auto handle display help on with --help, -h
-func (c *CFlags) Parse(args []string) error {
-	if args == nil {
-		args = os.Args[1:]
-	}
+func (c *CFlags) Parse(args []string) error { _ = "STUB: not implemented"; return nil }
 
-	defer func() {
-		if err := recover(); err != nil {
-			ccolor.Errorln("ERROR:", err)
-			if Debug {
-				fmt.Println(errorx.Newf("(debug mode)RECOVERD PARSE ERROR: %v", err))
-			}
-		}
-	}()
+// prepare
 
-	// prepare
-	if err := c.Prepare(); err != nil {
-		return err
-	}
+// show help when no args
 
-	// show help when no args
-	if c.HelpOnEmptyArgs && len(args) == 0 {
-		c.showHelp(nil)
-		return nil
-	}
+// do parsing(will handle show help)
 
-	// do parsing(will handle show help)
-	if err := c.DoParse(args); err != nil {
-		if errors.Is(err, flag.ErrHelp) {
-			c.showHelp(nil)
-			return nil // ignore help error
-		}
-		if errors.Is(err, ErrStopRun) {
-			return nil
-		}
-		return err
-	}
+// ignore help error
 
-	// call before run
-	if c.BeforeRun != nil && !c.BeforeRun(c) {
-		return nil
-	}
+// call before run
 
-	// call func
-	if c.Func != nil {
-		return c.Func(c)
-	}
-	return nil
-}
+// call func
 
 // Prepare for parse. (internal use)
-func (c *CFlags) Prepare() error {
-	if c.prepared {
-		return nil
-	}
-	c.prepared = true
+func (c *CFlags) Prepare() error { _ = "STUB: not implemented"; return nil }
 
-	// dont use flag output.
-	c.SetOutput(io.Discard)
+// dont use flag output.
 
-	// parse flag usage string
-	c.VisitAll(func(f *flag.Flag) {
-		if regName, ok := c.shortcuts[f.Name]; ok {
-			basefn.Panicf("cflag: name '%s' has been as shortcut by '%s'", f.Name, regName)
-		}
+// parse flag usage string
 
-		f.Usage = c.parseFlagUsage(f.Name, f.Usage)
-	})
-
-	// custom something
-	// c.FlagSet.Usage = c.ShowHelp
-	c.FlagSet.Usage = func() {}
-	return nil
-}
+// custom something
+// c.FlagSet.Usage = c.ShowHelp
 
 // do parse flag.Usage string.
-func (c *CFlags) parseFlagUsage(name, usage string) string {
-	opt, ok := c.bindOpts[name]
-	if !ok {
-		c.bindOpts[name] = &FlagOpt{}
-		opt = c.bindOpts[name]
-	}
+func (c *CFlags) parseFlagUsage(name, usage string) string { _ = "STUB: not implemented"; return "" }
 
-	desc := strings.Trim(usage, "; ")
-	if !strings.ContainsRune(desc, ';') {
-		return strutil.UpperFirst(desc)
-	}
+// FORMAT: desc;required;shorts
 
-	// FORMAT: desc;required;shorts
-	parts := strutil.SplitNTrimmed(desc, ";", 3)
-	if ln := len(parts); ln > 1 {
-		// required
-		if bl, err := strutil.Bool(parts[1]); err == nil && bl {
-			desc = "<red>*</>" + strutil.UpperFirst(parts[0])
-			opt.Required = true
-		} else {
-			desc = strutil.UpperFirst(parts[0])
-		}
+// required
 
-		// shortcuts
-		if ln > 2 && len(parts[2]) > 0 {
-			opt.Shortcuts = SplitShortcut(parts[2])
-			c.addShortcuts(name, opt.Shortcuts)
-		}
-	}
-
-	return desc
-}
+// shortcuts
 
 // DoParse parse options and validate, collect args. (internal use)
-func (c *CFlags) DoParse(args []string) error {
-	if len(c.shortcuts) > 0 && len(args) > 0 {
-		args = ReplaceShorts(args, c.shortcuts)
-	}
+func (c *CFlags) DoParse(args []string) error { _ = "STUB: not implemented"; return nil }
 
-	// do parsing
-	if err := c.FlagSet.Parse(args); err != nil {
-		return err
-	}
+// do parsing
 
-	// check option values
-	if err := c.checkBindOpts(); err != nil {
-		return err
-	}
+// check option values
 
-	// fire hook: after flag parse
-	if c.AfterFlagParse != nil && !c.AfterFlagParse(c) {
-		return ErrStopRun
-	}
-
-	return c.bindParsedArgs()
-}
+// fire hook: after flag parse
 
 // check bind option flags
-func (c *CFlags) checkBindOpts() error {
-	for name, opt := range c.bindOpts {
-		fv := c.Lookup(name).Value
-		if opt.Required && fv.String() == "" {
-			return errorx.Rawf("flag option '%s' is required", name)
-		}
+func (c *CFlags) checkBindOpts() error { _ = "STUB: not implemented"; return nil }
 
-		if opt.Validator == nil {
-			continue
-		}
-
-		// call validator
-		if fg, ok := fv.(flag.Getter); ok {
-			err := opt.Validator(fg.Get())
-			if err != nil {
-				return errorx.Rawf("flag option '%s': %s", name, err.Error())
-			}
-		}
-	}
-	return nil
-}
+// call validator
 
 // desc for command
-func (c *CFlags) bindParsedArgs() error {
-	args := c.Args()
-	argN := len(args) - 1 // max index
+func (c *CFlags) bindParsedArgs() error { _ = "STUB: not implemented"; return nil }
 
-	var lastIdx int
-	for _, arg := range c.bindArgs {
-		// fix: need reset value to default, on repeat parse
-		arg.V = arg.defVal
-		name := arg.Name
-		if arg.Index > argN {
-			if arg.Required {
-				return errorx.Rawf("argument '%s'(#%d) is required", name, arg.Index)
-			}
-			break
-		}
+// max index
 
-		lastIdx++
-		val := args[arg.Index]
-		if arg.Required && val == "" {
-			return errorx.Rawf("argument '%s'(#%d) is required", name, arg.Index)
-		}
+// fix: need reset value to default, on repeat parse
 
-		if arg.Arrayed {
-			arg.V = args[arg.Index:]
-			args = nil // clean it
-			break
-		}
-		arg.V = val
-	}
+// clean it
 
-	// collect remain args
-	if lastIdx <= argN && len(args) > 0 {
-		c.remainArgs = args[lastIdx:]
-	} else if lastIdx == 0 {
-		c.remainArgs = args // all args
-	} else {
-		c.remainArgs = nil
-	}
-	return nil
-}
+// collect remain args
+
+// all args
 
 // Arg get by bind name
 //
 //	val := c.Arg("name").String()
-func (c *CFlags) Arg(name string) *FlagArg {
-	idx, ok := c.argNames[name]
-	if !ok {
-		basefn.Panicf("cflag: get not binding arg '%s'", name)
-	}
-	return c.bindArgs[idx]
-}
+func (c *CFlags) Arg(name string) *FlagArg { _ = "STUB: not implemented"; return nil }
 
 // RemainArgs get
-func (c *CFlags) RemainArgs() []string { return c.remainArgs }
+func (c *CFlags) RemainArgs() []string {
+	_ = "STUB: not implemented"
 
-// Name for command
-func (c *CFlags) Name() string { return filepath.Base(c.FlagSet.Name()) }
+	// Name for command
+	return nil
+}
+
+func (c *CFlags) Name() string { _ = "STUB: not implemented"; return "" }
 
 // BinFile path for command
-func (c *CFlags) BinFile() string { return c.FlagSet.Name() }
+func (c *CFlags) BinFile() string { _ = "STUB: not implemented"; return "" }
 
 /*************************************************************
  * render command help
  *************************************************************/
 
 // desc for command
-func (c *CFlags) helpDesc() string {
-	desc := strutil.UpperFirst(c.Desc)
-
-	if c.Version != "" {
-		desc += "(v" + c.Version + ")"
-	}
-	return desc
-}
+func (c *CFlags) helpDesc() string { _ = "STUB: not implemented"; return "" }
 
 // ShowHelp for command
-func (c *CFlags) ShowHelp() { c.showHelp(nil) }
+func (c *CFlags) ShowHelp() {
+	_ = "STUB: not implemented"
 
-// show help for command
-func (c *CFlags) showHelp(err error) {
-	if c.HelpFunc != nil {
-		c.HelpFunc(c)
-		return
-	}
-
-	binName := c.Name()
-	helpVars := map[string]string{
-		"{{cmd}}":     binName,
-		"{{command}}": binName,
-		"{{binName}}": binName,
-		"{{binFile}}": c.BinFile(),
-	}
-
-	buf := new(strutil.Buffer)
-	if err != nil {
-		buf.Printf("<error>ERROR:</> %s\n", err.Error())
-	} else {
-		buf.Printf("<cyan>%s</>\n\n", c.helpDesc())
-	}
-
-	if c.Usage != "" {
-		buf.Printf("<comment>Usage:</> %s\n", c.Usage)
-	} else {
-		buf.Printf("<comment>Usage:</> %s [--Options...] [...Arguments]\n", binName)
-	}
-	buf.WriteStr("<comment>Options:</>\n")
-
-	// render options help
-	c.RenderOptionsHelp(buf)
-	buf.WriteStr1Nl("  <green>--help, -h</>" + strings.Repeat("    ", 4) + "Display command help")
-
-	if len(c.bindArgs) > 0 {
-		buf.WriteStr1("\n<comment>Arguments:</>\n")
-		for _, arg := range c.bindArgs {
-			buf.Printf(
-				"  <green>%s</>   %s\n",
-				strutil.PadRight(arg.Name, " ", c.argWidth),
-				arg.HelpDesc(),
-			)
-		}
-	}
-
-	if c.LongHelp != "" {
-		buf.WriteStr1Nl("\n<comment>Help:</>")
-		buf.WriteStr1Nl(strings.Trim(c.LongHelp, "\n"))
-	}
-
-	if c.Example != "" {
-		buf.WriteStr1Nl("\n<comment>Examples:</>")
-		buf.WriteStr1(strings.Trim(c.Example, "\n"))
-	}
-
-	ccolor.Println(strutil.Replaces(buf.String(), helpVars))
+	// show help for command
+	return
 }
+
+func (c *CFlags) showHelp(err error) { _ = "STUB: not implemented"; return }
+
+// render options help
 
 var optionIndentSpace = "\n" + strings.Repeat("    ", 7)
 
@@ -562,48 +284,15 @@ var optionIndentSpace = "\n" + strings.Repeat("    ", 7)
 // documentation for the global function PrintDefaults for more information.
 //
 // from flag.PrintDefaults
-func (c *CFlags) RenderOptionsHelp(buf *strutil.Buffer) {
-	c.VisitAll(func(opt *flag.Flag) {
-		var b strings.Builder
-		b.Grow(64)
+func (c *CFlags) RenderOptionsHelp(buf *strutil.Buffer) { _ = "STUB: not implemented"; return }
 
-		mate := c.bindOpts[opt.Name]
-		stdio.Fprintf(&b, "  <info>%s</>", mate.HelpName(opt.Name))
+// Boolean flags of one ASCII letter are so common we
+// treat them specially, putting their usage on the same line.
+// -9: <info></>
 
-		typName, usage := flag.UnquoteUsage(opt)
-		if len(typName) > 0 {
-			b.WriteString(" ")
-			b.WriteString(typName)
-		}
+// Four spaces before the tab triggers good alignment
+// for both 4- and 8-space tab stops.
 
-		// Boolean flags of one ASCII letter are so common we
-		// treat them specially, putting their usage on the same line.
-		lnDiff := b.Len() - 9 - 24 // -9: <info></>
-		if lnDiff < 0 {
-			b.WriteString("    ")
-			b.WriteString(strings.Repeat(" ", -lnDiff))
-		} else {
-			// Four spaces before the tab triggers good alignment
-			// for both 4- and 8-space tab stops.
-			b.WriteString(optionIndentSpace)
-		}
-		b.WriteString(strings.ReplaceAll(usage, "\n", optionIndentSpace))
+// put quotes on the string value
 
-		// put quotes on the string value
-		if isZero, isStr := IsZeroValue(opt, opt.DefValue); !isZero {
-			if isStr {
-				stdio.Fprintf(&b, " (default <magentaB>%q</>)", opt.DefValue)
-			} else {
-				stdio.Fprintf(&b, " (default <magentaB>%v</>)", opt.DefValue)
-			}
-		}
-
-		// arrayed, repeatable
-		if _, ok := opt.Value.(RepeatableFlag); ok {
-			b.WriteString(" <cyan>(repeatable)</>")
-		}
-
-		b.WriteByte('\n')
-		buf.WriteStr1(b.String())
-	})
-}
+// arrayed, repeatable

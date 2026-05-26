@@ -1,31 +1,17 @@
 package stdio
 
 import (
-	"fmt"
 	"io"
-	"strings"
 )
 
 // Fprint to writer, will ignore error
-func Fprint(w io.Writer, a ...any) {
-	_, _ = fmt.Fprint(w, a...)
-}
+func Fprint(w io.Writer, a ...any) { _ = "STUB: not implemented"; return }
 
 // Fprintf to writer, will ignore error
-func Fprintf(w io.Writer, tpl string, vs ...any) {
-	_, _ = fmt.Fprintf(w, tpl, vs...)
-}
+func Fprintf(w io.Writer, tpl string, vs ...any) { _ = "STUB: not implemented"; return }
 
 // Fprintln to writer, will ignore error
-func Fprintln(w io.Writer, a ...any) {
-	_, _ = fmt.Fprintln(w, a...)
-}
+func Fprintln(w io.Writer, a ...any) { _ = "STUB: not implemented"; return }
 
 // WriteStringTo a writer, will ignore error
-func WriteStringTo(w io.Writer, ss ...string) {
-	if len(ss) == 1 {
-		_, _ = io.WriteString(w, ss[0])
-	} else if len(ss) > 1 {
-		_, _ = io.WriteString(w, strings.Join(ss, ""))
-	}
-}
+func WriteStringTo(w io.Writer, ss ...string) { _ = "STUB: not implemented"; return }

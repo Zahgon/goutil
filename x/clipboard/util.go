@@ -1,7 +1,5 @@
 package clipboard
 
-import "strings"
-
 // clipboard writer, reader program names
 const (
 	// WriterOnMac driver
@@ -51,38 +49,31 @@ var (
 
 // Std get
 func Std() *Clipboard {
-	return std
+	_ = "STUB: not implemented"
+
+	// Reset clipboard data
+	return nil
 }
 
-// Reset clipboard data
 func Reset() error {
-	return std.Reset()
+	_ = "STUB: not implemented"
+
+	// Available clipboard available check
+	return nil
 }
 
-// Available clipboard available check
-func Available() bool {
-	return std.Available()
-}
+func Available() bool { _ = "STUB: not implemented"; return false }
 
 // ReadString contents from clipboard
 func ReadString() (string, error) {
-	return std.ReadString()
+	_ = "STUB: not implemented"
+	return "",
+
+		// WriteString contents to clipboard and flush
+		nil
 }
 
-// WriteString contents to clipboard and flush
-func WriteString(s string) error {
-	if _, err := std.WriteString(s); err != nil {
-		return err
-	}
-	return std.Flush()
-}
+func WriteString(s string) error { _ = "STUB: not implemented"; return nil }
 
 // special handle on with args
-func parseLine(line string) (bin string, args []string) {
-	bin = line
-	if strings.ContainsRune(line, ' ') {
-		list := strings.Split(line, " ")
-		bin, args = list[0], list[1:]
-	}
-	return
-}
+func parseLine(line string) (bin string, args []string) { _ = "STUB: not implemented"; return "", nil }

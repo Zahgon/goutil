@@ -3,146 +3,152 @@ package clog
 import (
 	"io"
 	"os"
-	"strings"
-
-	"github.com/gookit/goutil/x/ccolor"
 )
 
 const (
-	SimpleTemplate = `{emoji} [{level}] | {message}`
+	SimpleTemplate  = `{emoji} [{level}] | {message}`
 	DefaultTemplate = `{time} [{level}] | {emoji} {message}`
 )
 
 const (
-	DebugLevel = "debug"
-	InfoLevel = "info"
-	WarnLevel = "warn"
-	ErrorLevel = "error"
-	FatalLevel = "fatal"
-	TraceLevel = "trace"
+	DebugLevel   = "debug"
+	InfoLevel    = "info"
+	WarnLevel    = "warn"
+	ErrorLevel   = "error"
+	FatalLevel   = "fatal"
+	TraceLevel   = "trace"
 	SuccessLevel = "success"
 )
 
 // LevelColorMap 定义日志级别对应的颜色
 var LevelColorMap = map[string]string{
-	DebugLevel: "cyan",
-	InfoLevel: "blue",
-	WarnLevel: "yellow",
-	ErrorLevel: "red",
-	FatalLevel: "red",
-	TraceLevel: "gray",
+	DebugLevel:   "cyan",
+	InfoLevel:    "blue",
+	WarnLevel:    "yellow",
+	ErrorLevel:   "red",
+	FatalLevel:   "red",
+	TraceLevel:   "gray",
 	SuccessLevel: "green",
 }
 
 // LevelEmojiMap 定义日志级别对应的 emoji ⚠️💡
 var LevelEmojiMap = map[string]string{
-	DebugLevel: "🐛",
-	InfoLevel: "ℹ️",
-	WarnLevel: "💡",
-	ErrorLevel: "❌",
-	FatalLevel: "🚨",
-	TraceLevel: "🔍",
+	DebugLevel:   "🐛",
+	InfoLevel:    "ℹ️",
+	WarnLevel:    "💡",
+	ErrorLevel:   "❌",
+	FatalLevel:   "🚨",
+	TraceLevel:   "🔍",
 	SuccessLevel: "🎉",
 }
 
-func wrapColor(level, s string) string {
-	if color, ok := LevelColorMap[level]; ok {
-		return ccolor.WrapTag(s, color)
-	}
-	return s
-}
+func wrapColor(level, s string) string { _ = "STUB: not implemented"; return "" }
 
 // formatLevel formats the level string
-func formatLevel(level string) string {
-	switch level {
-	case DebugLevel:
-		return "DEBUG"
-	case InfoLevel:
-		return "INFO"
-	case WarnLevel:
-		return "WARN"
-	case ErrorLevel:
-		return "ERROR"
-	case FatalLevel:
-		return "FATAL"
-	case TraceLevel:
-		return "TRACE"
-	case SuccessLevel:
-		return "SUCCESS"
-	default:
-		return strings.ToUpper(level)
-	}
-}
+func formatLevel(level string) string { _ = "STUB: not implemented"; return "" }
 
 // getLevelEmoji returns the emoji for the given level
-func getLevelEmoji(level string) string {
-	if emoji, ok := LevelEmojiMap[level]; ok {
-		return emoji
-	}
-	return "📝" // default emoji
-}
+func getLevelEmoji(level string) string { _ = "STUB: not implemented"; return "" }
+
+// default emoji
 
 var std = NewPrinter(os.Stdout)
 
 // Configure the standard log printer
-func Configure(optFns ...func(p *Printer)) { std.Configure(optFns...) }
+func Configure(optFns ...func(p *Printer)) { _ = "STUB: not implemented"; return }
 
 // SetOnWrite sets a custom write function for the standard logger
-func SetOnWrite(fn WriteFn) { std.OnWriteFn = fn }
+func SetOnWrite(fn WriteFn) {
+	_ = "STUB: not implemented"
 
-// SetOutput sets the output for the standard logger
-func SetOutput(w io.Writer) { std.Output = w }
+	// SetOutput sets the output for the standard logger
+	return
+}
 
-// SetTemplate sets a custom template for the standard logger
-func SetTemplate(template string) { std.SetTemplate(template) }
+func SetOutput(w io.Writer) {
+	_ = "STUB: not implemented"
+
+	// SetTemplate sets a custom template for the standard logger
+	return
+}
+
+func SetTemplate(template string) { _ = "STUB: not implemented"; return }
 
 // Print logs a message with the specified level using the standard logger
-func Print(level string, v ...any) { std.Print(level, v...) }
+func Print(level string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Println logs a message with the specified level using the standard logger
-func Println(level string, v ...any) { std.Println(level, v...) }
+func Println(level string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Printf logs a message with the specified level and format using the standard logger
-func Printf(level, format string, v ...any) { std.Printf(level, format, v...) }
+func Printf(level, format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Debug logs a debug message using the standard logger
-func Debug(v ...any) { std.Debug(v...) }
+func Debug(v ...any) {
+	_ = "STUB: not implemented"
 
-// Debugf logs a debug message with format using the standard logger
-func Debugf(format string, v ...any) { std.Debugf(format, v...) }
+	// Debugf logs a debug message with format using the standard logger
+	return
+}
+
+func Debugf(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Info logs an info message using the standard logger
-func Info(v ...any) { std.Info(v...) }
+func Info(v ...any) {
+	_ = "STUB: not implemented"
 
-// Infof logs an info message with format using the standard logger
-func Infof(format string, v ...any) { std.Infof(format, v...) }
+	// Infof logs an info message with format using the standard logger
+	return
+}
+
+func Infof(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Warn logs a warning message using the standard logger
-func Warn(v ...any) { std.Warn(v...) }
+func Warn(v ...any) {
+	_ = "STUB: not implemented"
 
-// Warnf logs a warning message with format using the standard logger
-func Warnf(format string, v ...any) { std.Warnf(format, v...) }
+	// Warnf logs a warning message with format using the standard logger
+	return
+}
+
+func Warnf(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Error logs a message using the standard logger
-func Error(v ...any) { std.Error(v...) }
+func Error(v ...any) {
+	_ = "STUB: not implemented"
 
-// Errorf logs a message with format using the standard logger
-func Errorf(format string, v ...any) { std.Errorf(format, v...) }
+	// Errorf logs a message with format using the standard logger
+	return
+}
+
+func Errorf(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Fatal logs a fatal message using the standard logger
-func Fatal(v ...any) { std.Fatal(v...) }
+func Fatal(v ...any) {
+	_ = "STUB: not implemented"
 
-// Fatalf logs a fatal message with format using the standard logger
-func Fatalf(format string, v ...any) { std.Fatalf(format, v...) }
+	// Fatalf logs a fatal message with format using the standard logger
+	return
+}
+
+func Fatalf(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Trace logs a trace message using the standard logger
-func Trace(v ...any) { std.Trace(v...) }
+func Trace(v ...any) {
+	_ = "STUB: not implemented"
 
-// Tracef logs a trace message with format using the standard logger
-func Tracef(format string, v ...any) { std.Tracef(format, v...) }
+	// Tracef logs a trace message with format using the standard logger
+	return
+}
+
+func Tracef(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Success logs a success message using the standard logger
-func Success(v ...any) { std.Success(v...) }
+func Success(v ...any) {
+	_ = "STUB: not implemented"
 
-// Successf logs a success message with format using the standard logger
-func Successf(format string, v ...any) { std.Successf(format, v...) }
+	// Successf logs a success message with format using the standard logger
+	return
+}
+
+func Successf(format string, v ...any) { _ = "STUB: not implemented"; return }

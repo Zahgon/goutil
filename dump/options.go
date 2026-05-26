@@ -2,7 +2,6 @@ package dump
 
 import (
 	"io"
-	"os"
 )
 
 // Options for dumper
@@ -43,87 +42,39 @@ type Options struct {
 type OptionFunc func(opts *Options)
 
 // NewDefaultOptions create.
-func NewDefaultOptions(out io.Writer, skip int) *Options {
-	if out == nil {
-		out = os.Stdout
-	}
+func NewDefaultOptions(out io.Writer, skip int) *Options { _ = "STUB: not implemented"; return nil }
 
-	return &Options{
-		Output: out,
-		// ---
-		MaxDepth: 5,
-		ShowFlag: Ffunc | Ffname | Fline,
-		// MoreLenNL: 8,
-		// ---
-		IndentLen:  2,
-		IndentChar: ' ',
-		CallerSkip: skip,
-		ColorTheme: defaultTheme,
-		// ---
-		ShowLen:        true, // show length by default for backward compatibility
-		MaxElementsNum: 99,
-	}
-}
+// ---
+
+// MoreLenNL: 8,
+// ---
+
+// ---
+// show length by default for backward compatibility
 
 // SkipNilField setting.
-func SkipNilField() OptionFunc {
-	return func(opt *Options) {
-		opt.SkipNilField = true
-	}
-}
+func SkipNilField() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // SkipPrivate field dump on struct.
-func SkipPrivate() OptionFunc {
-	return func(opt *Options) {
-		opt.SkipPrivate = true
-	}
-}
+func SkipPrivate() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // BytesAsString setting.
-func BytesAsString() OptionFunc {
-	return func(opt *Options) {
-		opt.BytesAsString = true
-	}
-}
+func BytesAsString() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // WithCallerSkip on print caller position information.
-func WithCallerSkip(skip int) OptionFunc {
-	return func(opt *Options) {
-		opt.CallerSkip = skip
-	}
-}
+func WithCallerSkip(skip int) OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // WithoutPosition dont print call dump position information.
-func WithoutPosition() OptionFunc {
-	return func(opt *Options) {
-		opt.ShowFlag = Fnopos
-	}
-}
+func WithoutPosition() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // WithoutOutput setting.
-func WithoutOutput(out io.Writer) OptionFunc {
-	return func(opt *Options) {
-		opt.Output = out
-	}
-}
+func WithoutOutput(out io.Writer) OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // WithoutColor setting.
-func WithoutColor() OptionFunc {
-	return func(opt *Options) {
-		opt.NoColor = true
-	}
-}
+func WithoutColor() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // WithoutType setting.
-func WithoutType() OptionFunc {
-	return func(opt *Options) {
-		opt.NoType = true
-	}
-}
+func WithoutType() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }
 
 // WithoutLen setting. hide length information for string, slice, array, map.
-func WithoutLen() OptionFunc {
-	return func(opt *Options) {
-		opt.ShowLen = false
-	}
-}
+func WithoutLen() OptionFunc { _ = "STUB: not implemented"; return *new(OptionFunc) }

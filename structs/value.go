@@ -1,12 +1,5 @@
 package structs
 
-import (
-	"github.com/gookit/goutil/arrutil"
-	"github.com/gookit/goutil/comdef"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/strutil"
-)
-
 // Value data store
 type Value struct {
 	// V value
@@ -14,134 +7,59 @@ type Value struct {
 }
 
 // NewValue instance.
-func NewValue(val any) *Value {
-	return &Value{
-		V: val,
-	}
-}
+func NewValue(val any) *Value { _ = "STUB: not implemented"; return nil }
 
 // Set value
 func (v *Value) Set(val any) {
-	v.V = val
+	_ = "STUB: not implemented"
+
+	// Reset value
+	return
 }
 
-// Reset value
 func (v *Value) Reset() {
-	v.V = nil
+	_ = "STUB: not implemented"
+
+	// Val get
+	return
 }
 
-// Val get
 func (v *Value) Val() any {
-	return v.V
-}
+	_ = "STUB: not implemented"
 
-// Val get
-// func (v *Value) ValOr[T any](defVal T) T {
-// 	return v.V
-// }
+	// Val get
+	//
+	//	func (v *Value) ValOr[T any](defVal T) T {
+	//		return v.V
+	//	}
+	return *new(any)
+}
 
 // Int value get
-func (v *Value) Int() int {
-	if v.V == nil {
-		return 0
-	}
-	return mathutil.QuietInt(v.V)
-}
+func (v *Value) Int() int { _ = "STUB: not implemented"; return 0 }
 
 // Int64 value
-func (v *Value) Int64() int64 {
-	if v.V == nil {
-		return 0
-	}
-	return mathutil.QuietInt64(v.V)
-}
+func (v *Value) Int64() int64 { _ = "STUB: not implemented"; return 0 }
 
 // Bool value
-func (v *Value) Bool() bool {
-	if v.V == nil {
-		return false
-	}
-
-	if bl, ok := v.V.(bool); ok {
-		return bl
-	}
-
-	if str, ok := v.V.(string); ok {
-		return strutil.QuietBool(str)
-	}
-	return false
-}
+func (v *Value) Bool() bool { _ = "STUB: not implemented"; return false }
 
 // Float64 value
-func (v *Value) Float64() float64 {
-	if v.V == nil {
-		return 0
-	}
-	return mathutil.QuietFloat(v.V)
-}
+func (v *Value) Float64() float64 { _ = "STUB: not implemented"; return 0 }
 
 // String value
-func (v *Value) String() string {
-	if v.V == nil {
-		return ""
-	}
-
-	if str, ok := v.V.(string); ok {
-		return str
-	}
-	return strutil.QuietString(v.V)
-}
+func (v *Value) String() string { _ = "STUB: not implemented"; return "" }
 
 // Strings value
-func (v *Value) Strings() (ss []string) {
-	if v.V == nil {
-		return
-	}
-
-	if ss, ok := v.V.([]string); ok {
-		return ss
-	}
-	if str, ok := v.V.(string); ok {
-		return strutil.Split(str, comdef.DefaultSep)
-	}
-	return
-}
+func (v *Value) Strings() (ss []string) { _ = "STUB: not implemented"; return nil }
 
 // SplitToStrings split string value to strings. sep default is comma(,)
-func (v *Value) SplitToStrings(sep ...string) (ss []string) {
-	if v.V == nil {
-		return
-	}
-
-	if str, ok := v.V.(string); ok {
-		return strutil.Split(str, sepStr(sep))
-	}
-	return
-}
+func (v *Value) SplitToStrings(sep ...string) (ss []string) { _ = "STUB: not implemented"; return nil }
 
 // SplitToInts split string value to []int. sep default is comma(,)
-func (v *Value) SplitToInts(sep ...string) (ss []int) {
-	if v.V == nil {
-		return
-	}
-
-	if str, ok := v.V.(string); ok {
-		ints, err := arrutil.StringsToInts(strutil.Split(str, sepStr(sep)))
-		if err == nil {
-			return ints
-		}
-	}
-	return
-}
+func (v *Value) SplitToInts(sep ...string) (ss []int) { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty value
-func (v *Value) IsEmpty() bool {
-	return v.V == nil
-}
+func (v *Value) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
-func sepStr(seps []string) string {
-	if len(seps) > 0 {
-		return seps[0]
-	}
-	return comdef.DefaultSep
-}
+func sepStr(seps []string) string { _ = "STUB: not implemented"; return "" }

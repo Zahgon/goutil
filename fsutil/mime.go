@@ -2,23 +2,13 @@ package fsutil
 
 import (
 	"io"
-	"net/http"
-	"os"
 )
 
 // DetectMime detect a file mime type. alias of MimeType()
-func DetectMime(path string) string {
-	return MimeType(path)
-}
+func DetectMime(path string) string { _ = "STUB: not implemented"; return "" }
 
 // MimeType get file mime type name. eg "image/png"
-func MimeType(path string) (mime string) {
-	file, err := os.Open(path)
-	if err != nil {
-		return
-	}
-	return ReaderMimeType(file)
-}
+func MimeType(path string) (mime string) { _ = "STUB: not implemented"; return "" }
 
 // ReaderMimeType get the io.Reader mimeType
 //
@@ -29,12 +19,4 @@ func MimeType(path string) (mime string) {
 //		return
 //	}
 //	mime := ReaderMimeType(file)
-func ReaderMimeType(r io.Reader) (mime string) {
-	var buf [MimeSniffLen]byte
-	n, _ := io.ReadFull(r, buf[:])
-	if n == 0 {
-		return ""
-	}
-
-	return http.DetectContentType(buf[:n])
-}
+func ReaderMimeType(r io.Reader) (mime string) { _ = "STUB: not implemented"; return "" }

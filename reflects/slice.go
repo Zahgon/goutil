@@ -1,7 +1,6 @@
 package reflects
 
 import (
-	"fmt"
 	"reflect"
 )
 
@@ -18,7 +17,8 @@ import (
 //	// Or use reflect.AppendSlice() merge two slice
 //	// Or use `for` with `reflect.Append()` add elements
 func MakeSliceByElem(elTyp reflect.Type, len, cap int) reflect.Value {
-	return reflect.MakeSlice(reflect.SliceOf(elTyp), len, cap)
+	_ = "STUB: not implemented"
+	return *new(reflect.Value)
 }
 
 // FlatSlice flatten multi-level slice to given depth-level slice.
@@ -29,33 +29,11 @@ func MakeSliceByElem(elTyp reflect.Type, len, cap int) reflect.Value {
 //
 // always return reflect.Value of []any. note: maybe flatSl.Cap != flatSl.Len
 func FlatSlice(sl reflect.Value, depth int) reflect.Value {
-	items := make([]reflect.Value, 0, sl.Cap())
-	slCap := addSliceItem(sl, depth, func(item reflect.Value) {
-		items = append(items, item)
-	})
-
-	flatSl := reflect.MakeSlice(reflect.SliceOf(anyType), 0, slCap)
-	flatSl = reflect.Append(flatSl, items...)
-
-	return flatSl
+	_ = "STUB: not implemented"
+	return *new(reflect.Value)
 }
 
 func addSliceItem(sl reflect.Value, depth int, collector func(item reflect.Value)) (c int) {
-	for i := 0; i < sl.Len(); i++ {
-		v := Elem(sl.Index(i))
-
-		if depth > 0 {
-			if v.Kind() != reflect.Slice {
-				panic(fmt.Sprintf("depth: %d, the value of index %d is not slice", depth, i))
-			}
-			c += addSliceItem(v, depth-1, collector)
-		} else {
-			collector(v)
-		}
-	}
-
-	if depth == 0 {
-		c = sl.Cap()
-	}
-	return c
+	_ = "STUB: not implemented"
+	return 0
 }

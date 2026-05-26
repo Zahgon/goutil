@@ -1,11 +1,7 @@
 package capp
 
 import (
-	"flag"
-	"strings"
-
 	"github.com/gookit/goutil/cflag"
-	"github.com/gookit/goutil/x/ccolor"
 )
 
 // CmdOptionFn for one command
@@ -27,98 +23,56 @@ type Cmd struct {
 }
 
 // WrapRunFunc wrap a no-params func as cmd run func
-func WrapRunFunc(fn func() error) func(c *Cmd) error {
-	return func(c *Cmd) error { return fn() }
-}
+func WrapRunFunc(fn func() error) func(c *Cmd) error { _ = "STUB: not implemented"; return nil }
 
 // NewCmd create a Cmd instance
 func NewCmd(name, desc string, runFunc ...func(c *Cmd) error) *Cmd {
-	fs := cflag.NewEmpty(func(c *cflag.CFlags) {
-		c.Desc = desc
-		c.FlagSet = flag.NewFlagSet(name, flag.ContinueOnError)
-	})
-
-	cmd := &Cmd{Name: name, Desc: desc, CFlags: fs}
-	if len(runFunc) > 0 {
-		cmd.Func = runFunc[0]
-	}
-	return cmd
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithConfigFn config cmd, alias of ConfigCmd()
-func (c *Cmd) WithConfigFn(fns ...CmdOptionFn) *Cmd {
-	return c.Config(fns...)
-}
+func (c *Cmd) WithConfigFn(fns ...CmdOptionFn) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // Config the cmd. eg: bing flags
-func (c *Cmd) Config(fns ...CmdOptionFn) *Cmd {
-	for _, fn := range fns {
-		if fn != nil {
-			fn(c)
-		}
-	}
-	return c
-}
+func (c *Cmd) Config(fns ...CmdOptionFn) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // QuickRun parse OS flags and run command, will auto handle error
-func (c *Cmd) QuickRun() { c.MustParse(nil) }
+func (c *Cmd) QuickRun() {
+	_ = "STUB: not implemented"
 
-// MustRun parse flags and run command. alias of MustParse()
-func (c *Cmd) MustRun(args []string) { c.MustParse(args) }
-
-// MustParse parse flags and run command, will auto handle error
-func (c *Cmd) MustParse(args []string) {
-	if err := c.Parse(args); err != nil {
-		ccolor.Redln("ERROR:", err)
-	}
+	// MustRun parse flags and run command. alias of MustParse()
+	return
 }
+
+func (c *Cmd) MustRun(args []string) {
+	_ = "STUB: not implemented"
+
+	// MustParse parse flags and run command, will auto handle error
+	return
+}
+
+func (c *Cmd) MustParse(args []string) { _ = "STUB: not implemented"; return }
 
 // Parse flags and run command func
 //
 // If args is nil, will parse os.Args
 func (c *Cmd) Parse(args []string) error {
+	_ = "STUB: not implemented"
 	// fix: cmd.xxRun not exec Cmd.Func
-	c.initCmd()
-	return c.CFlags.Parse(args)
+	return nil
 }
 
-func (c *Cmd) initCmd() {
-	if c.init {
-		return
-	}
-	c.init = true
+func (c *Cmd) initCmd() { _ = "STUB: not implemented"; return }
 
-	// attach handle func
-	if c.Func == nil {
-		return
-	}
+// attach handle func
 
-	// fix: init c.CFlags on not exist
-	if c.CFlags == nil {
-		c.CFlags = cflag.NewEmpty(func(cf *cflag.CFlags) {
-			cf.Desc = c.Desc
-			cf.FlagSet = flag.NewFlagSet(c.Name, flag.ContinueOnError)
-		})
-	}
+// fix: init c.CFlags on not exist
 
-	if len(c.Aliases) > 0 {
-		c.CFlags.Desc += " (alias: " + strings.Join(c.Aliases, ", ") + ")"
-	}
-	c.CFlags.Func = func(_ *cflag.CFlags) error {
-		return c.Func(c)
-	}
-}
-
-func (c *Cmd) getDesc() string {
-	if c.Desc != "" {
-		return c.Desc
-	}
-	return c.CFlags.Desc
-}
+func (c *Cmd) getDesc() string { _ = "STUB: not implemented"; return "" }
 
 // WithAliases set aliases for command
 func WithAliases(aliases ...string) CmdOptionFn {
-	return func(c *Cmd) {
-		c.Aliases = aliases
-	}
+	_ = "STUB: not implemented"
+	return *new(CmdOptionFn)
 }

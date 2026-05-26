@@ -1,10 +1,5 @@
 package strutil
 
-import (
-	"github.com/gookit/goutil/byteutil"
-	"github.com/gookit/goutil/x/encodes"
-)
-
 // some constant string chars
 const (
 	Numbers  = "0123456789"
@@ -21,27 +16,16 @@ const (
 )
 
 // RandomChars generate give length random chars at `a-z`
-func RandomChars(ln int) string {
-	return buildRandomString(AlphaBet, ln)
-}
+func RandomChars(ln int) string { _ = "STUB: not implemented"; return "" }
 
 // RandomCharsV2 generate give length random chars in `0-9a-z`
-func RandomCharsV2(ln int) string {
-	return buildRandomString(AlphaNum, ln)
-}
+func RandomCharsV2(ln int) string { _ = "STUB: not implemented"; return "" }
 
 // RandomCharsV3 generate give length random chars in `0-9a-zA-Z`
-func RandomCharsV3(ln int) string {
-	return buildRandomString(AlphaNum2, ln)
-}
+func RandomCharsV3(ln int) string { _ = "STUB: not implemented"; return "" }
 
 // RandWithTpl generate random string with give template
-func RandWithTpl(n int, letters string) string {
-	if len(letters) == 0 {
-		letters = AlphaNum2
-	}
-	return buildRandomString(letters, n)
-}
+func RandWithTpl(n int, letters string) string { _ = "STUB: not implemented"; return "" }
 
 // RandomString generate.
 //
@@ -49,12 +33,7 @@ func RandWithTpl(n int, letters string) string {
 //
 //	// this will give us a 44 byte, base64 encoded output
 //	token, err := RandomString(16) // eg: "I7S4yFZddRMxQoudLZZ-eg"
-func RandomString(length int) (string, error) {
-	b, err := RandomBytes(length)
-	return encodes.B64URL.EncodeToString(b), err
-}
+func RandomString(length int) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // RandomBytes generate
-func RandomBytes(length int) ([]byte, error) {
-	return byteutil.Random(length)
-}
+func RandomBytes(length int) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }

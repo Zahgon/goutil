@@ -2,10 +2,8 @@ package arrutil
 
 import (
 	"io"
-	"reflect"
 
 	"github.com/gookit/goutil/comdef"
-	"github.com/gookit/goutil/strutil"
 )
 
 // ArrFormatter struct
@@ -20,104 +18,46 @@ type ArrFormatter struct {
 }
 
 // NewFormatter instance
-func NewFormatter(arr any) *ArrFormatter {
-	f := &ArrFormatter{}
-	f.Src = arr
-	return f
-}
+func NewFormatter(arr any) *ArrFormatter { _ = "STUB: not implemented"; return nil }
 
 // FormatIndent array data to string.
-func FormatIndent(arr any, indent string) string {
-	return NewFormatter(arr).WithIndent(indent).Format()
-}
+func FormatIndent(arr any, indent string) string { _ = "STUB: not implemented"; return "" }
 
 // WithFn for config self
 func (f *ArrFormatter) WithFn(fn func(f *ArrFormatter)) *ArrFormatter {
-	fn(f)
-	return f
+	_ = "STUB: not implemented"
+
+	// WithIndent string
+	return nil
 }
 
-// WithIndent string
 func (f *ArrFormatter) WithIndent(indent string) *ArrFormatter {
-	f.Indent = indent
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // FormatTo to custom buffer
-func (f *ArrFormatter) FormatTo(w io.Writer) {
-	f.SetOutput(w)
-	f.doFormat()
-}
+func (f *ArrFormatter) FormatTo(w io.Writer) { _ = "STUB: not implemented"; return }
 
 // Format to string
 func (f *ArrFormatter) String() string {
-	return f.Format()
+	_ = "STUB: not implemented"
+
+	// Format to string
+	return ""
 }
 
-// Format to string
-func (f *ArrFormatter) Format() string {
-	f.doFormat()
-	return f.BsWriter().String()
-}
+func (f *ArrFormatter) Format() string { _ = "STUB: not implemented"; return "" }
 
 // Format to string
 //
 //goland:noinspection GoUnhandledErrorResult
-func (f *ArrFormatter) doFormat() {
-	if f.Src == nil {
-		return
-	}
+func (f *ArrFormatter) doFormat() { _ = "STUB: not implemented"; return }
 
-	rv, ok := f.Src.(reflect.Value)
-	if !ok {
-		rv = reflect.ValueOf(f.Src)
-	}
+// if f.AfterReset {
+// 	defer f.Reset()
+// }
 
-	rv = reflect.Indirect(rv)
-	if rv.Kind() != reflect.Slice && rv.Kind() != reflect.Array {
-		return
-	}
+// sb.Grow(arrLn * 4)
 
-	writer := f.BsWriter()
-	arrLn := rv.Len()
-	if arrLn == 0 {
-		writer.WriteString("[]")
-		return
-	}
-
-	// if f.AfterReset {
-	// 	defer f.Reset()
-	// }
-
-	// sb.Grow(arrLn * 4)
-	writer.WriteByte('[')
-
-	indentLn := len(f.Indent)
-	if indentLn > 0 {
-		writer.WriteByte('\n')
-	}
-
-	for i := 0; i < arrLn; i++ {
-		if indentLn > 0 {
-			writer.WriteString(f.Indent)
-		}
-		writer.WriteString(strutil.QuietString(rv.Index(i).Interface()))
-
-		if i < arrLn-1 {
-			writer.WriteByte(',')
-
-			// no indent, with space
-			if indentLn == 0 {
-				writer.WriteByte(' ')
-			}
-		}
-		if indentLn > 0 {
-			writer.WriteByte('\n')
-		}
-	}
-
-	if f.ClosePrefix != "" {
-		writer.WriteString(f.ClosePrefix)
-	}
-	writer.WriteByte(']')
-}
+// no indent, with space

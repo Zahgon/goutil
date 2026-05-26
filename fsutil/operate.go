@@ -1,60 +1,30 @@
 package fsutil
 
 import (
-	"archive/zip"
-	"fmt"
-	"io"
 	"io/fs"
 	"os"
-	"path/filepath"
-	"strings"
-
-	"github.com/gookit/goutil/x/basefn"
 )
 
 // Mkdir alias of os.MkdirAll()
-func Mkdir(dirPath string, perm fs.FileMode) error { return os.MkdirAll(dirPath, perm) }
+func Mkdir(dirPath string, perm fs.FileMode) error { _ = "STUB: not implemented"; return nil }
 
 // MkdirQuick with default permission 0755.
-func MkdirQuick(dirPath string) error { return EnsureDir(dirPath) }
+func MkdirQuick(dirPath string) error { _ = "STUB: not implemented"; return nil }
 
 // EnsureDir creates a directory if it doesn't exist
-func EnsureDir(path string) error {
-	if !DirExist(path) {
-		return os.MkdirAll(path, 0755)
-	}
-	return nil
-}
+func EnsureDir(path string) error { _ = "STUB: not implemented"; return nil }
 
 // MkDirs batch makes multi dirs at once
-func MkDirs(perm fs.FileMode, dirPaths ...string) error {
-	for _, dirPath := range dirPaths {
-		if err := os.MkdirAll(dirPath, perm); err != nil {
-			return err
-		}
-	}
-	return nil
-}
+func MkDirs(perm fs.FileMode, dirPaths ...string) error { _ = "STUB: not implemented"; return nil }
 
 // MkSubDirs batch makes multi sub-dirs at once
 func MkSubDirs(perm fs.FileMode, parentDir string, subDirs ...string) error {
-	for _, dirName := range subDirs {
-		dirPath := parentDir + "/" + dirName
-		if err := os.MkdirAll(dirPath, perm); err != nil {
-			return err
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // MkParentDir quickly create parent dir for a given path.
-func MkParentDir(fpath string) error {
-	dirPath := filepath.Dir(fpath)
-	if !IsDir(dirPath) {
-		return os.MkdirAll(dirPath, 0775)
-	}
-	return nil
-}
+func MkParentDir(fpath string) error { _ = "STUB: not implemented"; return nil }
 
 // ************************************************************
 //	options for open file
@@ -76,38 +46,18 @@ type OpenOptionFunc func(*OpenOption)
 // Defaults:
 //   - open flags: FsCWTFlags (override write)
 //   - file Perm: DefaultFilePerm
-func NewOpenOption(optFns ...OpenOptionFunc) *OpenOption {
-	opt := &OpenOption{
-		Flag: FsCWTFlags,
-		Perm: DefaultFilePerm,
-	}
-
-	for _, fn := range optFns {
-		fn(opt)
-	}
-	return opt
-}
+func NewOpenOption(optFns ...OpenOptionFunc) *OpenOption { _ = "STUB: not implemented"; return nil }
 
 // OpenOptOrNew create a new OpenOption instance if opt is nil
-func OpenOptOrNew(opt *OpenOption) *OpenOption {
-	if opt == nil {
-		return NewOpenOption()
-	}
-	return opt
-}
+func OpenOptOrNew(opt *OpenOption) *OpenOption { _ = "STUB: not implemented"; return nil }
 
 // WithFlag set file open flag
-func WithFlag(flag int) OpenOptionFunc {
-	return func(opt *OpenOption) {
-		opt.Flag = flag
-	}
-}
+func WithFlag(flag int) OpenOptionFunc { _ = "STUB: not implemented"; return *new(OpenOptionFunc) }
 
 // WithPerm set file perm
 func WithPerm(perm os.FileMode) OpenOptionFunc {
-	return func(opt *OpenOption) {
-		opt.Perm = perm
-	}
+	_ = "STUB: not implemented"
+	return *new(OpenOptionFunc)
 }
 
 // ************************************************************
@@ -129,16 +79,8 @@ const (
 //
 //	file, err := OpenFile("path/to/file.txt", FsCWFlags, 0666)
 func OpenFile(filePath string, flag int, perm os.FileMode) (*os.File, error) {
-	fileDir := filepath.Dir(filePath)
-	if err := os.MkdirAll(fileDir, DefaultDirPerm); err != nil {
-		return nil, err
-	}
-
-	file, err := os.OpenFile(filePath, flag, perm)
-	if err != nil {
-		return nil, err
-	}
-	return file, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MustOpenFile like os.OpenFile, but will auto create dir.
@@ -147,37 +89,32 @@ func OpenFile(filePath string, flag int, perm os.FileMode) (*os.File, error) {
 //
 //	file := MustOpenFile("path/to/file.txt", FsCWFlags, 0666)
 func MustOpenFile(filePath string, flag int, perm os.FileMode) *os.File {
-	file, err := OpenFile(filePath, flag, perm)
-	if err != nil {
-		panic(err)
-	}
-	return file
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // QuickOpenFile like os.OpenFile, open for append write. if not exists, will create it.
 //
 // Alias of OpenAppendFile()
 func QuickOpenFile(filepath string, fileFlag ...int) (*os.File, error) {
-	flag := basefn.FirstOr(fileFlag, FsCWAFlags)
-	return OpenFile(filepath, flag, DefaultFilePerm)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // OpenAppendFile like os.OpenFile, open for append write. if not exists, will create it.
 func OpenAppendFile(filepath string, filePerm ...os.FileMode) (*os.File, error) {
-	perm := basefn.FirstOr(filePerm, DefaultFilePerm)
-	return OpenFile(filepath, FsCWAFlags, perm)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // OpenTruncFile like os.OpenFile, open for override write. if not exists, will create it.
 func OpenTruncFile(filepath string, filePerm ...os.FileMode) (*os.File, error) {
-	perm := basefn.FirstOr(filePerm, DefaultFilePerm)
-	return OpenFile(filepath, FsCWTFlags, perm)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // OpenReadFile like os.OpenFile, open file for read contents
-func OpenReadFile(filepath string) (*os.File, error) {
-	return os.OpenFile(filepath, FsRFlags, OnlyReadFilePerm)
-}
+func OpenReadFile(filepath string) (*os.File, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // CreateFile create file if not exists
 //
@@ -185,25 +122,14 @@ func OpenReadFile(filepath string) (*os.File, error) {
 //
 //	CreateFile("path/to/file.txt", 0664, 0666)
 func CreateFile(fpath string, filePerm, dirPerm os.FileMode, fileFlag ...int) (*os.File, error) {
-	dirPath := filepath.Dir(fpath)
-	if !IsDir(dirPath) {
-		err := os.MkdirAll(dirPath, dirPerm)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	flag := basefn.FirstOr(fileFlag, FsCWAFlags)
-	return os.OpenFile(fpath, flag, filePerm)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MustCreateFile create file, will panic on error
 func MustCreateFile(filePath string, filePerm, dirPerm os.FileMode) *os.File {
-	file, err := CreateFile(filePath, filePerm, dirPerm)
-	if err != nil {
-		panic(err)
-	}
-	return file
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ************************************************************
@@ -219,66 +145,36 @@ var (
 )
 
 // Remove removes the named file or (empty) directory.
-func Remove(fPath string) error {
-	return os.Remove(fPath)
-}
+func Remove(fPath string) error { _ = "STUB: not implemented"; return nil }
 
 // MustRemove removes the named file or (empty) directory.
 // NOTICE: will panic on error
-func MustRemove(fPath string) {
-	if err := os.Remove(fPath); err != nil {
-		panic(err)
-	}
-}
+func MustRemove(fPath string) { _ = "STUB: not implemented"; return }
 
 // QuietRemove removes the named file or (empty) directory.
 //
 // NOTICE: will ignore error
-func QuietRemove(fPath string) { _ = os.Remove(fPath) }
+func QuietRemove(fPath string) { _ = "STUB: not implemented"; return }
 
 // SafeRemoveAll removes path and any children it contains. will ignore error
-func SafeRemoveAll(path string) {
-	_ = os.RemoveAll(path)
-}
+func SafeRemoveAll(path string) { _ = "STUB: not implemented"; return }
 
 // RmIfExist removes the named file or (empty) directory on existing.
-func RmIfExist(fPath string) error { return DeleteIfExist(fPath) }
+func RmIfExist(fPath string) error { _ = "STUB: not implemented"; return nil }
 
 // DeleteIfExist removes the named file or (empty) directory on existing.
-func DeleteIfExist(fPath string) error {
-	if PathExists(fPath) {
-		return os.Remove(fPath)
-	}
-	return nil
-}
+func DeleteIfExist(fPath string) error { _ = "STUB: not implemented"; return nil }
 
 // RmFileIfExist removes the named file on existing.
-func RmFileIfExist(fPath string) error { return DeleteIfFileExist(fPath) }
+func RmFileIfExist(fPath string) error { _ = "STUB: not implemented"; return nil }
 
 // DeleteIfFileExist removes the named file on existing.
-func DeleteIfFileExist(fPath string) error {
-	if IsFile(fPath) {
-		return os.Remove(fPath)
-	}
-	return nil
-}
+func DeleteIfFileExist(fPath string) error { _ = "STUB: not implemented"; return nil }
 
 // RemoveSub removes all sub files and dirs of dirPath, but not remove dirPath.
-func RemoveSub(dirPath string, fns ...FilterFunc) error {
-	return FindInDir(dirPath, func(fPath string, ent fs.DirEntry) error {
-		if ent.IsDir() {
-			if err := RemoveSub(fPath, fns...); err != nil {
-				return err
-			}
+func RemoveSub(dirPath string, fns ...FilterFunc) error { _ = "STUB: not implemented"; return nil }
 
-			// skip rm not empty subdir
-			if !IsEmptyDir(fPath) {
-				return nil
-			}
-		}
-		return os.Remove(fPath)
-	}, fns...)
-}
+// skip rm not empty subdir
 
 // ************************************************************
 //	other operates
@@ -286,52 +182,6 @@ func RemoveSub(dirPath string, fns ...FilterFunc) error {
 
 // Unzip a zip archive
 // from https://blog.csdn.net/wangshubo1989/article/details/71743374
-func Unzip(archive, targetDir string) (err error) {
-	reader, err := zip.OpenReader(archive)
-	if err != nil {
-		return err
-	}
+func Unzip(archive, targetDir string) (err error) { _ = "STUB: not implemented"; return nil }
 
-	if err = os.MkdirAll(targetDir, DefaultDirPerm); err != nil {
-		return
-	}
-
-	for _, file := range reader.File {
-		if strings.Contains(file.Name, "..") {
-			return fmt.Errorf("illegal file path in zip: %v", file.Name)
-		}
-
-		fullPath := filepath.Join(targetDir, file.Name)
-
-		if file.FileInfo().IsDir() {
-			err = os.MkdirAll(fullPath, file.Mode())
-			if err != nil {
-				return err
-			}
-			continue
-		}
-
-		fileReader, err := file.Open()
-		if err != nil {
-			return err
-		}
-
-		targetFile, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, file.Mode())
-		if err != nil {
-			_ = fileReader.Close()
-			return err
-		}
-
-		_, err = io.Copy(targetFile, fileReader)
-
-		// close all
-		_ = fileReader.Close()
-		targetFile.Close()
-
-		if err != nil {
-			return err
-		}
-	}
-
-	return
-}
+// close all

@@ -2,9 +2,6 @@ package cmdline
 
 import (
 	"strings"
-
-	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/strutil"
 )
 
 // LineBuilder build command line string.
@@ -14,54 +11,31 @@ type LineBuilder struct {
 }
 
 // NewBuilder create
-func NewBuilder(binFile string, args ...string) *LineBuilder {
-	b := &LineBuilder{}
-
-	if binFile != "" {
-		b.AddArg(binFile)
-	}
-
-	b.AddArray(args)
-	return b
-}
+func NewBuilder(binFile string, args ...string) *LineBuilder { _ = "STUB: not implemented"; return nil }
 
 // ResetGet value, will reset after get.
-func (b *LineBuilder) ResetGet() string {
-	defer b.Reset()
-	return b.String()
-}
+func (b *LineBuilder) ResetGet() string { _ = "STUB: not implemented"; return "" }
 
 // AddArg to builder
-func (b *LineBuilder) AddArg(arg string) {
-	_, _ = b.WriteString(arg)
-}
+func (b *LineBuilder) AddArg(arg string) { _ = "STUB: not implemented"; return }
 
 // AddArgs to builder
 func (b *LineBuilder) AddArgs(args ...string) {
-	b.AddArray(args)
+	_ = "STUB: not implemented"
+
+	// AddArray to builder
+	return
 }
 
-// AddArray to builder
-func (b *LineBuilder) AddArray(args []string) {
-	for _, arg := range args {
-		_, _ = b.WriteString(arg)
-	}
-}
+func (b *LineBuilder) AddArray(args []string) { _ = "STUB: not implemented"; return }
 
 // AddAny args to builder
-func (b *LineBuilder) AddAny(args ...any) {
-	for _, arg := range args {
-		_, _ = b.WriteString(strutil.SafeString(arg))
-	}
-}
+func (b *LineBuilder) AddAny(args ...any) { _ = "STUB: not implemented"; return }
 
 // WriteString arg string to the builder, will auto quote special string.
 // refer strconv.Quote()
 func (b *LineBuilder) WriteString(a string) (int, error) {
+	_ = "STUB: not implemented"
 	// add sep on not-first write.
-	if b.Len() != 0 {
-		_ = b.WriteByte(' ')
-	}
-
-	return b.Builder.WriteString(comfunc.ShellQuote(a))
+	return 0, nil
 }

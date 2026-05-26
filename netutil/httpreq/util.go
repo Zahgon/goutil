@@ -1,17 +1,9 @@
 package httpreq
 
 import (
-	"bytes"
-	"encoding/base64"
-	"encoding/json"
 	"io"
 	"net/http"
 	"net/url"
-	"strings"
-
-	"github.com/gookit/goutil/arrutil"
-	"github.com/gookit/goutil/netutil/httpctype"
-	"github.com/gookit/goutil/strutil"
 )
 
 // BasicAuthConf struct
@@ -21,131 +13,72 @@ type BasicAuthConf struct {
 }
 
 // IsValid value
-func (ba *BasicAuthConf) IsValid() bool { return ba.Password != "" && ba.Username != "" }
+func (ba *BasicAuthConf) IsValid() bool { _ = "STUB: not implemented"; return false }
 
 // Value build to auth header "Authorization".
-func (ba *BasicAuthConf) Value() string { return BuildBasicAuth(ba.Username, ba.Password) }
+func (ba *BasicAuthConf) Value() string { _ = "STUB: not implemented"; return "" }
 
 // String build to auth header "Authorization".
-func (ba *BasicAuthConf) String() string { return ba.Username + ":" + ba.Password }
+func (ba *BasicAuthConf) String() string { _ = "STUB: not implemented"; return "" }
 
 // IsOK check response status code is 200
-func IsOK(statusCode int) bool {
-	return statusCode == http.StatusOK
-}
+func IsOK(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsSuccessful check response status code is in 200-300
-func IsSuccessful(statusCode int) bool {
-	return statusCode >= http.StatusOK && statusCode < 300
-}
+func IsSuccessful(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsRedirect check response status code is in [301, 302, 303, 307]
-func IsRedirect(statusCode int) bool {
-	return statusCode == http.StatusMovedPermanently ||
-		statusCode == http.StatusFound ||
-		statusCode == http.StatusSeeOther ||
-		statusCode == http.StatusTemporaryRedirect
-}
+func IsRedirect(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsForbidden is this response forbidden(403)
-func IsForbidden(statusCode int) bool {
-	return statusCode == http.StatusForbidden
-}
+func IsForbidden(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsNotFound is this response not found(404)
-func IsNotFound(statusCode int) bool {
-	return statusCode == http.StatusNotFound
-}
+func IsNotFound(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsClientError check response is client error (400-500)
-func IsClientError(statusCode int) bool {
-	return statusCode >= http.StatusBadRequest && statusCode < http.StatusInternalServerError
-}
+func IsClientError(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsServerError check response is server error (500-600)
-func IsServerError(statusCode int) bool {
-	return statusCode >= http.StatusInternalServerError && statusCode <= 600
-}
+func IsServerError(statusCode int) bool { _ = "STUB: not implemented"; return false }
 
 // IsNoBodyMethod check
-func IsNoBodyMethod(method string) bool {
-	return method != "POST" && method != "PUT" && method != "PATCH"
-}
+func IsNoBodyMethod(method string) bool { _ = "STUB: not implemented"; return false }
 
 // IsValidMethod check method is valid
-func IsValidMethod(method string) bool {
-	method = strings.ToUpper(method)
-	return http.MethodGet == method ||
-		http.MethodPost == method ||
-		http.MethodPut == method ||
-		http.MethodPatch == method ||
-		http.MethodDelete == method ||
-		http.MethodConnect == method ||
-		http.MethodHead == method ||
-		http.MethodOptions == method ||
-		http.MethodTrace == method
-}
+func IsValidMethod(method string) bool { _ = "STUB: not implemented"; return false }
 
 // BuildBasicAuth returns the base64 encoded username:password for basic auth.
 // Then set to header "Authorization".
 //
 // copied from net/http.
-func BuildBasicAuth(username, password string) string {
-	auth := username + ":" + password
-	return "Basic " + base64.StdEncoding.EncodeToString([]byte(auth))
-}
+func BuildBasicAuth(username, password string) string { _ = "STUB: not implemented"; return "" }
 
 // AddHeaders adds the key, value pairs from the given http.Header to the
 // request. Values for existing keys are appended to the keys values.
-func AddHeaders(req *http.Request, header http.Header) {
-	for key, values := range header {
-		for _, value := range values {
-			req.Header.Add(key, value)
-		}
-	}
-}
+func AddHeaders(req *http.Request, header http.Header) { _ = "STUB: not implemented"; return }
 
 // SetHeaders sets the key, value pairs from the given http.Header to the
 // request. Values for existing keys are overwritten.
-func SetHeaders(req *http.Request, headers ...http.Header) {
-	for _, header := range headers {
-		for key, values := range header {
-			req.Header[key] = values
-		}
-	}
-}
+func SetHeaders(req *http.Request, headers ...http.Header) { _ = "STUB: not implemented"; return }
 
 // AddHeaderMap to request instance.
 func AddHeaderMap(req *http.Request, headerMap map[string]string) {
-	for k, v := range headerMap {
-		req.Header.Add(k, v)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetHeaderMap to request instance.
 func SetHeaderMap(req *http.Request, headerMap map[string]string) {
-	for k, v := range headerMap {
-		req.Header.Set(k, v)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // HeaderToStringMap convert
-func HeaderToStringMap(rh http.Header) map[string]string {
-	if len(rh) == 0 {
-		return nil
-	}
-
-	mp := make(map[string]string, len(rh))
-	for name, values := range rh {
-		mp[name] = strings.Join(values, "; ")
-	}
-	return mp
-}
+func HeaderToStringMap(rh http.Header) map[string]string { _ = "STUB: not implemented"; return nil }
 
 // MakeQuery make query string, convert data to url.Values
-func MakeQuery(data any) url.Values {
-	return ToQueryValues(data)
-}
+func MakeQuery(data any) url.Values { _ = "STUB: not implemented"; return *new(url.Values) }
 
 // ToQueryValues convert string-map or any-map to url.Values
 //
@@ -156,106 +89,32 @@ func MakeQuery(data any) url.Values {
 //   - map[string][]string
 //   - map[string]string
 //   - map[string]any
-func ToQueryValues(data any) url.Values {
-	uv := make(url.Values)
+func ToQueryValues(data any) url.Values { _ = "STUB: not implemented"; return *new(url.Values) }
 
-	switch typData := data.(type) {
-	// use url.Values directly if we have it
-	case url.Values:
-		return typData
-	case map[string][]string:
-		return typData
-	case []byte:
-		m, err := url.ParseQuery(string(typData))
-		if err != nil {
-			return uv
-		}
-		return m
-	case string:
-		m, err := url.ParseQuery(typData)
-		if err != nil {
-			return uv
-		}
-		return m
-	case map[string]string:
-		for k, v := range typData {
-			uv.Add(k, v)
-		}
-	case map[string]any:
-		for k, v := range typData {
-			uv.Add(k, strutil.QuietString(v))
-		}
-	}
-	return uv
-}
+// use url.Values directly if we have it
 
 // MergeURLValues merge url.Values by overwrite.
 //
 // values support: url.Values, map[string]string, map[string][]string
 func MergeURLValues(uv url.Values, values ...any) url.Values {
-	if uv == nil {
-		uv = make(url.Values)
-	}
-
-	for _, v := range values {
-		switch tv := v.(type) {
-		case url.Values:
-			for k, vs := range tv {
-				uv[k] = vs
-			}
-		case map[string]any:
-			for k, v := range tv {
-				uv[k] = arrutil.AnyToStrings(v)
-			}
-		case map[string]string:
-			for k, v := range tv {
-				uv[k] = []string{v}
-			}
-		case map[string][]string:
-			for k, vs := range tv {
-				uv[k] = vs
-			}
-		}
-	}
-
-	return uv
+	_ = "STUB: not implemented"
+	return *new(url.Values)
 }
 
 // AppendQueryToURL appends the given query string to the given url.
-func AppendQueryToURL(reqURL *url.URL, uv url.Values) error {
-	urlValues, err := url.ParseQuery(reqURL.RawQuery)
-	if err != nil {
-		return err
-	}
+func AppendQueryToURL(reqURL *url.URL, uv url.Values) error { _ = "STUB: not implemented"; return nil }
 
-	for key, values := range uv {
-		for _, value := range values {
-			urlValues.Add(key, value)
-		}
-	}
-
-	// url.Values format to a sorted "url encoded" string.
-	// e.g. "key=val&foo=bar"
-	reqURL.RawQuery = urlValues.Encode()
-	return nil
-}
+// url.Values format to a sorted "url encoded" string.
+// e.g. "key=val&foo=bar"
 
 // AppendQueryToURLString appends the given query data to the given url.
 func AppendQueryToURLString(urlStr string, query url.Values) string {
-	if len(query) == 0 {
-		return urlStr
-	}
-
-	if strings.ContainsRune(urlStr, '?') {
-		return urlStr + "&" + query.Encode()
-	}
-	return urlStr + "?" + query.Encode()
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // MakeBody make request body, convert data to io.Reader
-func MakeBody(data any, cType string) io.Reader {
-	return ToRequestBody(data, cType)
-}
+func MakeBody(data any, cType string) io.Reader { _ = "STUB: not implemented"; return *new(io.Reader) }
 
 // ToRequestBody make request body, convert data to io.Reader
 //
@@ -266,138 +125,28 @@ func MakeBody(data any, cType string) io.Reader {
 //   - map[string][]string/url.Values
 //   - io.Reader(eg: bytes.Buffer, strings.Reader)
 func ToRequestBody(data any, cType string) io.Reader {
-	if data == nil {
-		return nil // nobody
-	}
-
-	var reader io.Reader
-	kind := httpctype.ToKind(cType, "")
-
-	switch typVal := data.(type) {
-	case io.Reader:
-		reader = typVal
-	case []byte:
-		reader = bytes.NewBuffer(typVal)
-	case string:
-		reader = bytes.NewBufferString(typVal)
-	case url.Values:
-		reader = bytes.NewBufferString(typVal.Encode())
-	case map[string]string:
-		if kind == httpctype.KindJSON {
-			reader = toJSONReader(data)
-		} else {
-			reader = bytes.NewBufferString(ToQueryValues(typVal).Encode())
-		}
-	case map[string][]string:
-		if kind == httpctype.KindJSON {
-			reader = toJSONReader(data)
-		} else {
-			reader = bytes.NewBufferString(url.Values(typVal).Encode())
-		}
-	default:
-		// encode body data to json
-		if kind == httpctype.KindJSON {
-			reader = toJSONReader(data)
-		} else {
-			panic("httpreq: invalid data type for request body, content-type: " + cType)
-		}
-	}
-
-	return reader
+	_ = "STUB: not implemented"
+	return *new(io.Reader)
 }
 
-func toJSONReader(data any) io.Reader {
-	buf := &bytes.Buffer{}
-	enc := json.NewEncoder(buf)
-	// close escape  &, <, >  TO  \u0026, \u003c, \u003e
-	enc.SetEscapeHTML(false)
-	if err := enc.Encode(data); err != nil {
-		panic("encode data as json fail. error=" + err.Error())
-	}
-	return buf
-}
+// nobody
+
+// encode body data to json
+
+func toJSONReader(data any) io.Reader { _ = "STUB: not implemented"; return *new(io.Reader) }
+
+// close escape  &, <, >  TO  \u0026, \u003c, \u003e
 
 // HeaderToString convert http Header to string
-func HeaderToString(h http.Header) string {
-	var sb strings.Builder
-	for key, values := range h {
-		sb.WriteString(key)
-		sb.WriteString(": ")
-		sb.WriteString(strings.Join(values, ";"))
-		sb.WriteByte('\n')
-	}
-	return sb.String()
-}
+func HeaderToString(h http.Header) string { _ = "STUB: not implemented"; return "" }
 
 // RequestToString convert http Request to string
-func RequestToString(r *http.Request) string {
-	buf := &bytes.Buffer{}
-	buf.WriteString(r.Method)
-	buf.WriteByte(' ')
-	buf.WriteString(r.URL.String())
-	buf.WriteByte(' ')
-	buf.WriteString(r.Proto)
-	buf.WriteByte('\n')
-
-	for key, values := range r.Header {
-		buf.WriteString(key)
-		buf.WriteString(": ")
-		buf.WriteString(strings.Join(values, ";"))
-		buf.WriteByte('\n')
-	}
-
-	if r.Body != nil {
-		buf.WriteByte('\n')
-		_, _ = buf.ReadFrom(r.Body)
-	}
-	return buf.String()
-}
+func RequestToString(r *http.Request) string { _ = "STUB: not implemented"; return "" }
 
 // ResponseToString convert http Response to string
-func ResponseToString(w *http.Response) string {
-	if w == nil {
-		return ""
-	}
-
-	buf := &bytes.Buffer{}
-	buf.WriteString(w.Proto)
-	buf.WriteByte(' ')
-	buf.WriteString(w.Status)
-	buf.WriteByte('\n')
-
-	if len(w.Header) > 0 {
-		for key, values := range w.Header {
-			buf.WriteString(key)
-			buf.WriteString(": ")
-			buf.WriteString(strings.Join(values, ";"))
-			buf.WriteByte('\n')
-		}
-	}
-
-	if w.Body != nil {
-		buf.WriteByte('\n')
-		_, _ = buf.ReadFrom(w.Body)
-		_ = w.Body.Close()
-	}
-
-	return buf.String()
-}
+func ResponseToString(w *http.Response) string { _ = "STUB: not implemented"; return "" }
 
 // ParseAccept header to strings. referred from gin framework
 //
 // eg: acceptHeader = "application/json, text/plain, */*"
-func ParseAccept(acceptHeader string) []string {
-	if acceptHeader == "" {
-		return []string{}
-	}
-
-	parts := strings.Split(acceptHeader, ",")
-	outs := make([]string, 0, len(parts))
-
-	for _, part := range parts {
-		if part = strings.TrimSpace(strings.Split(part, ";")[0]); part != "" {
-			outs = append(outs, part)
-		}
-	}
-	return outs
-}
+func ParseAccept(acceptHeader string) []string { _ = "STUB: not implemented"; return nil }

@@ -2,14 +2,11 @@
 package dump
 
 import (
-	"bytes"
 	"fmt"
 	"io"
 	"os"
 	"reflect"
 	"time"
-
-	"github.com/gookit/goutil/x/ccolor"
 )
 
 // These flags define which print caller information
@@ -55,99 +52,81 @@ var (
 // Theme color code/tag map for dump
 type Theme map[string]string
 
-func (ct Theme) caller(s string) string  { return ct.wrap("caller", s) }
-func (ct Theme) field(s string) string   { return ct.wrap("field", s) }
-func (ct Theme) value(s string) string   { return ct.wrap("value", s) }
-func (ct Theme) msType(s string) string  { return ct.wrap("msType", s) }
-func (ct Theme) valTip(s string) string  { return ct.wrap("valTip", s) }
-func (ct Theme) string(s string) string  { return ct.wrap("string", s) }
-func (ct Theme) integer(s string) string { return ct.wrap("integer", s) }
+func (ct Theme) caller(s string) string  { _ = "STUB: not implemented"; return "" }
+func (ct Theme) field(s string) string   { _ = "STUB: not implemented"; return "" }
+func (ct Theme) value(s string) string   { _ = "STUB: not implemented"; return "" }
+func (ct Theme) msType(s string) string  { _ = "STUB: not implemented"; return "" }
+func (ct Theme) valTip(s string) string  { _ = "STUB: not implemented"; return "" }
+func (ct Theme) string(s string) string  { _ = "STUB: not implemented"; return "" }
+func (ct Theme) integer(s string) string { _ = "STUB: not implemented"; return "" }
 
 // wrap color tag.
-func (ct Theme) wrap(key string, s string) string {
-	if tag := ct[key]; tag != "" {
-		return ccolor.WrapTag(s, tag)
-	}
-	return s
-}
+func (ct Theme) wrap(key string, s string) string { _ = "STUB: not implemented"; return "" }
 
 // Std dumper
-func Std() *Dumper { return std }
+func Std() *Dumper {
+	_ = "STUB: not implemented"
 
-// Reset std dumper
-func Reset() { std = NewDumper(os.Stdout, 3) }
+	// Reset std dumper
+	return nil
+}
+
+func Reset() { _ = "STUB: not implemented"; return }
 
 // Config std dumper
-func Config(fns ...OptionFunc) { std.WithOptions(fns...) }
+func Config(fns ...OptionFunc) { _ = "STUB: not implemented"; return }
 
 // V like fmt.Println, but the output is clearer and more beautiful
 func V(vs ...any) {
-	std.Dump(vs...)
+	_ = "STUB: not implemented"
+
+	// P like fmt.Println, but the output is clearer and more beautiful
+	return
 }
 
-// P like fmt.Println, but the output is clearer and more beautiful
 func P(vs ...any) {
-	std.Print(vs...)
+	_ = "STUB: not implemented"
+
+	// Print like fmt.Println, but the output is clearer and more beautiful
+	return
 }
 
-// Print like fmt.Println, but the output is clearer and more beautiful
 func Print(vs ...any) {
-	std.Print(vs...)
+	_ = "STUB: not implemented"
+
+	// Println like fmt.Println, but the output is clearer and more beautiful
+	return
 }
 
-// Println like fmt.Println, but the output is clearer and more beautiful
 func Println(vs ...any) {
-	std.Println(vs...)
+	_ = "STUB: not implemented"
+
+	// Fprint like fmt.Println, but the output is clearer and more beautiful
+	return
 }
 
-// Fprint like fmt.Println, but the output is clearer and more beautiful
-func Fprint(w io.Writer, vs ...any) {
-	std.Fprint(w, vs...)
-}
+func Fprint(w io.Writer, vs ...any) { _ = "STUB: not implemented"; return }
 
 // Std2 dumper
-func Std2() *Dumper { return std2 }
+func Std2() *Dumper {
+	_ = "STUB: not implemented"
 
-// Reset2 reset std2 dumper
-func Reset2() {
-	std2 = NewWithOptions(func(opts *Options) {
-		opts.Output = os.Stdout
-		opts.ShowFlag = Fnopos
-	})
+	// Reset2 reset std2 dumper
+	return nil
 }
+
+func Reset2() { _ = "STUB: not implemented"; return }
 
 // Format like fmt.Println, but the output is clearer and more beautiful
-func Format(vs ...any) string {
-	w := &bytes.Buffer{}
-
-	std2.Fprint(w, vs...)
-	return w.String()
-}
+func Format(vs ...any) string { _ = "STUB: not implemented"; return "" }
 
 // NoLoc dump vars data, without location.
-func NoLoc(vs ...any) {
-	std2.Println(vs...)
-}
+func NoLoc(vs ...any) { _ = "STUB: not implemented"; return }
 
 // Clear dump clear data, without location.
-func Clear(vs ...any) {
-	std2.Println(vs...)
-}
+func Clear(vs ...any) { _ = "STUB: not implemented"; return }
 
 // is unexported field name on struct
-func isUnexported(fieldName string) bool {
-	return fieldName[0] < 'A' || fieldName[0] > 'Z'
-}
+func isUnexported(fieldName string) bool { _ = "STUB: not implemented"; return false }
 
-func isNilOrInvalid(v reflect.Value) bool {
-	if !v.IsValid() {
-		return true
-	}
-
-	switch v.Kind() {
-	case reflect.Chan, reflect.Func, reflect.Map, reflect.Pointer, reflect.UnsafePointer, reflect.Interface, reflect.Slice:
-		return v.IsNil()
-	default:
-		return false
-	}
-}
+func isNilOrInvalid(v reflect.Value) bool { _ = "STUB: not implemented"; return false }

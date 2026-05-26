@@ -2,8 +2,6 @@ package timex
 
 import (
 	"time"
-
-	"github.com/gookit/goutil/strutil"
 )
 
 // some common datetime templates
@@ -65,20 +63,6 @@ var charMap = map[byte][]byte{
 // ToLayout convert chars date template to Go date layout.
 //
 // template chars see timex.charMap
-func ToLayout(template string) string {
-	if template == "" {
-		return DefaultLayout
-	}
+func ToLayout(template string) string { _ = "STUB: not implemented"; return "" }
 
-	// layout eg: "2006-01-02 15:04:05"
-	bts := make([]byte, 0, 24)
-	for _, c := range strutil.ToBytes(template) {
-		if bs, ok := charMap[c]; ok {
-			bts = append(bts, bs...)
-		} else {
-			bts = append(bts, c)
-		}
-	}
-
-	return strutil.Byte2str(bts)
-}
+// layout eg: "2006-01-02 15:04:05"

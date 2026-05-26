@@ -2,53 +2,17 @@ package testutil
 
 import (
 	"os"
-	"strconv"
-	"strings"
-	"time"
 )
 
 // Env mocking
 
 // MockEnvValue will store old env value, set new val. will restore old value on end.
-func MockEnvValue(key, val string, fn func(nv string)) {
-	old := os.Getenv(key)
-	err := os.Setenv(key, val)
-	if err != nil {
-		panic(err)
-	}
+func MockEnvValue(key, val string, fn func(nv string)) { _ = "STUB: not implemented"; return }
 
-	fn(os.Getenv(key))
-
-	// if old is empty, unset key.
-	if old == "" {
-		err = os.Unsetenv(key)
-	} else {
-		err = os.Setenv(key, old)
-	}
-	if err != nil {
-		panic(err)
-	}
-}
+// if old is empty, unset key.
 
 // MockEnvValues will store old env value, set new val. will restore old value on end.
-func MockEnvValues(kvMap map[string]string, fn func()) {
-	backups := make(map[string]string, len(kvMap))
-
-	for key, val := range kvMap {
-		backups[key] = os.Getenv(key)
-		_ = os.Setenv(key, val)
-	}
-
-	fn()
-
-	for key := range kvMap {
-		if old := backups[key]; old == "" {
-			_ = os.Unsetenv(key)
-		} else {
-			_ = os.Setenv(key, old)
-		}
-	}
-}
+func MockEnvValues(kvMap map[string]string, fn func()) { _ = "STUB: not implemented"; return }
 
 // MockOsEnvByText by env multi line text string.
 // Will **CLEAR** all old ENV data, use given data map,
@@ -64,30 +28,7 @@ func MockEnvValues(kvMap map[string]string, fn func()) {
 //	`, func() {
 //			// do something ...
 //	})
-func MockOsEnvByText(envText string, fn func()) {
-	ss := strings.Split(envText, "\n")
-	mp := make(map[string]string, len(ss))
-
-	for _, line := range ss {
-		if line = strings.TrimSpace(line); line == "" {
-			continue
-		}
-		if line[0] == '#' || strings.HasPrefix(line, "//") {
-			continue
-		}
-
-		nodes := strings.SplitN(line, "=", 2)
-		envKey := strings.TrimSpace(nodes[0])
-
-		if len(nodes) < 2 {
-			mp[envKey] = ""
-		} else {
-			mp[envKey] = strings.TrimSpace(nodes[1])
-		}
-	}
-
-	MockCleanOsEnv(mp, fn)
-}
+func MockOsEnvByText(envText string, fn func()) { _ = "STUB: not implemented"; return }
 
 var envGroupSet = make(map[string]map[string]string)
 
@@ -101,27 +42,12 @@ var envGroupSet = make(map[string]map[string]string)
 //		"APP_DEBUG":   "true",
 //	})
 //	defer testutil.RemoveTmpEnvs(tmpKey)
-func SetOsEnvs(mp map[string]string) string {
-	timeStr := strconv.FormatInt(time.Now().UnixMicro(), 32)
-	tmpKey := "g_" + timeStr
-	envGroupSet[tmpKey] = mp
-
-	for key, val := range mp {
-		_ = os.Setenv(key, val)
-	}
-	return tmpKey
-}
+func SetOsEnvs(mp map[string]string) string { _ = "STUB: not implemented"; return "" }
 
 // RemoveTmpEnvs remove test set envs by SetOsEnvs
-func RemoveTmpEnvs(tmpKey string) {
-	if mp, ok := envGroupSet[tmpKey]; ok {
-		for key := range mp {
-			_ = os.Unsetenv(key)
-		}
-		// delete group key
-		delete(envGroupSet, tmpKey)
-	}
-}
+func RemoveTmpEnvs(tmpKey string) { _ = "STUB: not implemented"; return }
+
+// delete group key
 
 // backup os ENV
 var envBak = os.Environ()
@@ -133,43 +59,24 @@ var envBak = os.Environ()
 //	testutil.ClearOSEnv()
 //	defer testutil.RevertOSEnv()
 //	// do something ...
-func ClearOSEnv() { os.Clearenv() }
+func ClearOSEnv() {
+	_ = "STUB: not implemented"
 
-// RevertOSEnv info
-func RevertOSEnv() {
-	os.Clearenv()
-	for _, str := range envBak {
-		nodes := strings.SplitN(str, "=", 2)
-		_ = os.Setenv(nodes[0], nodes[1])
-	}
+	// RevertOSEnv info
+	return
 }
+
+func RevertOSEnv() { _ = "STUB: not implemented"; return }
 
 // RunOnCleanEnv will CLEAR all old ENV, then run given func.
 // will RECOVER old ENV after fn run.
-func RunOnCleanEnv(runFn func()) {
-	os.Clearenv()
-	runFn()
-	RevertOSEnv()
-}
+func RunOnCleanEnv(runFn func()) { _ = "STUB: not implemented"; return }
 
 // MockOsEnv by input map data. alias of MockCleanOsEnv
-func MockOsEnv(mp map[string]string, fn func()) { MockCleanOsEnv(mp, fn) }
+func MockOsEnv(mp map[string]string, fn func()) { _ = "STUB: not implemented"; return }
 
 // MockCleanOsEnv by input env map data.
 //
 // will CLEAR all old ENV data, use given a data map.
 // will RECOVER old ENV after fn run.
-func MockCleanOsEnv(mp map[string]string, fn func()) {
-	os.Clearenv()
-	for key, val := range mp {
-		_ = os.Setenv(key, val)
-	}
-
-	fn()
-
-	os.Clearenv()
-	for _, str := range envBak {
-		nodes := strings.SplitN(str, "=", 2)
-		_ = os.Setenv(nodes[0], nodes[1])
-	}
-}
+func MockCleanOsEnv(mp map[string]string, fn func()) { _ = "STUB: not implemented"; return }

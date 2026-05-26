@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/gookit/goutil/cliutil"
-	"github.com/gookit/goutil/dump"
 )
 
 var opts1 = struct {
@@ -37,8 +36,4 @@ func main() {
 	handleFunc1()
 }
 
-func handleFunc1() {
-	cliutil.Infoln("after parse, do something")
-
-	dump.P(opts1)
-}
+func handleFunc1() { _ = "STUB: not implemented"; return }

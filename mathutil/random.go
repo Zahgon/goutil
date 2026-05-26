@@ -1,10 +1,5 @@
 package mathutil
 
-import (
-	"math/rand"
-	"time"
-)
-
 // RandomInt return a random int at the [min, max)
 //
 // Usage:
@@ -12,18 +7,13 @@ import (
 //	RandomInt(10, 99)
 //	RandomInt(100, 999)
 //	RandomInt(1000, 9999)
-func RandomInt(min, max int) int {
-	rr := rand.New(rand.NewSource(time.Now().UnixNano()))
-	return min + rr.Intn(max-min)
-}
+func RandomInt(min, max int) int { _ = "STUB: not implemented"; return 0 }
 
 // RandInt alias of RandomInt()
-func RandInt(min, max int) int { return RandomInt(min, max) }
+func RandInt(min, max int) int { _ = "STUB: not implemented"; return 0 }
 
 // RandIntWithSeed alias of RandomIntWithSeed()
-func RandIntWithSeed(min, max int, seed int64) int {
-	return RandomIntWithSeed(min, max, seed)
-}
+func RandIntWithSeed(min, max int, seed int64) int { _ = "STUB: not implemented"; return 0 }
 
 // RandomIntWithSeed return a random int at the [min, max)
 //
@@ -31,7 +21,4 @@ func RandIntWithSeed(min, max int, seed int64) int {
 //
 //	seed := time.Now().UnixNano()
 //	RandomIntWithSeed(1000, 9999, seed)
-func RandomIntWithSeed(min, max int, seed int64) int {
-	rr := rand.New(rand.NewSource(seed))
-	return min + rr.Intn(max-min)
-}
+func RandomIntWithSeed(min, max int, seed int64) int { _ = "STUB: not implemented"; return 0 }

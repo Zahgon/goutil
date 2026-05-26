@@ -1,7 +1,6 @@
 package stdio
 
 import (
-	"fmt"
 	"io"
 )
 
@@ -11,43 +10,33 @@ type WriteWrapper struct {
 }
 
 // WrapW instance
-func WrapW(w io.Writer) *WriteWrapper {
-	return &WriteWrapper{Out: w}
-}
+func WrapW(w io.Writer) *WriteWrapper { _ = "STUB: not implemented"; return nil }
 
 // NewWriteWrapper instance
-func NewWriteWrapper(w io.Writer) *WriteWrapper {
-	return &WriteWrapper{Out: w}
-}
+func NewWriteWrapper(w io.Writer) *WriteWrapper { _ = "STUB: not implemented"; return nil }
 
 // Write bytes data
 func (w *WriteWrapper) Write(p []byte) (n int, err error) {
-	return w.Out.Write(p)
+	_ = "STUB: not implemented"
+	return 0,
+
+		// Writef data to output
+		nil
 }
 
-// Writef data to output
 func (w *WriteWrapper) Writef(tpl string, vs ...any) (n int, err error) {
-	return fmt.Fprintf(w.Out, tpl, vs...)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // WriteByte data
-func (w *WriteWrapper) WriteByte(c byte) error {
-	_, err := w.Out.Write([]byte{c})
-	return err
-}
+func (w *WriteWrapper) WriteByte(c byte) error { _ = "STUB: not implemented"; return nil }
 
 // WriteString data
 func (w *WriteWrapper) WriteString(s string) (n int, err error) {
-	if sw, ok := w.Out.(io.StringWriter); ok {
-		return sw.WriteString(s)
-	}
-	return w.Out.Write([]byte(s))
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // String get write data string
-func (w *WriteWrapper) String() string {
-	if sw, ok := w.Out.(fmt.Stringer); ok {
-		return sw.String()
-	}
-	return ""
-}
+func (w *WriteWrapper) String() string { _ = "STUB: not implemented"; return "" }

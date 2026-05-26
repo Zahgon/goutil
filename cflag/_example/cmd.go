@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/gookit/goutil/cflag"
-	"github.com/gookit/goutil/cliutil"
 )
 
 var opts = struct {
@@ -37,21 +36,4 @@ func main() {
 	c.MustParse(os.Args[1:])
 }
 
-func handleFunc(c *cflag.CFlags) error {
-	cliutil.Magentaln("hello, this is command:", c.Name())
-	cliutil.Infoln("after parse, do something ...")
-
-	cliutil.Yellowln("option values:")
-	cliutil.Infoln("opts.age =", opts.age)
-	cliutil.Infoln("opts.name =", opts.name)
-	cliutil.Infoln("opts.str1 =", opts.str1)
-	cliutil.Infoln("opts.lOpt =", opts.lOpt)
-
-	cliutil.Yellowln("argument values:")
-	cliutil.Infoln("arg1 =", c.Arg("arg1").String())
-	cliutil.Infoln("arg2 =", c.Arg("arg2").String())
-
-	cliutil.Infoln("\nremain args =", c.RemainArgs())
-
-	return nil
-}
+func handleFunc(c *cflag.CFlags) error { _ = "STUB: not implemented"; return nil }

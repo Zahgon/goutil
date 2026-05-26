@@ -29,11 +29,4 @@ func main() {
 	otherFunc()
 }
 
-func otherFunc() {
-	dump.P(234, int64(56))
-	dump.P("abc", "def")
-	dump.P([]string{"ab", "cd"})
-	dump.P(
-		[]any{"ab", 234, []int{1, 3}},
-	)
-}
+func otherFunc() { _ = "STUB: not implemented"; return }

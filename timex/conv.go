@@ -1,54 +1,19 @@
 package timex
 
 import (
-	"fmt"
-	"strings"
 	"time"
-
-	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/strutil"
 )
 
 // Elapsed calc elapsed time from start time to end time.
-func Elapsed(start, end time.Time) string {
-	dur := end.Sub(start)
-
-	switch {
-	case dur > time.Hour:
-		return fmt.Sprintf("%.2fhrs", dur.Hours())
-	case dur > time.Minute:
-		return fmt.Sprintf("%.2fmins", dur.Minutes())
-	case dur > time.Second:
-		return fmt.Sprintf("%.3fs", dur.Seconds())
-	case dur > time.Millisecond:
-		return fmt.Sprintf("%.2fms", float64(dur.Nanoseconds())/1e6)
-	default:
-		return fmt.Sprintf("%.2fµs", float64(dur.Nanoseconds())/1e3)
-	}
-}
+func Elapsed(start, end time.Time) string { _ = "STUB: not implemented"; return "" }
 
 // ElapsedNow calc elapsed time from start time to now.
-func ElapsedNow(start time.Time) string {
-	return Elapsed(start, time.Now())
-}
+func ElapsedNow(start time.Time) string { _ = "STUB: not implemented"; return "" }
 
 // FormatDuration Formatting time consumption is clock format. 格式化时间消耗为时钟格式
 //
 // eg: 90 * time.Second => "01:30"
-func FormatDuration(d time.Duration) string {
-	seconds := int(d.Seconds())
-	if seconds < 0 {
-		seconds = 0
-	}
-	hours := seconds / 3600
-	minutes := (seconds % 3600) / 60
-	secs := seconds % 60
-
-	if hours > 0 {
-		return fmt.Sprintf("%02d:%02d:%02d", hours, minutes, secs)
-	}
-	return fmt.Sprintf("%02d:%02d", minutes, secs)
-}
+func FormatDuration(d time.Duration) string { _ = "STUB: not implemented"; return "" }
 
 //
 // -------- parse time diff to string --------
@@ -87,84 +52,63 @@ var TimeMessages = []TimeMessage{
 // FromNow format time from now, returns like: 1 hour ago, 2 days ago
 //
 // refer: https://gist.github.com/davidrleonard/259fe449b1ec13bf7d87cde567ca0fde
-func FromNow(t time.Time) string {
-	return FromNowWith(t, TimeMessages)
-}
+func FromNow(t time.Time) string { _ = "STUB: not implemented"; return "" }
 
 // FromNowWith format time from now with custom TimeMessage list
-func FromNowWith(u time.Time, tms []TimeMessage) string {
-	return HowLongAgo2(int64(time.Since(u).Seconds()), tms)
-}
+func FromNowWith(u time.Time, tms []TimeMessage) string { _ = "STUB: not implemented"; return "" }
 
 // HowLongAgo format diff time seconds to string. alias of HowLongAgo2()
-func HowLongAgo(diffSec int64) string {
-	return HowLongAgo2(diffSec, TimeMessages)
-}
+func HowLongAgo(diffSec int64) string { _ = "STUB: not implemented"; return "" }
 
 // HowLongAgo2 format diff time seconds with custom TimeMessage list
-func HowLongAgo2(diffSec int64, tms []TimeMessage) string {
-	length := len(tms)
-	diffInt := int(diffSec)
+func HowLongAgo2(diffSec int64, tms []TimeMessage) string { _ = "STUB: not implemented"; return "" }
 
-	var msg string
-	var secs []int
-	for i, item := range tms {
-		msg, secs = item.Message, item.Seconds
-
-		// match success: is last elem or diffSec <= secs[0]
-		if i+1 == length || diffInt <= secs[0] {
-			break
-		}
-	}
-
-	if len(secs) == 1 {
-		return msg
-	}
-	return fmt.Sprintf(msg, int64(diffInt/secs[1]))
-}
+// match success: is last elem or diffSec <= secs[0]
 
 //
 // -------- parse string to time --------
 //
 
 // ToTime parse a datetime string. alias of strutil.ToTime()
-func ToTime(s string, layouts ...string) (time.Time, error) { return strutil.ToTime(s, layouts...) }
+func ToTime(s string, layouts ...string) (time.Time, error) {
+	_ = "STUB: not implemented"
+	return *new(time.Time), nil
+}
 
 // ToDur parse a duration string. alias of ToDuration()
-func ToDur(s string) (time.Duration, error) { return ToDuration(s) }
+func ToDur(s string) (time.Duration, error) {
+	_ = "STUB: not implemented"
+	return *
 
-// ParseDuration parse a duration string. alias of ToDuration()
-func ParseDuration(s string) (time.Duration, error) { return comfunc.ToDuration(s) }
+	// ParseDuration parse a duration string. alias of ToDuration()
+	new(time.Duration), nil
+}
+
+func ParseDuration(s string) (time.Duration, error) {
+	_ = "STUB: not implemented"
+	return *new(time.Duration), nil
+}
 
 // ToDuration parses a duration string. such as "300ms", "-1.5h" or "2h45m".
 // Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 //
 // it like time.ParseDuration, but supports more unit string. eg: "1d", "2w"
-func ToDuration(s string) (time.Duration, error) { return comfunc.ToDuration(s) }
+func ToDuration(s string) (time.Duration, error) {
+	_ = "STUB: not implemented"
+	return *new(time.Duration), nil
+}
 
 // TryToTime parse a date string or duration string to time.Time.
 //
 // if s is empty, return zero time.
 func TryToTime(s string, bt time.Time) (time.Time, error) {
-	if s == "" {
-		return ZeroTime, nil
-	}
-	if s == "now" {
-		return time.Now(), nil
-	}
-
-	// if s is a duration string, add it to bt(base time)
-	if IsDuration(s) {
-		dur, err := ToDuration(s)
-		if err != nil {
-			return ZeroTime, err
-		}
-		return bt.Add(dur), nil
-	}
-
-	// as a date string, parse it to time.Time
-	return ToTime(s)
+	_ = "STUB: not implemented"
+	return *new(time.Time), nil
 }
+
+// if s is a duration string, add it to bt(base time)
+
+// as a date string, parse it to time.Time
 
 //
 // -------- parse string to time range --------
@@ -189,20 +133,7 @@ type ParseRangeOpt struct {
 	KeywordFn func(string) (time.Time, time.Time, error)
 }
 
-func ensureOpt(opt *ParseRangeOpt) *ParseRangeOpt {
-	if opt == nil {
-		opt = &ParseRangeOpt{BaseTime: time.Now(), SepChar: '~'}
-	} else {
-		if opt.BaseTime.IsZero() {
-			opt.BaseTime = time.Now()
-		}
-		if opt.SepChar == 0 {
-			opt.SepChar = '~'
-		}
-	}
-
-	return opt
-}
+func ensureOpt(opt *ParseRangeOpt) *ParseRangeOpt { _ = "STUB: not implemented"; return nil }
 
 // ParseRange parse time range expression string to time.Time range.
 //
@@ -230,117 +161,18 @@ func ensureOpt(opt *ParseRangeOpt) *ParseRangeOpt {
 //	}
 //	fmt.Println(start, end)
 func ParseRange(expr string, opt *ParseRangeOpt) (start, end time.Time, err error) {
-	opt = ensureOpt(opt)
-	expr = strings.TrimSpace(expr)
-	if expr == "" {
-		err = fmt.Errorf("invalid time range expr %q", expr)
-		return
-	}
-
-	// parse time range. eg: "5h~1h"
-	if strings.IndexByte(expr, opt.SepChar) > -1 {
-		s1, s2 := strutil.TrimCut(expr, string(opt.SepChar))
-		if s1 == "" && s2 == "" {
-			err = fmt.Errorf("invalid time range expr: %s", expr)
-			return
-		}
-
-		if s1 != "" {
-			start, err = TryToTime(s1, opt.BaseTime)
-			if err != nil {
-				return
-			}
-		}
-
-		if s2 != "" {
-			end, err = TryToTime(s2, opt.BaseTime)
-			// auto sort range time
-			if opt.AutoSort && err == nil {
-				if !start.IsZero() && start.After(end) {
-					start, end = end, start
-				}
-			}
-		}
-
-		return
-	}
-
-	// single time. eg: "5h", "1h", "-1h"
-	if IsDuration(expr) {
-		tt, err1 := TryToTime(expr, opt.BaseTime)
-		if err1 != nil {
-			err = err1
-			return
-		}
-
-		if opt.OneAsEnd {
-			end = tt
-		} else {
-			start = tt
-		}
-		return
-	}
-
-	// with compare operator. eg: "<1h", ">1h"
-	if expr[0] == '<' || expr[0] == '>' {
-		tt, err1 := TryToTime(strings.Trim(expr[1:], " ="), opt.BaseTime)
-		if err1 != nil {
-			err = err1
-			return
-		}
-
-		if expr[0] == '<' {
-			end = tt
-		} else {
-			start = tt
-		}
-		return
-	}
-
-	// parse keyword time string
-	switch expr {
-	case "0":
-		if opt.OneAsEnd {
-			end = opt.BaseTime
-		} else {
-			start = opt.BaseTime
-		}
-	case "now":
-		if opt.OneAsEnd {
-			end = time.Now()
-		} else {
-			start = time.Now()
-		}
-	case "today":
-		start = DayStart(opt.BaseTime)
-		end = DayEnd(opt.BaseTime)
-	case "yesterday":
-		yd := opt.BaseTime.AddDate(0, 0, -1)
-		start = DayStart(yd)
-		end = DayEnd(yd)
-	case "tomorrow":
-		td := opt.BaseTime.AddDate(0, 0, 1)
-		start = DayStart(td)
-		end = DayEnd(td)
-	default:
-		// single datetime. eg: "2019-01-01"
-		tt, err1 := TryToTime(expr, opt.BaseTime)
-		if err1 != nil {
-			if opt.KeywordFn == nil {
-				err = fmt.Errorf("invalid keyword time string: %s", expr)
-				return
-			}
-
-			start, end, err = opt.KeywordFn(expr)
-			return
-		}
-
-		if opt.OneAsEnd {
-			end = tt
-		} else {
-			start = tt
-		}
-	}
-
-	return
+	_ = "STUB: not implemented"
+	return *new(time.Time), *new(time.Time), nil
 }
+
+// parse time range. eg: "5h~1h"
+
+// auto sort range time
+
+// single time. eg: "5h", "1h", "-1h"
+
+// with compare operator. eg: "<1h", ">1h"
+
+// parse keyword time string
+
+// single datetime. eg: "2019-01-01"

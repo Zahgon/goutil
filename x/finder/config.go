@@ -1,13 +1,5 @@
 package finder
 
-import (
-	"fmt"
-	"strings"
-
-	"github.com/gookit/goutil/errorx"
-	"github.com/gookit/goutil/strutil"
-)
-
 // commonly dot file and dirs
 var (
 	CommonlyDotDirs  = []string{".git", ".idea", ".vscode", ".svn", ".hg"}
@@ -18,16 +10,7 @@ var (
 type FindFlag uint8
 
 // String get string name
-func (f FindFlag) String() string {
-	switch f {
-	case FlagDir:
-		return "dir"
-	case FlagBoth:
-		return "both"
-	default:
-		return "file"
-	}
-}
+func (f FindFlag) String() string { _ = "STUB: not implemented"; return "" }
 
 // flags for find result.
 const (
@@ -37,16 +20,7 @@ const (
 )
 
 // ToFlag convert flag string to FindFlag
-func ToFlag(s string) FindFlag {
-	switch strings.ToLower(s) {
-	case "dirs", "dir", "d":
-		return FlagDir
-	case "both", "b":
-		return FlagBoth
-	default:
-		return FlagFile
-	}
-}
+func ToFlag(s string) FindFlag { _ = "STUB: not implemented"; return *new(FindFlag) }
 
 // Config for finder
 type Config struct {
@@ -110,20 +84,12 @@ type Config struct {
 }
 
 // NewConfig create a new Config
-func NewConfig(dirs ...string) *Config {
-	return &Config{
-		ScanDirs:  dirs,
-		FindFlags: FlagFile,
-		// with default setting.
-		ExcludeDotDir: true,
-		Concurrency:   1,
-	}
-}
+func NewConfig(dirs ...string) *Config { _ = "STUB: not implemented"; return nil }
+
+// with default setting.
 
 // NewEmptyConfig create a new Config
-func NewEmptyConfig() *Config {
-	return &Config{FindFlags: FlagFile}
-}
+func NewEmptyConfig() *Config { _ = "STUB: not implemented"; return nil }
 
 // LoadRules load rules and parse to config
 //
@@ -139,165 +105,45 @@ func NewEmptyConfig() *Config {
 //	ext:.go,.yaml
 //	name:*_test.go,go.mod
 func (c *Config) LoadRules(addOrExclude bool, rules []string) error {
-	es := errorx.Errors{}
-	for i, rule := range rules {
-		if !strings.Contains(rule, ":") {
-			es = append(es, fmt.Errorf("invalid rule#%d: %s", i, rule))
-			break
-		}
-
-		name, pattern := strutil.TrimCut(rule, ":")
-		if name == "" || pattern == "" {
-			es = append(es, fmt.Errorf("invalid rule#%d: %s", i, rule))
-			break
-		}
-
-		patterns := strutil.Split(pattern, ",")
-		switch name {
-		case "ext", "exts": // ext:.go,.yaml
-			if addOrExclude {
-				c.IncludeExts = append(c.IncludeExts, patterns...)
-			} else {
-				c.ExcludeExts = append(c.ExcludeExts, patterns...)
-			}
-		case "name", "names": // names:*_test.go,go.mod
-			if addOrExclude {
-				c.IncludeNames = append(c.IncludeNames, patterns...)
-			} else {
-				c.ExcludeNames = append(c.ExcludeNames, patterns...)
-			}
-		case "file", "files":
-			if addOrExclude {
-				c.IncludeFiles = append(c.IncludeFiles, patterns...)
-			} else {
-				c.ExcludeFiles = append(c.ExcludeFiles, patterns...)
-			}
-		case "path", "paths":
-			if addOrExclude {
-				c.IncludePaths = append(c.IncludePaths, patterns...)
-			} else {
-				c.ExcludePaths = append(c.ExcludePaths, patterns...)
-			}
-		case "dir", "dirs":
-			if addOrExclude {
-				c.IncludeDirs = append(c.IncludeDirs, patterns...)
-			} else {
-				c.ExcludeDirs = append(c.ExcludeDirs, patterns...)
-			}
-		case "size": // size:>=1M,<=10M
-			if addOrExclude {
-				for _, expr := range patterns {
-					c.FileMatchers = append(c.FileMatchers, HumanSize(expr))
-				}
-			} else {
-				for _, expr := range patterns {
-					c.FileExMatchers = append(c.FileExMatchers, HumanSize(expr))
-				}
-			}
-		case "time", "mtime": // mtime:>=1d,<=10d
-			if addOrExclude {
-				for _, expr := range patterns {
-					c.FileMatchers = append(c.FileMatchers, HumanModTime(expr))
-				}
-			} else {
-				for _, expr := range patterns {
-					c.FileExMatchers = append(c.FileExMatchers, HumanModTime(expr))
-				}
-			}
-		}
-	}
-
-	return es.ErrorOrNil()
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// ext:.go,.yaml
+
+// names:*_test.go,go.mod
+
+// size:>=1M,<=10M
+
+// mtime:>=1d,<=10d
 
 // NewFinder create a new Finder by config
-func (c *Config) NewFinder() *Finder {
-	return NewWithConfig(c.Init())
-}
+func (c *Config) NewFinder() *Finder { _ = "STUB: not implemented"; return nil }
 
 // Init build matchers by config and append to Matchers.
-func (c *Config) Init() *Config {
-	if c.init {
-		return c
-	}
-	c.init = true
-	if c.Concurrency < 1 {
-		c.Concurrency = 1
-	}
+func (c *Config) Init() *Config { _ = "STUB: not implemented"; return nil }
 
-	// generic matchers
-	if len(c.IncludeNames) > 0 {
-		c.Matchers = append(c.Matchers, MatchNames(c.IncludeNames))
-	}
+// generic matchers
 
-	if len(c.IncludePaths) > 0 {
-		c.Matchers = append(c.Matchers, MatchPaths(c.IncludePaths))
-	}
+// dir matchers
 
-	if len(c.ExcludePaths) > 0 {
-		c.ExMatchers = append(c.ExMatchers, MatchPaths(c.ExcludePaths))
-	}
-
-	if len(c.ExcludeNames) > 0 {
-		c.ExMatchers = append(c.ExMatchers, MatchNames(c.ExcludeNames))
-	}
-
-	// dir matchers
-	if len(c.IncludeDirs) > 0 {
-		c.DirMatchers = append(c.DirMatchers, MatchNames(c.IncludeDirs))
-	}
-
-	if len(c.ExcludeDirs) > 0 {
-		c.DirExMatchers = append(c.DirExMatchers, MatchNames(c.ExcludeDirs))
-	}
-
-	// file matchers
-	if len(c.IncludeExts) > 0 {
-		c.FileMatchers = append(c.FileMatchers, MatchExts(c.IncludeExts))
-	}
-
-	if len(c.IncludeFiles) > 0 {
-		c.FileMatchers = append(c.FileMatchers, MatchNames(c.IncludeFiles))
-	}
-
-	if len(c.ExcludeExts) > 0 {
-		c.FileExMatchers = append(c.FileExMatchers, MatchExts(c.ExcludeExts))
-	}
-
-	if len(c.ExcludeFiles) > 0 {
-		c.FileExMatchers = append(c.FileExMatchers, MatchNames(c.ExcludeFiles))
-	}
-
-	return c
-}
+// file matchers
 
 //
 // --------- config finder by rules ---------
 //
 
 // IncludeRule include rules for finder
-func (f *Finder) IncludeRule(rules ...string) *Finder {
-	f.err = f.c.LoadRules(true, rules)
-	return f
-}
+func (f *Finder) IncludeRule(rules ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // IncludeRules include rules for finder
-func (f *Finder) IncludeRules(rules []string) *Finder {
-	f.err = f.c.LoadRules(true, rules)
-	return f
-}
+func (f *Finder) IncludeRules(rules []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeRule exclude rules for finder
-func (f *Finder) ExcludeRule(rules ...string) *Finder {
-	f.err = f.c.LoadRules(false, rules)
-	return f
-}
+func (f *Finder) ExcludeRule(rules ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeRules exclude rules for finder
-func (f *Finder) ExcludeRules(rules []string) *Finder {
-	f.err = f.c.LoadRules(false, rules)
-	return f
-}
+func (f *Finder) ExcludeRules(rules []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithRules on the finder
 //
@@ -310,8 +156,8 @@ func (f *Finder) ExcludeRules(rules []string) *Finder {
 //	ext:.go,.yaml
 //	name:*_test.go,go.mod
 func (f *Finder) WithRules(addOrExclude bool, rules []string) *Finder {
-	f.err = f.c.LoadRules(addOrExclude, rules)
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 //
@@ -319,350 +165,236 @@ func (f *Finder) WithRules(addOrExclude bool, rules []string) *Finder {
 //
 
 // WithDebug enable debug mode
-func (f *Finder) WithDebug(enable ...bool) *Finder {
-	if len(enable) > 0 {
-		f.c.DebugMode = enable[0]
-	} else {
-		f.c.DebugMode = true
-	}
-	return f
-}
+func (f *Finder) WithDebug(enable ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithConfig on the finder
 func (f *Finder) WithConfig(c *Config) *Finder {
-	f.c = c
-	return f
+	_ = "STUB: not implemented"
+
+	// ConfigFn the finder. alias of WithConfigFn()
+	return nil
 }
 
-// ConfigFn the finder. alias of WithConfigFn()
-func (f *Finder) ConfigFn(fns ...func(c *Config)) *Finder { return f.WithConfigFn(fns...) }
+func (f *Finder) ConfigFn(fns ...func(c *Config)) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithConfigFn the finder
 func (f *Finder) WithConfigFn(fns ...func(c *Config)) *Finder {
-	if f.c == nil {
-		f.c = &Config{}
-	}
-
-	for _, fn := range fns {
-		fn(f.c)
-	}
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddScanDirs add source dir for find
-func (f *Finder) AddScanDirs(dirPaths []string) *Finder {
-	f.c.ScanDirs = append(f.c.ScanDirs, dirPaths...)
-	return f
-}
+func (f *Finder) AddScanDirs(dirPaths []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // AddScanDir add source dir for find. alias of AddScanDirs()
-func (f *Finder) AddScanDir(dirPaths ...string) *Finder { return f.AddScanDirs(dirPaths) }
+func (f *Finder) AddScanDir(dirPaths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // AddScan add source dir for find. alias of AddScanDirs()
-func (f *Finder) AddScan(dirPaths ...string) *Finder { return f.AddScanDirs(dirPaths) }
+func (f *Finder) AddScan(dirPaths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ScanDir add source dir for find. alias of AddScanDirs()
-func (f *Finder) ScanDir(dirPaths ...string) *Finder { return f.AddScanDirs(dirPaths) }
+func (f *Finder) ScanDir(dirPaths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // CacheResult cache result for find result.
-func (f *Finder) CacheResult(enable ...bool) *Finder {
-	if len(enable) > 0 {
-		f.c.CacheResult = enable[0]
-	} else {
-		f.c.CacheResult = true
-	}
-	return f
-}
+func (f *Finder) CacheResult(enable ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithFlags set find flags.
-func (f *Finder) WithFlags(flags FindFlag) *Finder {
-	f.c.FindFlags = flags
-	return f
-}
+func (f *Finder) WithFlags(flags FindFlag) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithStrFlag set find flags by string.
-func (f *Finder) WithStrFlag(s string) *Finder {
-	f.c.FindFlags = ToFlag(s)
-	return f
-}
+func (f *Finder) WithStrFlag(s string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // TypeFile only find file.
-func (f *Finder) TypeFile() *Finder { return f.WithFlags(FlagFile) }
+func (f *Finder) TypeFile() *Finder { _ = "STUB: not implemented"; return nil }
 
 // TypeDir only find dir.
-func (f *Finder) TypeDir() *Finder { return f.WithFlags(FlagDir) }
+func (f *Finder) TypeDir() *Finder { _ = "STUB: not implemented"; return nil }
 
 // OnlyFindDir only find dir.
-func (f *Finder) OnlyFindDir() *Finder { return f.WithFlags(FlagDir) }
+func (f *Finder) OnlyFindDir() *Finder { _ = "STUB: not implemented"; return nil }
 
 // FileAndDir both find file and dir.
-func (f *Finder) FileAndDir() *Finder { return f.WithFlags(FlagDir | FlagFile) }
+func (f *Finder) FileAndDir() *Finder { _ = "STUB: not implemented"; return nil }
 
 // UseAbsPath use absolute path for find result. alias of WithUseAbsPath()
-func (f *Finder) UseAbsPath(enable ...bool) *Finder { return f.WithUseAbsPath(enable...) }
+func (f *Finder) UseAbsPath(enable ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithUseAbsPath use absolute path for find result.
-func (f *Finder) WithUseAbsPath(enable ...bool) *Finder {
-	if len(enable) > 0 {
-		f.c.UseAbsPath = enable[0]
-	} else {
-		f.c.UseAbsPath = true
-	}
-	return f
-}
+func (f *Finder) WithUseAbsPath(enable ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithMaxDepth set max depth for find.
-func (f *Finder) WithMaxDepth(i int) *Finder {
-	f.c.MaxDepth = i
-	return f
-}
+func (f *Finder) WithMaxDepth(i int) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithConcurrency set goroutine number for find.
-func (f *Finder) WithConcurrency(i int) *Finder {
-	f.c.Concurrency = i
-	return f
-}
+func (f *Finder) WithConcurrency(i int) *Finder { _ = "STUB: not implemented"; return nil }
 
 // IncludeDir include dir names.
-func (f *Finder) IncludeDir(dirs ...string) *Finder {
-	f.c.IncludeDirs = append(f.c.IncludeDirs, dirs...)
-	return f
-}
+func (f *Finder) IncludeDir(dirs ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithDirName include dir names. alias of IncludeDir()
-func (f *Finder) WithDirName(dirs ...string) *Finder { return f.IncludeDir(dirs...) }
+func (f *Finder) WithDirName(dirs ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // IncludeFile include file names.
-func (f *Finder) IncludeFile(files ...string) *Finder {
-	f.c.IncludeFiles = append(f.c.IncludeFiles, files...)
-	return f
-}
+func (f *Finder) IncludeFile(files ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithFileName include file names. alias of IncludeFile()
-func (f *Finder) WithFileName(files ...string) *Finder { return f.IncludeFile(files...) }
+func (f *Finder) WithFileName(files ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // IncludeName include file or dir names.
-func (f *Finder) IncludeName(names ...string) *Finder {
-	f.c.IncludeNames = append(f.c.IncludeNames, names...)
-	return f
-}
+func (f *Finder) IncludeName(names ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithNames include file or dir names. alias of IncludeName()
-func (f *Finder) WithNames(names []string) *Finder { return f.IncludeName(names...) }
+func (f *Finder) WithNames(names []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // IncludeExt include file exts.
-func (f *Finder) IncludeExt(exts ...string) *Finder {
-	f.c.IncludeExts = append(f.c.IncludeExts, exts...)
-	return f
-}
+func (f *Finder) IncludeExt(exts ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithExts include file exts. alias of IncludeExt()
-func (f *Finder) WithExts(exts []string) *Finder { return f.IncludeExt(exts...) }
+func (f *Finder) WithExts(exts []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithFileExt include file exts. alias of IncludeExt()
-func (f *Finder) WithFileExt(exts ...string) *Finder { return f.IncludeExt(exts...) }
+func (f *Finder) WithFileExt(exts ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // IncludePath include file or dir paths.
-func (f *Finder) IncludePath(paths ...string) *Finder {
-	f.c.IncludePaths = append(f.c.IncludePaths, paths...)
-	return f
-}
+func (f *Finder) IncludePath(paths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithPaths include file or dir paths. alias of IncludePath()
-func (f *Finder) WithPaths(paths []string) *Finder { return f.IncludePath(paths...) }
+func (f *Finder) WithPaths(paths []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithSubPath include file or dir paths. alias of IncludePath()
-func (f *Finder) WithSubPath(paths ...string) *Finder { return f.IncludePath(paths...) }
+func (f *Finder) WithSubPath(paths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeDir exclude dir names.
-func (f *Finder) ExcludeDir(dirs ...string) *Finder {
-	f.c.ExcludeDirs = append(f.c.ExcludeDirs, dirs...)
-	return f
-}
+func (f *Finder) ExcludeDir(dirs ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutDir exclude dir names. alias of ExcludeDir()
-func (f *Finder) WithoutDir(dirs ...string) *Finder { return f.ExcludeDir(dirs...) }
+func (f *Finder) WithoutDir(dirs ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutNames exclude file or dir names. see Config.ExcludeNames
-func (f *Finder) WithoutNames(names []string) *Finder {
-	f.c.ExcludeNames = append(f.c.ExcludeNames, names...)
-	return f
-}
+func (f *Finder) WithoutNames(names []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeName exclude file names. alias of WithoutNames()
-func (f *Finder) ExcludeName(names ...string) *Finder { return f.WithoutNames(names) }
+func (f *Finder) ExcludeName(names ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeFile exclude file names.
-func (f *Finder) ExcludeFile(files ...string) *Finder {
-	f.c.ExcludeFiles = append(f.c.ExcludeFiles, files...)
-	return f
-}
+func (f *Finder) ExcludeFile(files ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutFile exclude file names. alias of ExcludeFile()
-func (f *Finder) WithoutFile(files ...string) *Finder { return f.ExcludeFile(files...) }
+func (f *Finder) WithoutFile(files ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeExt exclude file exts.
 //
 // eg: ExcludeExt(".go", ".java")
-func (f *Finder) ExcludeExt(exts ...string) *Finder {
-	f.c.ExcludeExts = append(f.c.ExcludeExts, exts...)
-	return f
-}
+func (f *Finder) ExcludeExt(exts ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutExt exclude file exts. alias of ExcludeExt()
-func (f *Finder) WithoutExt(exts ...string) *Finder { return f.ExcludeExt(exts...) }
+func (f *Finder) WithoutExt(exts ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutExts exclude file exts. alias of ExcludeExt()
-func (f *Finder) WithoutExts(exts []string) *Finder { return f.ExcludeExt(exts...) }
+func (f *Finder) WithoutExts(exts []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludePath exclude file paths.
-func (f *Finder) ExcludePath(paths ...string) *Finder {
-	f.c.ExcludePaths = append(f.c.ExcludePaths, paths...)
-	return f
-}
+func (f *Finder) ExcludePath(paths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutPath exclude file paths. alias of ExcludePath()
-func (f *Finder) WithoutPath(paths ...string) *Finder { return f.ExcludePath(paths...) }
+func (f *Finder) WithoutPath(paths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutPaths exclude file paths. alias of ExcludePath()
-func (f *Finder) WithoutPaths(paths []string) *Finder { return f.ExcludePath(paths...) }
+func (f *Finder) WithoutPaths(paths []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeDotDir exclude dot dir names. eg: ".idea"
-func (f *Finder) ExcludeDotDir(exclude ...bool) *Finder {
-	if len(exclude) > 0 {
-		f.c.ExcludeDotDir = exclude[0]
-	} else {
-		f.c.ExcludeDotDir = true
-	}
-	return f
-}
+func (f *Finder) ExcludeDotDir(exclude ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutDotDir exclude dot dir names. alias of ExcludeDotDir().
-func (f *Finder) WithoutDotDir(exclude ...bool) *Finder {
-	return f.ExcludeDotDir(exclude...)
-}
+func (f *Finder) WithoutDotDir(exclude ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NoDotDir exclude dot dir names. alias of ExcludeDotDir().
-func (f *Finder) NoDotDir(exclude ...bool) *Finder {
-	return f.ExcludeDotDir(exclude...)
-}
+func (f *Finder) NoDotDir(exclude ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // ExcludeDotFile exclude dot dir names. eg: ".gitignore"
-func (f *Finder) ExcludeDotFile(exclude ...bool) *Finder {
-	if len(exclude) > 0 {
-		f.c.ExcludeDotFile = exclude[0]
-	} else {
-		f.c.ExcludeDotFile = true
-	}
-	return f
-}
+func (f *Finder) ExcludeDotFile(exclude ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithoutDotFile exclude dot dir names. alias of ExcludeDotFile().
-func (f *Finder) WithoutDotFile(exclude ...bool) *Finder {
-	return f.ExcludeDotFile(exclude...)
-}
+func (f *Finder) WithoutDotFile(exclude ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NoDotFile exclude dot dir names. alias of ExcludeDotFile().
-func (f *Finder) NoDotFile(exclude ...bool) *Finder {
-	return f.ExcludeDotFile(exclude...)
-}
+func (f *Finder) NoDotFile(exclude ...bool) *Finder { _ = "STUB: not implemented"; return nil }
 
 //
 // --------- add matchers to finder ---------
 //
 
 // Includes add include match matchers
-func (f *Finder) Includes(fls []Matcher) *Finder {
-	f.c.Matchers = append(f.c.Matchers, fls...)
-	return f
-}
+func (f *Finder) Includes(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Collect add include match matchers. alias of Includes()
-func (f *Finder) Collect(fls ...Matcher) *Finder { return f.Includes(fls) }
+func (f *Finder) Collect(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Include add include match matchers. alias of Includes()
-func (f *Finder) Include(fls ...Matcher) *Finder { return f.Includes(fls) }
+func (f *Finder) Include(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // With add include match matchers. alias of Includes()
-func (f *Finder) With(fls ...Matcher) *Finder { return f.Includes(fls) }
+func (f *Finder) With(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Adds include match matchers. alias of Includes()
-func (f *Finder) Adds(fls []Matcher) *Finder { return f.Includes(fls) }
+func (f *Finder) Adds(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Add include match matchers. alias of Includes()
-func (f *Finder) Add(fls ...Matcher) *Finder { return f.Includes(fls) }
+func (f *Finder) Add(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Excludes add exclude match matchers
-func (f *Finder) Excludes(fls []Matcher) *Finder {
-	f.c.ExMatchers = append(f.c.ExMatchers, fls...)
-	return f
-}
+func (f *Finder) Excludes(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Exclude add exclude match matchers. alias of Excludes()
-func (f *Finder) Exclude(fls ...Matcher) *Finder { return f.Excludes(fls) }
+func (f *Finder) Exclude(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Without add exclude match matchers. alias of Excludes()
-func (f *Finder) Without(fls ...Matcher) *Finder { return f.Excludes(fls) }
+func (f *Finder) Without(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Nots add exclude match matchers. alias of Excludes()
-func (f *Finder) Nots(fls []Matcher) *Finder { return f.Excludes(fls) }
+func (f *Finder) Nots(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // Not add exclude match matchers. alias of Excludes()
-func (f *Finder) Not(fls ...Matcher) *Finder { return f.Excludes(fls) }
+func (f *Finder) Not(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithMatchers add include matchers
-func (f *Finder) WithMatchers(fls []Matcher) *Finder {
-	f.c.Matchers = append(f.c.Matchers, fls...)
-	return f
-}
+func (f *Finder) WithMatchers(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithFilter add include matchers
-func (f *Finder) WithFilter(fls ...Matcher) *Finder { return f.WithMatchers(fls) }
+func (f *Finder) WithFilter(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // MatchFiles add include file matchers
-func (f *Finder) MatchFiles(fls []Matcher) *Finder {
-	f.c.FileMatchers = append(f.c.FileMatchers, fls...)
-	return f
-}
+func (f *Finder) MatchFiles(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // MatchFile add include file matchers
-func (f *Finder) MatchFile(fls ...Matcher) *Finder { return f.MatchFiles(fls) }
+func (f *Finder) MatchFile(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // AddFiles add include file matchers
-func (f *Finder) AddFiles(fls []Matcher) *Finder { return f.MatchFiles(fls) }
+func (f *Finder) AddFiles(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // AddFile add include file matchers
-func (f *Finder) AddFile(fls ...Matcher) *Finder { return f.MatchFiles(fls) }
+func (f *Finder) AddFile(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NotFiles add exclude file matchers
-func (f *Finder) NotFiles(fls []Matcher) *Finder {
-	f.c.FileExMatchers = append(f.c.FileExMatchers, fls...)
-	return f
-}
+func (f *Finder) NotFiles(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NotFile add exclude file matchers
-func (f *Finder) NotFile(fls ...Matcher) *Finder { return f.NotFiles(fls) }
+func (f *Finder) NotFile(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // MatchDirs add exclude dir matchers
-func (f *Finder) MatchDirs(fls []Matcher) *Finder {
-	f.c.DirMatchers = append(f.c.DirMatchers, fls...)
-	return f
-}
+func (f *Finder) MatchDirs(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // MatchDir add exclude dir matchers
-func (f *Finder) MatchDir(fls ...Matcher) *Finder { return f.MatchDirs(fls) }
+func (f *Finder) MatchDir(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithDirs add exclude dir matchers
-func (f *Finder) WithDirs(fls []Matcher) *Finder { return f.MatchDirs(fls) }
+func (f *Finder) WithDirs(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // WithDir add exclude dir matchers
-func (f *Finder) WithDir(fls ...Matcher) *Finder { return f.MatchDirs(fls) }
+func (f *Finder) WithDir(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NotDirs add exclude dir matchers
-func (f *Finder) NotDirs(fls []Matcher) *Finder {
-	f.c.DirExMatchers = append(f.c.DirExMatchers, fls...)
-	return f
-}
+func (f *Finder) NotDirs(fls []Matcher) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NotDir add exclude dir matchers
-func (f *Finder) NotDir(fls ...Matcher) *Finder { return f.NotDirs(fls) }
+func (f *Finder) NotDir(fls ...Matcher) *Finder { _ = "STUB: not implemented"; return nil }

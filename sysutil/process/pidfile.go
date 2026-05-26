@@ -1,13 +1,5 @@
 package process
 
-import (
-	"os"
-
-	"github.com/gookit/goutil/fsutil"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/strutil"
-)
-
 // PidFile struct
 type PidFile struct {
 	pid  int
@@ -16,55 +8,26 @@ type PidFile struct {
 }
 
 // NewPidFile instance
-func NewPidFile(file string) *PidFile {
-	return &PidFile{
-		file: file,
-	}
-}
+func NewPidFile(file string) *PidFile { _ = "STUB: not implemented"; return nil }
 
 // Exists of th pid file
-func (pf *PidFile) Exists() bool {
-	return fsutil.FileExist(pf.file)
-}
+func (pf *PidFile) Exists() bool { _ = "STUB: not implemented"; return false }
 
 // File path
 func (pf *PidFile) File() string {
-	return pf.file
+	_ = "STUB: not implemented"
+
+	// PID value
+	return ""
 }
 
-// PID value
-func (pf *PidFile) PID() int {
-	if pf.pid > 0 {
-		return pf.pid
-	}
-
-	if fsutil.FileExist(pf.file) {
-		bts, err := os.ReadFile(pf.file)
-		if err == nil {
-			pf.pid = strutil.QuietInt(string(bts))
-		}
-	}
-
-	return pf.pid
-}
+func (pf *PidFile) PID() int { _ = "STUB: not implemented"; return 0 }
 
 // String PID value string
-func (pf *PidFile) String() string {
-	return mathutil.String(pf.pid)
-}
+func (pf *PidFile) String() string { _ = "STUB: not implemented"; return "" }
 
 // SetPID value
-func (pf *PidFile) SetPID(val int) int {
-	pf.pid = val
-	return pf.pid
-}
+func (pf *PidFile) SetPID(val int) int { _ = "STUB: not implemented"; return 0 }
 
 // Save PID value to file
-func (pf *PidFile) Save() error {
-	if pf.pid < 1 {
-		return nil
-	}
-
-	_, err := fsutil.PutContents(pf.file, pf.String())
-	return err
-}
+func (pf *PidFile) Save() error { _ = "STUB: not implemented"; return nil }

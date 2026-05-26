@@ -1,7 +1,6 @@
 package structs
 
 import (
-	"errors"
 	"reflect"
 )
 
@@ -21,55 +20,22 @@ type Wrapper struct {
 }
 
 // Wrap quick create a struct wrapper
-func Wrap(src any) *Wrapper { return NewWrapper(src) }
+func Wrap(src any) *Wrapper { _ = "STUB: not implemented"; return nil }
 
 // NewWrapper create a struct wrapper
-func NewWrapper(src any) *Wrapper {
-	return WrapValue(reflect.ValueOf(src))
-}
+func NewWrapper(src any) *Wrapper { _ = "STUB: not implemented"; return nil }
 
 // WrapValue create a struct wrapper
-func WrapValue(rv reflect.Value) *Wrapper {
-	rv = reflect.Indirect(rv)
-	if rv.Kind() != reflect.Struct {
-		panic("must be provider an struct value")
-	}
-	return &Wrapper{rv: rv}
-}
+func WrapValue(rv reflect.Value) *Wrapper { _ = "STUB: not implemented"; return nil }
 
 // Get field value by name, name allows to use dot syntax.
-func (r *Wrapper) Get(name string) any {
-	val, ok := r.Lookup(name)
-	if !ok {
-		return nil
-	}
-	return val
-}
+func (r *Wrapper) Get(name string) any { _ = "STUB: not implemented"; return *new(any) }
 
 // Lookup field value by name, name allows to use dot syntax.
 func (r *Wrapper) Lookup(name string) (val any, ok bool) {
-	fv := r.rv.FieldByName(name)
-	if !fv.IsValid() {
-		return
-	}
-
-	if fv.CanInterface() {
-		return fv.Interface(), true
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(any), false
 }
 
 // Set field value by name. name allows using dot syntax.
-func (r *Wrapper) Set(name string, val any) error {
-	fv := r.rv.FieldByName(name)
-	if !fv.IsValid() {
-		return errors.New("field " + name + " not found")
-	}
-
-	if !fv.CanSet() {
-		return errors.New("can not set value for field: " + name)
-	}
-
-	fv.Set(reflect.ValueOf(val))
-	return nil
-}
+func (r *Wrapper) Set(name string, val any) error { _ = "STUB: not implemented"; return nil }

@@ -1,91 +1,54 @@
 package strutil
 
-import (
-	"crypto/rand"
-	"fmt"
-	"math/big"
-	"strings"
-
-	"github.com/gookit/goutil/byteutil"
-)
-
 // Md5 Generate a 32-bit md5 string
-func Md5(src any) string { return string(Md5Bytes(src)) }
+func Md5(src any) string { _ = "STUB: not implemented"; return "" }
 
 // MD5 Generate a 32-bit md5 string
-func MD5(src any) string { return Md5(src) }
+func MD5(src any) string {
+	_ = "STUB: not implemented"
 
-// GenMd5 Generate a 32-bit md5 string
-func GenMd5(src any) string { return Md5(src) }
-
-// Md5Simple md5 加密原始二进制的每个byte转为 base62，缩短长度(16)
-func Md5Simple(src any) string {
-	md5Bytes := byteutil.Md5Sum(src)
-	b62str := new(strings.Builder)
-	b62str.Grow(16)
-
-	// 直接将每个 byte 转为 base62 数字然后拼接
-	for _, b := range md5Bytes {
-		b62str.WriteByte(Base62Chars[b%0x3E])
-	}
-	return b62str.String()
+	// GenMd5 Generate a 32-bit md5 string
+	return ""
 }
+
+func GenMd5(src any) string {
+	_ = "STUB: not implemented"
+
+	// Md5Simple md5 加密原始二进制的每个byte转为 base62，缩短长度(16)
+	return ""
+}
+
+func Md5Simple(src any) string { _ = "STUB: not implemented"; return "" }
+
+// 直接将每个 byte 转为 base62 数字然后拼接
 
 // Md5Base62 md5 加密原始二进制的转为 base62 字符串，缩短长度(21~22)
-func Md5Base62(src any) string {
-	md5Bytes := byteutil.Md5Sum(src)
+func Md5Base62(src any) string { _ = "STUB: not implemented"; return "" }
 
-	// Step 2: 将字节数组转为 big.Int
-	number := new(big.Int)
-	number.SetBytes(md5Bytes)
+// Step 2: 将字节数组转为 big.Int
 
-	// Step 3: 转换为 Base62 字符串
-	base62 := new(strings.Builder)
-	// base62.Grow(22)
-	for number.Sign() > 0 {
-		remainder := new(big.Int)
-		number.DivMod(number, big.NewInt(62), remainder)
-		base62.WriteByte(Base62Chars[remainder.Int64()])
-	}
+// Step 3: 转换为 Base62 字符串
 
-	// 反转字符串以得到正确的顺序
-	runes := []rune(base62.String())
-	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
-		runes[i], runes[j] = runes[j], runes[i]
-	}
+// base62.Grow(22)
 
-	return string(runes)
-}
+// 反转字符串以得到正确的顺序
 
 // Md5Bytes Generate a 32-bit md5 bytes
-func Md5Bytes(src any) []byte { return byteutil.Md5(src) }
+func Md5Bytes(src any) []byte { _ = "STUB: not implemented"; return nil }
 
 // ShortMd5 Generate a 16-bit md5 string. remove the first 8 and last 8 bytes from 32-bit md5 string.
-func ShortMd5(src any) string { return string(byteutil.ShortMd5(src)) }
+func ShortMd5(src any) string { _ = "STUB: not implemented"; return "" }
 
 //
 // ----------------------- Simple UUID -----------------------------
 //
 
 // UUIDv4 Generate a simple UUIDv4 string
-func UUIDv4() (string, error) {
-	b := make([]byte, 16)
-	if _, err := rand.Read(b); err != nil {
-		return "", fmt.Errorf("generate UUID fail: %w", err)
-	}
+func UUIDv4() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-	// 设置版本（4）和变体
-	b[6] = (b[6] & 0x0f) | 0x40 // Version 4
-	b[8] = (b[8] & 0x3f) | 0x80 // Variant 10
-
-	return fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:16]), nil
-}
+// 设置版本（4）和变体
+// Version 4
+// Variant 10
 
 // ShortUUID Generate a short UUID (8 characters)
-func ShortUUID() string {
-	b := make([]byte, 4)
-	if _, err := rand.Read(b); err != nil {
-		return fmt.Sprintf("%04x", b)
-	}
-	return fmt.Sprintf("%08x", b)
-}
+func ShortUUID() string { _ = "STUB: not implemented"; return "" }

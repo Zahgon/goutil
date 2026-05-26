@@ -1,7 +1,5 @@
 package strutil
 
-import "strings"
-
 // Value string
 type Value string
 
@@ -9,90 +7,64 @@ type Value string
 type StrVal = Value
 
 // Set value
-func (s *Value) Set(val string) error {
-	*s = Value(val)
-	return nil
-}
+func (s *Value) Set(val string) error { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty check
-func (s Value) IsEmpty() bool {
-	return string(s) == ""
-}
+func (s Value) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
 // IsBlank check
-func (s Value) IsBlank() bool {
-	return strings.TrimSpace(string(s)) == ""
-}
+func (s Value) IsBlank() bool { _ = "STUB: not implemented"; return false }
 
 // IsStartWith prefix
-func (s Value) IsStartWith(sub string) bool {
-	return strings.HasPrefix(string(s), sub)
-}
+func (s Value) IsStartWith(sub string) bool { _ = "STUB: not implemented"; return false }
 
 // HasPrefix prefix
-func (s Value) HasPrefix(sub string) bool {
-	return strings.HasPrefix(string(s), sub)
-}
+func (s Value) HasPrefix(sub string) bool { _ = "STUB: not implemented"; return false }
 
 // IsEndWith suffix
-func (s Value) IsEndWith(sub string) bool {
-	return strings.HasSuffix(string(s), sub)
-}
+func (s Value) IsEndWith(sub string) bool { _ = "STUB: not implemented"; return false }
 
 // HasSuffix suffix
-func (s Value) HasSuffix(sub string) bool {
-	return strings.HasSuffix(string(s), sub)
-}
+func (s Value) HasSuffix(sub string) bool { _ = "STUB: not implemented"; return false }
 
 // Bytes string to bytes
 func (s Value) Bytes() []byte {
-	return []byte(s)
+	_ = "STUB: not implemented"
+
+	// Val string
+	return nil
 }
 
-// Val string
 func (s Value) Val() string {
-	return string(s)
+	_ = "STUB: not implemented"
+
+	// Int convert
+	return ""
 }
 
-// Int convert
-func (s Value) Int() int {
-	return QuietInt(string(s))
-}
+func (s Value) Int() int { _ = "STUB: not implemented"; return 0 }
 
 // Int64 convert
-func (s Value) Int64() int64 {
-	return QuietInt64(string(s))
-}
+func (s Value) Int64() int64 { _ = "STUB: not implemented"; return 0 }
 
 // Bool convert
-func (s Value) Bool() bool {
-	return QuietBool(string(s))
-}
+func (s Value) Bool() bool { _ = "STUB: not implemented"; return false }
 
 // Value string
 func (s Value) String() string {
-	return string(s)
+	_ = "STUB: not implemented"
+
+	// OrElse string
+	return ""
 }
 
-// OrElse string
-func (s Value) OrElse(or string) string {
-	if s != "" {
-		return string(s)
-	}
-	return or
-}
+func (s Value) OrElse(or string) string { _ = "STUB: not implemented"; return "" }
 
 // Split string
-func (s Value) Split(sep string) []string {
-	return strings.Split(string(s), sep)
-}
+func (s Value) Split(sep string) []string { _ = "STUB: not implemented"; return nil }
 
 // SplitN string
-func (s Value) SplitN(sep string, n int) []string {
-	return strings.SplitN(string(s), sep, n)
-}
+func (s Value) SplitN(sep string, n int) []string { _ = "STUB: not implemented"; return nil }
 
 // WithTrimSpace string and return new
-func (s Value) WithTrimSpace() Value {
-	return Value(strings.TrimSpace(string(s)))
-}
+func (s Value) WithTrimSpace() Value { _ = "STUB: not implemented"; return *new(Value) }

@@ -1,13 +1,5 @@
 package envutil
 
-import (
-	"os"
-	"path/filepath"
-	"strings"
-
-	"github.com/gookit/goutil/internal/comfunc"
-)
-
 // DefaultEnvFile default file name
 const DefaultEnvFile = ".env"
 
@@ -36,133 +28,65 @@ type Dotenv struct {
 }
 
 // NewDotenv create a new dotenv config
-func NewDotenv() *Dotenv {
-	return &Dotenv{
-		UpperKey: true,
-		Files: []string{DefaultEnvFile},
-		// init fields
-		loadData: make(map[string]string),
-	}
-}
+func NewDotenv() *Dotenv { _ = "STUB: not implemented"; return nil }
+
+// init fields
 
 // LoadAndInit load dotenv files and parse to os.Environ
-func (c *Dotenv) LoadAndInit() error {
-	return c.doLoadFiles(c.Files)
-}
+func (c *Dotenv) LoadAndInit() error { _ = "STUB: not implemented"; return nil }
 
 // LoadFiles append load dotenv files
-//  - filename support simple glob pattern. eg: ".env.*"
-func (c *Dotenv) LoadFiles(files ...string) error {
-	return c.doLoadFiles(files)
-}
+//   - filename support simple glob pattern. eg: ".env.*"
+func (c *Dotenv) LoadFiles(files ...string) error { _ = "STUB: not implemented"; return nil }
 
 // LoadText load dotenv contents and parse to os Env
-func (c *Dotenv) LoadText(contents string) error {
-	return c.parseAndSetEnv(contents)
-}
+func (c *Dotenv) LoadText(contents string) error { _ = "STUB: not implemented"; return nil }
 
 // do load dotenv files
-func (c *Dotenv) doLoadFiles(files []string) error {
-	var filePath string
-	for _, file := range files {
-		filePath = strings.TrimSpace(file)
-		if c.BaseDir != "" && !filepath.IsAbs(file) {
-			filePath = filepath.Join(c.BaseDir, file)
-		}
+func (c *Dotenv) doLoadFiles(files []string) error { _ = "STUB: not implemented"; return nil }
 
-		// load and parse to ENV
-		if err := c.loadFile(filePath); err != nil {
-			return err
-		}
-		if c.LoadFirstExist && len(c.loadFiles) > 0 {
-			break
-		}
-	}
+// load and parse to ENV
 
+func (c *Dotenv) loadFile(filePath string) error {
+	_ = "STUB: not implemented"
+	// filename support simple glob pattern.
 	return nil
 }
 
-func (c *Dotenv) loadFile(filePath string) error {
-	// filename support simple glob pattern.
-	if strings.ContainsRune(filePath, '*') {
-		matches, err := filepath.Glob(filePath)
-		if err != nil {
-			return err
-		}
-
-		for _, matchFile := range matches {
-			if err = c.parseFile(matchFile); err != nil {
-				return err
-			}
-		}
-		return err
-	}
-
-	// Load single file
-	return c.parseFile(filePath)
-}
+// Load single file
 
 // parseFile load single file and parse to ENV
-func (c *Dotenv) parseFile(filePath string) error {
-	contents, err := os.ReadFile(filePath)
-	if err != nil {
-		// IgnoreNotExist: skip non-existent files
-		if c.IgnoreNotExist && os.IsNotExist(err) {
-			return nil
-		}
-		return err
-	}
+func (c *Dotenv) parseFile(filePath string) error { _ = "STUB: not implemented"; return nil }
 
-	err = c.parseAndSetEnv(string(contents))
-	if err == nil {
-		c.loadFiles = append(c.loadFiles, filePath)
-	}
-	return err
-}
+// IgnoreNotExist: skip non-existent files
 
 func (c *Dotenv) parseAndSetEnv(contents string) error {
+	_ = "STUB: not implemented"
 	// Parse ENV lines
-	envMp, err := comfunc.ParseEnvLines(contents, comfunc.ParseEnvLineOption{
-		SkipOnErrorLine: true,
-	})
-
-	// Set to ENV
-	for key, val := range envMp {
-		key = strings.ToUpper(key)
-		c.loadData[key] = val
-		_ = os.Setenv(key, val)
-	}
-	return err
+	return nil
 }
+
+// Set to ENV
 
 // UnloadEnv remove loaded dotenv data from os.Environ
-func (c *Dotenv) UnloadEnv() bool {
-	if len(c.loadData) == 0 {
-		return false
-	}
-
-	for key := range c.loadData {
-		_ = os.Unsetenv(key)
-	}
-	return true
-}
+func (c *Dotenv) UnloadEnv() bool { _ = "STUB: not implemented"; return false }
 
 // LoadedData get loaded dotenv data map
 func (c *Dotenv) LoadedData() map[string]string {
-	return c.loadData
+	_ = "STUB: not implemented"
+
+	// LoadedFiles get loaded dotenv files
+	return nil
 }
 
-// LoadedFiles get loaded dotenv files
 func (c *Dotenv) LoadedFiles() []string {
-	return c.loadFiles
+	_ = "STUB: not implemented"
+
+	// Reset unload all loaded ENV and reset data
+	return nil
 }
 
-// Reset unload all loaded ENV and reset data
-func (c *Dotenv) Reset() {
-	c.UnloadEnv()
-	c.loadFiles = nil
-	c.loadData = make(map[string]string)
-}
+func (c *Dotenv) Reset() { _ = "STUB: not implemented"; return }
 
 //
 // region standard dotenv instance
@@ -171,28 +95,17 @@ func (c *Dotenv) Reset() {
 var stdEnv = NewDotenv()
 
 // StdDotenv get standard dotenv instance
-func StdDotenv() *Dotenv { return stdEnv }
+func StdDotenv() *Dotenv {
+	_ = "STUB: not implemented"
 
-// DotenvLoad load dotenv file and parse to ENV
-func DotenvLoad(fns ...func(cfg *Dotenv)) error {
-	for _, fn := range fns {
-		fn(stdEnv)
-	}
-	return stdEnv.LoadAndInit()
+	// DotenvLoad load dotenv file and parse to ENV
+	return nil
 }
+
+func DotenvLoad(fns ...func(cfg *Dotenv)) error { _ = "STUB: not implemented"; return nil }
 
 // LoadEnvFiles load dotenv files and parse to ENV
-func LoadEnvFiles(baseDir string, files ...string) error {
-	return DotenvLoad(func(cfg *Dotenv) {
-		cfg.BaseDir = baseDir
-		if len(files) > 0 {
-			cfg.Files = files
-		}
-	})
-}
+func LoadEnvFiles(baseDir string, files ...string) error { _ = "STUB: not implemented"; return nil }
 
 // LoadedEnvFiles get loaded dotenv files
-func LoadedEnvFiles() []string {
-	return stdEnv.LoadedFiles()
-}
-
+func LoadedEnvFiles() []string { _ = "STUB: not implemented"; return nil }

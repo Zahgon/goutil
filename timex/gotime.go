@@ -24,106 +24,64 @@ var (
 )
 
 // SetLocalByName set local by tz name. eg: UTC, PRC
-func SetLocalByName(tzName string) error {
-	location, err := time.LoadLocation(tzName)
-	if err != nil {
-		return err
-	}
-
-	time.Local = location
-	return nil
-}
+func SetLocalByName(tzName string) error { _ = "STUB: not implemented"; return nil }
 
 // NowAddDay add some day time from now
-func NowAddDay(day int) time.Time {
-	return time.Now().AddDate(0, 0, day)
-}
+func NowAddDay(day int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NowAddHour add some hour time from now
-func NowAddHour(hour int) time.Time {
-	return time.Now().Add(time.Duration(hour) * OneHour)
-}
+func NowAddHour(hour int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NowAddMinutes add some minutes time from now
-func NowAddMinutes(minutes int) time.Time {
-	return time.Now().Add(time.Duration(minutes) * OneMin)
-}
+func NowAddMinutes(minutes int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NowAddSec add some seconds time from now. alias of NowAddSeconds()
-func NowAddSec(seconds int) time.Time {
-	return time.Now().Add(time.Duration(seconds) * time.Second)
-}
+func NowAddSec(seconds int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NowAddSeconds add some seconds time from now
-func NowAddSeconds(seconds int) time.Time {
-	return time.Now().Add(time.Duration(seconds) * time.Second)
-}
+func NowAddSeconds(seconds int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NowHourStart time
-func NowHourStart() time.Time {
-	return HourStart(time.Now())
-}
+func NowHourStart() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // NowHourEnd time
-func NowHourEnd() time.Time {
-	return HourEnd(time.Now())
-}
+func NowHourEnd() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // AddDay add some day time for given time
-func AddDay(t time.Time, day int) time.Time {
-	return t.AddDate(0, 0, day)
-}
+func AddDay(t time.Time, day int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // AddHour add some hour time for given time
-func AddHour(t time.Time, hour int) time.Time {
-	return t.Add(time.Duration(hour) * OneHour)
-}
+func AddHour(t time.Time, hour int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // AddMinutes add some minutes time for given time
 func AddMinutes(t time.Time, minutes int) time.Time {
-	return t.Add(time.Duration(minutes) * OneMin)
+	_ = "STUB: not implemented"
+	return *new(time.Time)
 }
 
 // AddSeconds add some seconds time for given time
 func AddSeconds(t time.Time, seconds int) time.Time {
-	return t.Add(time.Duration(seconds) * time.Second)
+	_ = "STUB: not implemented"
+	return *new(time.Time)
 }
 
 // AddSec add some seconds time for given time. alias of AddSeconds()
-func AddSec(t time.Time, seconds int) time.Time {
-	return t.Add(time.Duration(seconds) * time.Second)
-}
+func AddSec(t time.Time, seconds int) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // HourStart time for given time
-func HourStart(t time.Time) time.Time {
-	y, m, d := t.Date()
-	return time.Date(y, m, d, t.Hour(), 0, 0, 0, t.Location())
-}
+func HourStart(t time.Time) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // HourEnd time for given time
-func HourEnd(t time.Time) time.Time {
-	y, m, d := t.Date()
-	return time.Date(y, m, d, t.Hour(), 59, 59, int(time.Second-time.Nanosecond), t.Location())
-}
+func HourEnd(t time.Time) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // DayStart time for given time
-func DayStart(t time.Time) time.Time {
-	y, m, d := t.Date()
-	return time.Date(y, m, d, 0, 0, 0, 0, t.Location())
-}
+func DayStart(t time.Time) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // DayEnd time for given time
-func DayEnd(t time.Time) time.Time {
-	y, m, d := t.Date()
-	return time.Date(y, m, d, 23, 59, 59, int(time.Second-time.Nanosecond), t.Location())
-}
+func DayEnd(t time.Time) time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // TodayStart time
-func TodayStart() time.Time {
-	return DayStart(time.Now())
-}
+func TodayStart() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }
 
 // TodayEnd time
-func TodayEnd() time.Time {
-	return DayEnd(time.Now())
-}
+func TodayEnd() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }

@@ -3,92 +3,42 @@ package stdio
 
 import (
 	"bufio"
-	"bytes"
 	"io"
-	"os"
-	"strings"
 )
 
 // DiscardReader anything from the reader
-func DiscardReader(src io.Reader) {
-	_, _ = io.Copy(io.Discard, src)
-}
+func DiscardReader(src io.Reader) { _ = "STUB: not implemented"; return }
 
 // ReadString read contents from io.Reader, return empty string on error
-func ReadString(r io.Reader) string {
-	bs, err := io.ReadAll(r)
-	if err != nil {
-		return ""
-	}
-	return string(bs)
-}
+func ReadString(r io.Reader) string { _ = "STUB: not implemented"; return "" }
 
 // MustReadReader read contents from io.Reader, will panic on error
-func MustReadReader(r io.Reader) []byte {
-	bs, err := io.ReadAll(r)
-	if err != nil {
-		panic(err)
-	}
-	return bs
-}
+func MustReadReader(r io.Reader) []byte { _ = "STUB: not implemented"; return nil }
 
 // NewIOReader instance by input: string, bytes, io.Reader
-func NewIOReader(in any) io.Reader {
-	switch typIn := in.(type) {
-	case []byte:
-		return bytes.NewReader(typIn)
-	case string:
-		return strings.NewReader(typIn)
-	case io.Reader:
-		return typIn
-	}
-	panic("invalid input type for create reader")
-}
+func NewIOReader(in any) io.Reader { _ = "STUB: not implemented"; return *new(io.Reader) }
 
 // NewScanner instance by input data or reader
-func NewScanner(in any) *bufio.Scanner {
-	switch typIn := in.(type) {
-	case io.Reader:
-		return bufio.NewScanner(typIn)
-	case []byte:
-		return bufio.NewScanner(bytes.NewReader(typIn))
-	case string:
-		return bufio.NewScanner(strings.NewReader(typIn))
-	case *bufio.Scanner:
-		return typIn
-	default:
-		panic("invalid input type for create scanner")
-	}
-}
+func NewScanner(in any) *bufio.Scanner { _ = "STUB: not implemented"; return nil }
 
 // SafeClose close io.Closer, ignore error
 func SafeClose(c io.Closer) {
-	_ = c.Close()
+	_ = "STUB: not implemented"
+
+	// WriteByte to stdout, will ignore error
+	return
 }
 
-// WriteByte to stdout, will ignore error
-func WriteByte(b byte) {
-	_, _ = os.Stdout.Write([]byte{b})
-}
+func WriteByte(b byte) { _ = "STUB: not implemented"; return }
 
 // WriteBytes to stdout, will ignore error
-func WriteBytes(bs []byte) {
-	_, _ = os.Stdout.Write(bs)
-}
+func WriteBytes(bs []byte) { _ = "STUB: not implemented"; return }
 
 // WritelnBytes to stdout, will ignore error
-func WritelnBytes(bs []byte) {
-	_, _ = os.Stdout.Write(bs)
-	_, _ = os.Stdout.Write([]byte("\n"))
-}
+func WritelnBytes(bs []byte) { _ = "STUB: not implemented"; return }
 
 // WriteString to stdout. will ignore error
-func WriteString(s string) {
-	_, _ = os.Stdout.WriteString(s)
-}
+func WriteString(s string) { _ = "STUB: not implemented"; return }
 
 // Writeln string to stdout. will ignore error
-func Writeln(s string) {
-	_, _ = os.Stdout.WriteString(s)
-	_, _ = os.Stdout.Write([]byte("\n"))
-}
+func Writeln(s string) { _ = "STUB: not implemented"; return }

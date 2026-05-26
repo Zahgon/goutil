@@ -15,15 +15,14 @@ type ErrGroup = syncs.ErrGroup
 //
 // Deprecated: use syncs.NewCtxErrGroup instead
 func NewCtxErrGroup(ctx context.Context, limit ...int) (*ErrGroup, context.Context) {
-	return syncs.NewCtxErrGroup(ctx, limit...)
+	_ = "STUB: not implemented"
+	return nil, *new(context.Context)
 }
 
 // NewErrGroup instance. use for batch run tasks
 //
 // Deprecated: use syncs.NewErrGroup instead
-func NewErrGroup(limit ...int) *ErrGroup {
-	return syncs.NewErrGroup(limit...)
-}
+func NewErrGroup(limit ...int) *ErrGroup { _ = "STUB: not implemented"; return nil }
 
 // RunFn func
 type RunFn func(ctx *structs.Data) error
@@ -36,25 +35,10 @@ type QuickRun struct {
 }
 
 // NewQuickRun instance
-func NewQuickRun() *QuickRun {
-	return &QuickRun{
-		ctx: structs.NewData(),
-	}
-}
+func NewQuickRun() *QuickRun { _ = "STUB: not implemented"; return nil }
 
 // Add func for run
-func (p *QuickRun) Add(fns ...RunFn) *QuickRun {
-	p.fns = append(p.fns, fns...)
-	return p
-}
+func (p *QuickRun) Add(fns ...RunFn) *QuickRun { _ = "STUB: not implemented"; return nil }
 
 // Run all func
-func (p *QuickRun) Run() error {
-	for i, fn := range p.fns {
-		p.ctx.Set("_index", i)
-		if err := fn(p.ctx); err != nil {
-			return err
-		}
-	}
-	return nil
-}
+func (p *QuickRun) Run() error { _ = "STUB: not implemented"; return nil }

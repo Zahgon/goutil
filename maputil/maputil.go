@@ -1,13 +1,6 @@
 // Package maputil provide map data util functions. eg: convert, sub-value get, simple merge
 package maputil
 
-import (
-	"reflect"
-	"strings"
-
-	"github.com/gookit/goutil/arrutil"
-)
-
 // Key, value sep char consts
 const (
 	ValSepStr  = ","
@@ -21,129 +14,67 @@ const (
 // the value in dst will be overwritten by the value associated
 // with the key in src.
 func Copy[M1 ~map[K]V, M2 ~map[K]V, K comparable, V any](dst M1, src M2) {
-	for k, v := range src {
-		dst[k] = v
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // DeleteFunc deletes any key/value pairs from m for which del returns true.
 func DeleteFunc[M ~map[K]V, K comparable, V any](m M, del func(K, V) bool) {
-	for k, v := range m {
-		if del(k, v) {
-			delete(m, k)
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // SimpleMerge simple merge two data map by string key. will merge the src to dst map
-func SimpleMerge(src, dst map[string]any) map[string]any {
-	if len(src) == 0 {
-		return dst
-	}
-	if len(dst) == 0 {
-		return src
-	}
+func SimpleMerge(src, dst map[string]any) map[string]any { _ = "STUB: not implemented"; return nil }
 
-	for key, val := range src {
-		if mp, ok := val.(map[string]any); ok {
-			if dmp, ok := dst[key].(map[string]any); ok {
-				dst[key] = SimpleMerge(mp, dmp)
-				continue
-			}
-		}
-
-		// simple merge
-		dst[key] = val
-	}
-	return dst
-}
+// simple merge
 
 // Merge1level merge multi any map[string]any data. only merge one level data.
-func Merge1level(mps ...map[string]any) map[string]any {
-	newMp := make(map[string]any)
-	for _, mp := range mps {
-		for k, v := range mp {
-			newMp[k] = v
-		}
-	}
-	return newMp
-}
+func Merge1level(mps ...map[string]any) map[string]any { _ = "STUB: not implemented"; return nil }
 
 // func DeepMerge(src, dst map[string]any, deep int) map[string]any { TODO
 // }
 
 // MergeSMap simple merge two string map. merge src to dst map
 func MergeSMap(src, dst map[string]string, ignoreCase bool) map[string]string {
-	return MergeStringMap(src, dst, ignoreCase)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MergeStrMap simple merge two string map. merge src to dst map
 func MergeStrMap(src, dst map[string]string) map[string]string {
-	return MergeStringMap(src, dst, false)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AppendSMap append string map data to dst map.
 func AppendSMap(dst, src map[string]string) map[string]string {
-	return MergeStringMap(src, dst, false)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MergeStringMap simple merge two string map. merge src to dst map
 func MergeStringMap(src, dst map[string]string, ignoreCase bool) map[string]string {
-	if len(src) == 0 {
-		return dst
-	}
-	if len(dst) == 0 {
-		return src
-	}
-
-	for k, v := range src {
-		if ignoreCase {
-			k = strings.ToLower(k)
-		}
-		dst[k] = v
-	}
-	return dst
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MergeMultiSMap quick merge multi string-map data.
 func MergeMultiSMap(mps ...map[string]string) map[string]string {
-	newMp := make(map[string]string)
-	for _, mp := range mps {
-		for k, v := range mp {
-			newMp[k] = v
-		}
-	}
-	return newMp
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MergeL2StrMap merge multi level2 string-map data. The back map covers the front.
 func MergeL2StrMap(mps ...map[string]map[string]string) map[string]map[string]string {
-	newMp := make(map[string]map[string]string)
-	for _, mp := range mps {
-		for k, v := range mp {
-			// merge level 2 value
-			if oldV, ok := newMp[k]; ok {
-				for k1, v1 := range v {
-					oldV[k1] = v1
-				}
-				newMp[k] = oldV
-			} else {
-				newMp[k] = v
-			}
-		}
-	}
-	return newMp
+	_ = "STUB: not implemented"
+	return nil
 }
 
+// merge level 2 value
+
 // FilterSMap filter empty elem for the string map.
-func FilterSMap(sm map[string]string) map[string]string {
-	for key, val := range sm {
-		if val == "" {
-			delete(sm, key)
-		}
-	}
-	return sm
-}
+func FilterSMap(sm map[string]string) map[string]string { _ = "STUB: not implemented"; return nil }
 
 // MakeByPath build new value by key names
 //
@@ -161,9 +92,7 @@ func FilterSMap(sm map[string]string) map[string]string {
 //	map[string]any {
 //		site: {tags: [val]}
 //	}
-func MakeByPath(path string, val any) (mp map[string]any) {
-	return MakeByKeys(strings.Split(path, KeySepStr), val)
-}
+func MakeByPath(path string, val any) (mp map[string]any) { _ = "STUB: not implemented"; return nil }
 
 // MakeByKeys build new value by key names
 //
@@ -183,33 +112,14 @@ func MakeByPath(path string, val any) (mp map[string]any) {
 //		site: {tags: [val]}
 //	}
 func MakeByKeys(keys []string, val any) (mp map[string]any) {
-	size := len(keys)
+	_ = "STUB: not implemented"
 
 	// if last key contains slice index, make slice wrap the val
-	lastKey := keys[size-1]
-	if newK, idx, ok := parseArrKeyIndex(lastKey); ok {
-		// valTyp := reflect.TypeOf(val)
-		sliTyp := reflect.SliceOf(reflect.TypeOf(val))
-		sliVal := reflect.MakeSlice(sliTyp, idx+1, idx+1)
-		sliVal.Index(idx).Set(reflect.ValueOf(val))
-
-		// update val and last key
-		val = sliVal.Interface()
-		keys[size-1] = newK
-	}
-
-	if size == 1 {
-		return map[string]any{keys[0]: val}
-	}
-
-	// multi nodes
-	arrutil.Reverse(keys)
-	for _, p := range keys {
-		if mp == nil {
-			mp = map[string]any{p: val}
-		} else {
-			mp = map[string]any{p: mp}
-		}
-	}
-	return
+	return nil
 }
+
+// valTyp := reflect.TypeOf(val)
+
+// update val and last key
+
+// multi nodes

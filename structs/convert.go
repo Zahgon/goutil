@@ -1,67 +1,38 @@
 package structs
 
 import (
-	"errors"
-	"fmt"
 	"reflect"
-	"time"
-
-	"github.com/gookit/goutil/maputil"
-	"github.com/gookit/goutil/reflects"
 )
 
 // ToMap quickly convert structs to map by reflection
-func ToMap(st any, optFns ...MapOptFunc) map[string]any {
-	mp, _ := StructToMap(st, optFns...)
-	return mp
-}
+func ToMap(st any, optFns ...MapOptFunc) map[string]any { _ = "STUB: not implemented"; return nil }
 
 // MustToMap alis of TryToMap, but will panic on error
-func MustToMap(st any, optFns ...MapOptFunc) map[string]any {
-	mp, err := StructToMap(st, optFns...)
-	if err != nil {
-		panic(err)
-	}
-	return mp
-}
+func MustToMap(st any, optFns ...MapOptFunc) map[string]any { _ = "STUB: not implemented"; return nil }
 
 // TryToMap simple convert structs to map by reflect
 func TryToMap(st any, optFns ...MapOptFunc) (map[string]any, error) {
-	return StructToMap(st, optFns...)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ToSMap quickly and safe convert structs to map[string]string by reflection
-func ToSMap(st any, optFns ...MapOptFunc) map[string]string {
-	mp, _ := StructToMap(st, optFns...)
-	return maputil.ToStringMap(mp)
-}
+func ToSMap(st any, optFns ...MapOptFunc) map[string]string { _ = "STUB: not implemented"; return nil }
 
 // TryToSMap quickly convert structs to map[string]string by reflection
 func TryToSMap(st any, optFns ...MapOptFunc) (map[string]string, error) {
-	mp, err := StructToMap(st, optFns...)
-	if err != nil {
-		return nil, err
-	}
-	return maputil.ToStringMap(mp), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // MustToSMap alias of ToStringMap(), but will panic on error
 func MustToSMap(st any, optFns ...MapOptFunc) map[string]string {
-	mp, err := StructToMap(st, optFns...)
-	if err != nil {
-		panic(err)
-	}
-	return maputil.ToStringMap(mp)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ToString quickly format struct to string
-func ToString(st any, optFns ...MapOptFunc) string {
-	mp, err := StructToMap(st, optFns...)
-	if err == nil {
-		return maputil.ToString(mp)
-	}
-	return fmt.Sprint(st)
-}
+func ToString(st any, optFns ...MapOptFunc) string { _ = "STUB: not implemented"; return "" }
 
 const defaultFieldTag = "json"
 
@@ -93,129 +64,49 @@ type MapOptions struct {
 type MapOptFunc func(opt *MapOptions)
 
 // WithMapTagName set tag name for map field
-func WithMapTagName(tagName string) MapOptFunc {
-	return func(opt *MapOptions) { opt.TagName = tagName }
-}
+func WithMapTagName(tagName string) MapOptFunc { _ = "STUB: not implemented"; return *new(MapOptFunc) }
 
 // WithUserFunc custom user func
-func WithUserFunc(fn CustomUserFunc) MapOptFunc {
-	return func(opt *MapOptions) { opt.UserFunc = fn }
-}
+func WithUserFunc(fn CustomUserFunc) MapOptFunc { _ = "STUB: not implemented"; return *new(MapOptFunc) }
 
 // MergeAnonymous merge anonymous struct fields to parent map
-func MergeAnonymous(opt *MapOptions) { opt.MergeAnonymous = true }
+func MergeAnonymous(opt *MapOptions) { _ = "STUB: not implemented"; return }
 
 // ExportPrivate merge anonymous struct fields to parent map
-func ExportPrivate(opt *MapOptions) { opt.ExportPrivate = true }
+func ExportPrivate(opt *MapOptions) { _ = "STUB: not implemented"; return }
 
 // WithIgnoreEmpty ignore on field value is empty
-func WithIgnoreEmpty(opt *MapOptions) { opt.IgnoreEmpty = true }
+func WithIgnoreEmpty(opt *MapOptions) { _ = "STUB: not implemented"; return }
 
 // StructToMap quickly convert structs to map[string]any by reflection.
 //
 // Can custom export field name by tag `json` or custom tag. see MapOptions
 func StructToMap(st any, optFns ...MapOptFunc) (map[string]any, error) {
-	mp := make(map[string]any)
-	if st == nil {
-		return mp, nil
-	}
-
-	obj := reflect.Indirect(reflect.ValueOf(st))
-	if obj.Kind() != reflect.Struct {
-		return mp, errors.New("StructToMap: must be an struct value")
-	}
-
-	opt := &MapOptions{TagName: defaultFieldTag}
-	for _, fn := range optFns {
-		fn(opt)
-	}
-
-	_, err := structToMap(obj, opt, mp)
-	return mp, err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func structToMap(obj reflect.Value, opt *MapOptions, mp map[string]any) (map[string]any, error) {
-	if mp == nil {
-		mp = make(map[string]any)
-	}
-
-	refType := obj.Type()
-	for i := 0; i < obj.NumField(); i++ {
-		sf := refType.Field(i)
-		name := sf.Name
-		// skip un-exported field
-		if !opt.ExportPrivate && IsUnexported(name) {
-			continue
-		}
-
-		tagVal, ok := sf.Tag.Lookup(opt.TagName)
-		if ok && tagVal != "" {
-			sMap, err := ParseTagValueDefault(name, tagVal)
-			if err != nil {
-				return nil, err
-			}
-
-			name = sMap.Default("name", name)
-			if name == "" || name == "-" { // un-exported field
-				continue
-			}
-		}
-
-		fv := reflect.Indirect(obj.Field(i))
-		if !fv.IsValid() {
-			continue
-		}
-
-		// opt: ignore empty field
-		if opt.IgnoreEmpty && reflects.IsEmpty(fv) {
-			continue
-		}
-
-		if fv.Kind() == reflect.Struct {
-			// up: special handle time.Time field value
-			if reflects.IsTimeType(fv.Type()) {
-				mp[name] = fv.Interface().(time.Time).Format(time.RFC3339)
-				continue
-			}
-
-			// collect anonymous struct values to parent.
-			if sf.Anonymous && opt.MergeAnonymous {
-				_, err := structToMap(fv, opt, mp)
-				if err != nil {
-					return nil, err
-				}
-			} else { // collect struct values to submap
-				sub, err := structToMap(fv, opt, nil)
-				if err != nil {
-					return nil, err
-				}
-				mp[name] = sub
-			}
-			continue
-		}
-
-		// TODO support struct slice field.
-
-		// up: support custom user func
-		if opt.UserFunc != nil {
-			ok1, newVal := opt.UserFunc(sf.Name, fv)
-			if !ok1 {
-				continue
-			}
-
-			// ok1=true, newVal != nil
-			if newVal != nil {
-				mp[name] = newVal
-				continue
-			}
-		}
-
-		if fv.CanInterface() {
-			mp[name] = fv.Interface()
-		} else if fv.CanAddr() { // for unexported field
-			mp[name] = reflects.UnexportedValue(fv)
-		}
-	}
-
-	return mp, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// skip un-exported field
+
+// un-exported field
+
+// opt: ignore empty field
+
+// up: special handle time.Time field value
+
+// collect anonymous struct values to parent.
+
+// collect struct values to submap
+
+// TODO support struct slice field.
+
+// up: support custom user func
+
+// ok1=true, newVal != nil
+
+// for unexported field

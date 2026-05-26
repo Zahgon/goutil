@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"sync"
 	"time"
-
-	"github.com/gookit/goutil/netutil/httpctype"
 )
 
 // ValidMethods valid http methods
@@ -35,10 +33,12 @@ type DoerFunc func(req *http.Request) (*http.Response, error)
 
 // Do send request and return response.
 func (do DoerFunc) Do(req *http.Request) (*http.Response, error) {
-	return do(req)
+	_ = "STUB: not implemented"
+
+	// ReqLogger request logger interface
+	return nil, nil
 }
 
-// ReqLogger request logger interface
 type ReqLogger interface {
 	Infof(format string, args ...any)
 	Errorf(format string, args ...any)
@@ -57,43 +57,16 @@ var (
 // NewClient create a new http client and cache it.
 //
 // Note: timeout unit is millisecond
-func NewClient(timeout int) *Client {
-	_gl.Lock()
-	cli, ok := cs[timeout]
-
-	if !ok {
-		cli = NewWithTimeout(timeout)
-		cs[timeout] = cli
-	}
-
-	_gl.Unlock()
-	return cli
-}
+func NewClient(timeout int) *Client { _ = "STUB: not implemented"; return nil }
 
 // MustResp check error and return response
-func MustResp(r *http.Response, err error) *http.Response {
-	if err != nil {
-		panic(err)
-	}
-	return r
-}
+func MustResp(r *http.Response, err error) *http.Response { _ = "STUB: not implemented"; return nil }
 
 // MustRespX check error and create a new RespX instance
-func MustRespX(r *http.Response, err error) *RespX {
-	if err != nil {
-		panic(err)
-	}
-	return NewResp(r)
-}
+func MustRespX(r *http.Response, err error) *RespX { _ = "STUB: not implemented"; return nil }
 
 // WithJSONType set request content type to JSON
-func WithJSONType(opt *Option) {
-	opt.ContentType = httpctype.JSON
-}
+func WithJSONType(opt *Option) { _ = "STUB: not implemented"; return }
 
 // WithData set request data, will auto convert to body data or query string
-func WithData(data any) OptionFn {
-	return func(opt *Option) {
-		opt.Data = data
-	}
-}
+func WithData(data any) OptionFn { _ = "STUB: not implemented"; return *new(OptionFn) }

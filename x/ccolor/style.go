@@ -1,9 +1,7 @@
 package ccolor
 
 import (
-	"fmt"
 	"io"
-	"strings"
 )
 
 // String color style string. TODO
@@ -21,68 +19,31 @@ type Style struct {
 }
 
 // NewStyle fg, bg and options
-func NewStyle(fg Color, bg Color, opts ...Color) *Style {
-	return &Style{
-		Fg:   fg,
-		Bg:   bg,
-		Opts: opts,
-	}
-}
+func NewStyle(fg Color, bg Color, opts ...Color) *Style { _ = "STUB: not implemented"; return nil }
 
 // Print like fmt.Print, but with color
-func (s *Style) Print(v ...any) {
-	doPrint(s.String(), fmt.Sprint(v...))
-}
+func (s *Style) Print(v ...any) { _ = "STUB: not implemented"; return }
 
 // Println like fmt.Println, but with color
-func (s *Style) Println(v ...any) {
-	doPrintln(s.String(), v)
-}
+func (s *Style) Println(v ...any) { _ = "STUB: not implemented"; return }
 
 // Printf render and print text
-func (s *Style) Printf(format string, v ...any) {
-	doPrint(s.String(), fmt.Sprintf(format, v...))
-}
+func (s *Style) Printf(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Sprint like fmt.Sprint, but with color
-func (s *Style) Sprint(v ...any) string {
-	return RenderString(s.String(), fmt.Sprint(v...))
-}
+func (s *Style) Sprint(v ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Sprintln like fmt.Sprintln, but with color
-func (s *Style) Sprintln(v ...any) string {
-	return RenderWithSpaces(s.String(), v...)
-}
+func (s *Style) Sprintln(v ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Sprintf format and render message.
-func (s *Style) Sprintf(format string, v ...any) string {
-	return RenderString(s.String(), fmt.Sprintf(format, v...))
-}
+func (s *Style) Sprintf(format string, v ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Fprint like fmt.Fprint, but with color
-func (s *Style) Fprint(w io.Writer, v ...any) {
-	doPrintTo(w, s.String(), fmt.Sprint(v...))
-}
+func (s *Style) Fprint(w io.Writer, v ...any) { _ = "STUB: not implemented"; return }
 
 // String convert style setting to color code string.
-func (s *Style) String() string {
-	var codes []string
-	if s.Fg.IsFg() {
-		codes = append(codes, s.Fg.String())
-	}
-	if s.Bg.IsBg() {
-		codes = append(codes, s.Bg.String())
-	}
-
-	if len(s.Opts) > 0 {
-		codes = append(codes, ColorsToCode(s.Opts...))
-	}
-
-	if len(codes) == 0 {
-		return ""
-	}
-	return strings.Join(codes, ";")
-}
+func (s *Style) String() string { _ = "STUB: not implemented"; return "" }
 
 var (
 	// Info color style

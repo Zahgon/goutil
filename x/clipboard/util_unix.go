@@ -2,19 +2,18 @@
 
 package clipboard
 
-import "os"
-
 // GetWriterBin program name
 func GetWriterBin() string {
-	return WriterOnLin
+	_ = "STUB: not implemented"
+
+	// GetReaderBin program name
+	return ""
 }
 
-// GetReaderBin program name
-func GetReaderBin() string {
-	return ReaderOnLin
-}
+func GetReaderBin() string { _ = "STUB: not implemented"; return "" }
 
 func available() bool {
+	_ = "STUB: not implemented"
 	// X clipboard is unavailable when not under X.
-	return os.Getenv("DISPLAY") != ""
+	return false
 }

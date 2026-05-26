@@ -4,12 +4,8 @@
 package finder
 
 import (
-	"fmt"
 	"os"
-	"path/filepath"
-	"strings"
 	"sync"
-	"sync/atomic"
 )
 
 type scanDir struct {
@@ -39,27 +35,24 @@ type Finder struct {
 }
 
 // New instance with source dir paths.
-func New(dirs []string) *Finder {
-	return NewWithConfig(NewConfig(dirs...))
-}
+func New(dirs []string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NewFinder new instance with source dir paths.
-func NewFinder(dirPaths ...string) *Finder { return New(dirPaths) }
+func NewFinder(dirPaths ...string) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NewWithConfig new instance with config.
-func NewWithConfig(c *Config) *Finder { return &Finder{c: c} }
+func NewWithConfig(c *Config) *Finder { _ = "STUB: not implemented"; return nil }
 
 // NewEmpty new empty Finder instance
-func NewEmpty() *Finder {
-	return &Finder{c: NewEmptyConfig()}
-}
+func NewEmpty() *Finder { _ = "STUB: not implemented"; return nil }
 
 // EmptyFinder new empty Finder instance. alias of NewEmpty()
-func EmptyFinder() *Finder { return NewEmpty() }
+func EmptyFinder() *Finder {
+	_ = "STUB: not implemented"
 
-//
-// --------- do finding ---------
-//
+	// --------- do finding ---------
+	return nil
+}
 
 // Find files in given dir paths. will return a channel, you can use it to get the result.
 //
@@ -69,106 +62,66 @@ func EmptyFinder() *Finder { return NewEmpty() }
 //	for el := range f.Find() {
 //		fmt.Println(el.Path())
 //	}
-func (f *Finder) Find() <-chan Elem { return f.find() }
+func (f *Finder) Find() <-chan Elem {
+	_ = "STUB: not implemented"
 
-// Elems find and return founded file Elem. alias of Find()
-func (f *Finder) Elems() <-chan Elem { return f.find() }
-
-// Results find and return founded file Elem. alias of Find()
-func (f *Finder) Results() <-chan Elem { return f.find() }
-
-// FindNames find and return founded file/dir names.
-func (f *Finder) FindNames() []string {
-	paths := make([]string, 0, 8*len(f.c.ScanDirs))
-	for el := range f.find() {
-		paths = append(paths, el.Name())
-	}
-	return paths
+	// Elems find and return founded file Elem. alias of Find()
+	return nil
 }
+
+func (f *Finder) Elems() <-chan Elem {
+	_ = "STUB: not implemented"
+
+	// Results find and return founded file Elem. alias of Find()
+	return nil
+}
+
+func (f *Finder) Results() <-chan Elem {
+	_ = "STUB: not implemented"
+
+	// FindNames find and return founded file/dir names.
+	return nil
+}
+
+func (f *Finder) FindNames() []string { _ = "STUB: not implemented"; return nil }
 
 // FindPaths find and return founded file/dir paths.
-func (f *Finder) FindPaths() []string {
-	paths := make([]string, 0, 8*len(f.c.ScanDirs))
-	for el := range f.find() {
-		paths = append(paths, el.Path())
-	}
-	return paths
-}
+func (f *Finder) FindPaths() []string { _ = "STUB: not implemented"; return nil }
 
 // Each founded file or dir Elem.
-func (f *Finder) Each(fn func(el Elem)) { f.EachElem(fn) }
+func (f *Finder) Each(fn func(el Elem)) {
+	_ = "STUB: not implemented"
 
-// EachElem founded file or dir Elem.
-func (f *Finder) EachElem(fn func(el Elem)) {
-	for el := range f.find() {
-		fn(el)
-	}
+	// EachElem founded file or dir Elem.
+	return
 }
+
+func (f *Finder) EachElem(fn func(el Elem)) { _ = "STUB: not implemented"; return }
 
 // EachPath founded file paths.
-func (f *Finder) EachPath(fn func(filePath string)) {
-	f.EachElem(func(el Elem) {
-		fn(el.Path())
-	})
-}
+func (f *Finder) EachPath(fn func(filePath string)) { _ = "STUB: not implemented"; return }
 
 // EachFile each file os.File
-func (f *Finder) EachFile(fn func(file *os.File)) {
-	f.EachElem(func(el Elem) {
-		file, err := os.Open(el.Path())
-		if err == nil {
-			fn(file)
-		} else {
-			f.setError(err)
-		}
-	})
-}
+func (f *Finder) EachFile(fn func(file *os.File)) { _ = "STUB: not implemented"; return }
 
 // EachStat each file os.FileInfo
 func (f *Finder) EachStat(fn func(fi os.FileInfo, filePath string)) {
-	f.EachElem(func(el Elem) {
-		fi, err := el.Info()
-		if err == nil {
-			fn(fi, el.Path())
-		} else {
-			f.setError(err)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // EachContents handle each found file contents
 func (f *Finder) EachContents(fn func(contents, filePath string)) {
-	f.EachElem(func(el Elem) {
-		bs, err := os.ReadFile(el.Path())
-		if err == nil {
-			fn(string(bs), el.Path())
-		} else {
-			f.setError(err)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // prepare for find.
-func (f *Finder) prepare() {
-	f.err = nil
-	if f.CacheNum() == 0 {
-		f.num = 0
-	}
+func (f *Finder) prepare() { _ = "STUB: not implemented"; return }
 
-	// ensure config
-	if f.c == nil {
-		f.c = NewConfig()
-	} else {
-		f.c.Init()
-	}
+// ensure config
 
-	coNum := f.c.Concurrency
-	f.debugf("PREPARE done. type-flag: %s, concurrency: %d", f.c.FindFlags, coNum)
-	f.debugf("config: %+v", f.c)
-	// 创建队列
-	f.ch = make(chan Elem, coNum*8*3)
-	f.dirQueue = make(chan scanDir, coNum*8*2)
-}
+// 创建队列
 
 // Do finding
 //
@@ -178,255 +131,103 @@ func (f *Finder) prepare() {
 //		fmt.Println(el.Path())
 //	}
 func (f *Finder) find() <-chan Elem {
+	_ = "STUB: not implemented"
 	// has caches, return it
-	if len(f.caches) > 0 {
-		f.ch = make(chan Elem, 8)
-		defer close(f.ch)
-		for _, el := range f.caches {
-			f.ch <- el
-		}
-		return f.ch
-	}
-
-	f.prepare()
-
-	// 添加初始任务
-	f.addRootDirs()
-
-	// 启动工作goroutine
-	for i := 0; i < f.c.Concurrency; i++ {
-		go f.worker(i)
-	}
-
-	// 等待所有任务完成并关闭通道
-	go func() {
-		f.debugf("waiting all task complete ...")
-		f.wg.Wait()
-
-		close(f.ch)
-		close(f.dirQueue)
-		f.debugf("all find task DONE. total found: %d", f.num)
-
-		// reset wg
-		// f.wg = sync.WaitGroup{}
-	}()
-
-	f.debugf("find task STARTING ...")
-	return f.ch
+	return nil
 }
+
+// 添加初始任务
+
+// 启动工作goroutine
+
+// 等待所有任务完成并关闭通道
+
+// reset wg
+// f.wg = sync.WaitGroup{}
 
 // worker 处理目录的工作goroutine
-func (f *Finder) worker(index int) {
-	f.debugf("worker#%d STARTING ...", index)
-	for sd := range f.dirQueue {
-		f.safeFindDir(index, sd.path, sd.depth)
-	}
-	f.debugf("worker#%d DONE.", index)
-}
+func (f *Finder) worker(index int) { _ = "STUB: not implemented"; return }
 
 func (f *Finder) safeFindDir(index int, dirPath string, depth int) {
-	f.debugf("worker#%d into dir: %s (depth: %d)", index, dirPath, depth)
-
-	// recover error and always call wg.Done()
-	defer func() {
-		if err := recover(); err != nil {
-			f.debugf("worker#%d panic in dir: %s, ERROR: %v", index, dirPath, err)
-			f.setError(fmt.Errorf("worker#%d findDir panic, dir: %s, ERROR: %v", index, dirPath, err))
-		}
-		f.wg.Done()
-	}()
-
-	f.findDir(dirPath, depth)
+	_ = "STUB: not implemented"
+	return
 }
 
-func (f *Finder) addRootDirs() {
-	f.debugf("add scan root dirs: %v", f.c.ScanDirs)
+// recover error and always call wg.Done()
 
-	var err error
-	for _, dirPath := range f.c.ScanDirs {
-		if f.c.UseAbsPath {
-			dirPath, err = filepath.Abs(dirPath)
-			if err != nil {
-				f.setError(err)
-				continue
-			}
-		}
+func (f *Finder) addRootDirs() { _ = "STUB: not implemented"; return }
 
-		// add task
-		f.debugf("add root-dir: %s", dirPath)
-		f.wg.Add(1)
-		f.dirQueue <- scanDir{path: dirPath}
-	}
-}
+// add task
 
 // code refer filepath.glob()
-func (f *Finder) findDir(dirPath string, depth int) {
-	deList, err := os.ReadDir(dirPath)
-	if err != nil {
-		return // ignore I/O error
-	}
+func (f *Finder) findDir(dirPath string, depth int) { _ = "STUB: not implemented"; return }
 
-	cfg := f.c
-	depth++
-	var ok bool
+// ignore I/O error
 
-	for _, ent := range deList {
-		name := ent.Name()
-		isDir := ent.IsDir()
-		if name[0] == '.' {
-			if isDir {
-				if cfg.ExcludeDotDir {
-					continue
-				}
-			} else if cfg.ExcludeDotFile {
-				continue
-			}
-		}
+// apply generic filters
 
-		fullPath := filepath.Join(dirPath, name)
-		el := NewElem(fullPath, ent)
+// --- dir: apply dir filters
 
-		// apply generic filters
-		if !applyExMatchers(el, cfg.ExMatchers) {
-			continue
-		}
+// match ok, send to consumer
 
-		// --- dir: apply dir filters
-		if isDir {
-			if !applyExMatchers(el, cfg.DirExMatchers) {
-				continue
-			}
+// if cfg.FindFlags == FlagDir {
+// 	continue // only find sub-dir on ok=false
+// }
 
-			if len(cfg.Matchers) > 0 {
-				ok = applyMatchers(el, cfg.Matchers)
-				if !ok && len(cfg.DirMatchers) > 0 {
-					ok = applyMatchers(el, cfg.DirMatchers)
-				}
-			} else {
-				ok = applyMatchers(el, cfg.DirMatchers)
-			}
+// find in sub dir. 添加子目录任务
 
-			// match ok, send to consumer
-			if ok && cfg.FindFlags&FlagDir > 0 {
-				if cfg.CacheResult {
-					f.caches = append(f.caches, el)
-				}
-				f.ch <- el
-				atomic.AddUint32(&f.num, 1)
+// fix: 创建一个 goroutine 添加子目录任务，不然会造成阻塞
 
-				// if cfg.FindFlags == FlagDir {
-				// 	continue // only find sub-dir on ok=false
-				// }
-			}
+// --- type: file
 
-			// find in sub dir. 添加子目录任务
-			if cfg.MaxDepth == 0 || depth < cfg.MaxDepth {
-				f.debugf("add sub-dir: %s (depth: %d)", fullPath, depth)
-				f.wg.Add(1)
-				// fix: 创建一个 goroutine 添加子目录任务，不然会造成阻塞
-				go func(p string, d int) {
-					f.dirQueue <- scanDir{path: p, depth: d}
-				}(fullPath, depth)
-			}
-			continue
-		}
+// apply file filters
 
-		// --- type: file
-		if cfg.FindFlags&FlagFile == 0 {
-			continue
-		}
+// write to consumer
 
-		// apply file filters
-		if !applyExMatchers(el, cfg.FileExMatchers) {
-			continue
-		}
+func applyMatchers(el Elem, fls []Matcher) bool { _ = "STUB: not implemented"; return false }
 
-		if len(cfg.Matchers) > 0 {
-			ok = applyMatchers(el, cfg.Matchers)
-			if !ok && len(cfg.FileMatchers) > 0 {
-				ok = applyMatchers(el, cfg.FileMatchers)
-			}
-		} else {
-			ok = applyMatchers(el, cfg.FileMatchers)
-		}
-
-		// write to consumer
-		if ok && cfg.FindFlags&FlagFile > 0 {
-			if cfg.CacheResult {
-				f.caches = append(f.caches, el)
-			}
-			f.ch <- el
-			atomic.AddUint32(&f.num, 1)
-		}
-	}
-}
-
-func applyMatchers(el Elem, fls []Matcher) bool {
-	for _, f := range fls {
-		if f.Apply(el) {
-			return true
-		}
-	}
-	return len(fls) == 0
-}
-
-func applyExMatchers(el Elem, fls []Matcher) bool {
-	for _, f := range fls {
-		if f.Apply(el) {
-			return false
-		}
-	}
-	return true
-}
+func applyExMatchers(el Elem, fls []Matcher) bool { _ = "STUB: not implemented"; return false }
 
 // Reset filters config setting and results info.
-func (f *Finder) Reset() {
-	c := NewConfig(f.c.ScanDirs...)
-	c.ExcludeDotDir = f.c.ExcludeDotDir
-	c.FindFlags = f.c.FindFlags
-	c.MaxDepth = f.c.MaxDepth
-
-	f.c = c
-	f.ResetResult()
-}
+func (f *Finder) Reset() { _ = "STUB: not implemented"; return }
 
 // ResetResult reset result info.
-func (f *Finder) ResetResult() {
-	f.num = 0
-	f.err = nil
-	f.ch = make(chan Elem, 8)
-	f.caches = []Elem{}
-}
+func (f *Finder) ResetResult() { _ = "STUB: not implemented"; return }
 
 // Num get found elem num. only valid after finding.
-func (f *Finder) Num() uint { return uint(f.num) }
+func (f *Finder) Num() uint {
+	_ = "STUB: not implemented"
 
-// Err get last error
-func (f *Finder) Err() error { return f.err }
+	// Err get last error
+	return 0
+}
 
-// Caches get cached results. only valid after finding.
-func (f *Finder) Caches() []Elem { return f.caches }
+func (f *Finder) Err() error {
+	_ = "STUB: not implemented"
 
-// CacheNum get
-func (f *Finder) CacheNum() int { return len(f.caches) }
+	// Caches get cached results. only valid after finding.
+	return nil
+}
+
+func (f *Finder) Caches() []Elem {
+	_ = "STUB: not implemented"
+
+	// CacheNum get
+	return nil
+}
+
+func (f *Finder) CacheNum() int { _ = "STUB: not implemented"; return 0 }
 
 // Config get, NOTE: it's a copy of config.
-func (f *Finder) Config() Config { return *f.c }
+func (f *Finder) Config() Config {
+	_ = "STUB: not implemented"
 
-// String all dir paths
-func (f *Finder) String() string {
-	return strings.Join(f.c.ScanDirs, ";")
+	// String all dir paths
+	return *new(Config)
 }
 
-func (f *Finder) debugf(tpl string, vs ...any) {
-	if f.c.DebugMode {
-		fmt.Printf("Finder: "+tpl+"\n", vs...)
-	}
-}
+func (f *Finder) String() string { _ = "STUB: not implemented"; return "" }
 
-func (f *Finder) setError(err error) {
-	if err != nil {
-		f.err = err
-		f.debugf("ERROR=%v", err)
-	}
-}
+func (f *Finder) debugf(tpl string, vs ...any) { _ = "STUB: not implemented"; return }
+
+func (f *Finder) setError(err error) { _ = "STUB: not implemented"; return }

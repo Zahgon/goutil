@@ -8,14 +8,7 @@ import (
 type Buffer = byteutil.Buffer
 
 // NewBuffer instance, can set init size
-func NewBuffer(initSize ...int) *Buffer {
-	if len(initSize) > 0 && initSize[0] > 0 {
-		buf := &Buffer{}
-		buf.Grow(initSize[0])
-		return buf
-	}
-	return &Buffer{}
-}
+func NewBuffer(initSize ...int) *Buffer { _ = "STUB: not implemented"; return nil }
 
 // ByteChanPool struct
 //
@@ -29,5 +22,6 @@ type ByteChanPool = byteutil.ChanPool
 
 // NewByteChanPool instance
 func NewByteChanPool(maxSize, width, capWidth int) *ByteChanPool {
-	return byteutil.NewChanPool(maxSize, width, capWidth)
+	_ = "STUB: not implemented"
+	return nil
 }

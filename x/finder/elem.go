@@ -2,8 +2,6 @@ package finder
 
 import (
 	"io/fs"
-
-	"github.com/gookit/goutil/strutil"
 )
 
 // Elem of find file/dir path result
@@ -23,27 +21,20 @@ type elem struct {
 }
 
 // NewElem create a new Elem instance
-func NewElem(fPath string, ent fs.DirEntry) Elem {
-	return &elem{
-		path:     fPath,
-		DirEntry: ent,
-	}
-}
+func NewElem(fPath string, ent fs.DirEntry) Elem { _ = "STUB: not implemented"; return *new(Elem) }
 
 // Path gets full file/dir path. eg: "/path/to/file.go"
 func (e *elem) Path() string {
-	return e.path
+	_ = "STUB: not implemented"
+
+	// Info gets file info, will cache result
+	return ""
 }
 
-// Info gets file info, will cache result
 func (e *elem) Info() (fs.FileInfo, error) {
-	if e.stat == nil {
-		e.stat, e.sErr = e.DirEntry.Info()
-	}
-	return e.stat, e.sErr
+	_ = "STUB: not implemented"
+	return *new(fs.FileInfo), nil
 }
 
 // String get string representation
-func (e *elem) String() string {
-	return strutil.OrCond(e.IsDir(), "dir: ", "file: ") + e.Path()
-}
+func (e *elem) String() string { _ = "STUB: not implemented"; return "" }

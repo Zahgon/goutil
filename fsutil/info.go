@@ -1,112 +1,75 @@
 package fsutil
 
-import (
-	"os"
-	"path/filepath"
-	"strings"
-
-	"github.com/gookit/goutil/internal/comfunc"
-)
-
 // DirPath get dir path from filepath, without a last name.
-//  eg: "/foo/bar/baz.js" => "/foo/bar"
-func DirPath(fPath string) string { return filepath.Dir(fPath) }
+//
+//	eg: "/foo/bar/baz.js" => "/foo/bar"
+func DirPath(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // Dir get dir path from filepath, without a last name.
-//  eg: "/foo/bar/baz.js" => "/foo/bar"
-func Dir(fPath string) string { return filepath.Dir(fPath) }
+//
+//	eg: "/foo/bar/baz.js" => "/foo/bar"
+func Dir(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // PathName get file/dir name from a full path.
-//  eg: "/foo/bar/baz.js" => "baz.js"
-func PathName(fPath string) string { return filepath.Base(fPath) }
+//
+//	eg: "/foo/bar/baz.js" => "baz.js"
+func PathName(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // PathNoExt get path from full path, without ext.
 //
 // eg: path/to/main.go => "path/to/main"
-func PathNoExt(fPath string) string {
-	ext := filepath.Ext(fPath)
-	if el := len(ext); el > 0 {
-		return fPath[:len(fPath)-el]
-	}
-	return fPath
-}
+func PathNoExt(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // Name get file/dir name from full path.
 //
 // eg:
-//  "path/to/main.go" => "main.go"
-//  "/foo/bar/baz" => "baz"
-func Name(fPath string) string {
-	if fPath == "" {
-		return ""
-	}
-	return filepath.Base(fPath)
-}
+//
+//	"path/to/main.go" => "main.go"
+//	"/foo/bar/baz" => "baz"
+func Name(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // NameNoExt get file name from a full path, without an ext.
 //
 // eg: path/to/main.go => "main"
-func NameNoExt(fPath string) string {
-	if fPath == "" {
-		return ""
-	}
-
-	fName := filepath.Base(fPath)
-	if pos := strings.LastIndexByte(fName, '.'); pos > 0 {
-		return fName[:pos]
-	}
-	return fName
-}
+func NameNoExt(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // FileExt get filename ext. alias of filepath.Ext()
 //
 // eg: path/to/main.go => ".go"
-func FileExt(fPath string) string { return filepath.Ext(fPath) }
+func FileExt(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // Extname get filename ext. alias of filepath.Ext()
 //
 // eg: path/to/main.go => "go"
-func Extname(fPath string) string {
-	if ext := filepath.Ext(fPath); len(ext) > 0 {
-		return ext[1:]
-	}
-	return ""
-}
+func Extname(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // Suffix get filename ext. alias of filepath.Ext()
 //
 // eg: path/to/main.go => ".go"
-func Suffix(fPath string) string { return filepath.Ext(fPath) }
+func Suffix(fPath string) string { _ = "STUB: not implemented"; return "" }
 
 // Expand will parse first `~` to user home dir path.
-func Expand(pathStr string) string { return comfunc.ExpandHome(pathStr) }
+func Expand(pathStr string) string { _ = "STUB: not implemented"; return "" }
 
 // ExpandHome will parse first `~` to user home dir path.
-func ExpandHome(pathStr string) string { return comfunc.ExpandHome(pathStr) }
+func ExpandHome(pathStr string) string { _ = "STUB: not implemented"; return "" }
 
 // ExpandPath will parse `~` to user home dir path.
-func ExpandPath(pathStr string) string { return comfunc.ExpandHome(pathStr) }
+func ExpandPath(pathStr string) string { _ = "STUB: not implemented"; return "" }
 
 // ResolvePath will parse `~` and ENV var in path
-func ResolvePath(pathStr string) string {
-	pathStr = comfunc.ExpandHome(pathStr)
-	// return comfunc.ParseEnvVar()
-	return os.ExpandEnv(pathStr)
-}
+func ResolvePath(pathStr string) string { _ = "STUB: not implemented"; return "" }
+
+// return comfunc.ParseEnvVar()
 
 // SplitPath splits path immediately following the final Separator, separating it into a directory and file name component
-func SplitPath(pathStr string) (dir, name string) { return filepath.Split(pathStr) }
+func SplitPath(pathStr string) (dir, name string) { _ = "STUB: not implemented"; return "", "" }
 
 // homeDir cache
 var _homeDir string
 
 // UserHomeDir is alias of os.UserHomeDir, but ignore error.(by os.UserHomeDir)
-func UserHomeDir() string {
-	if _homeDir == "" {
-		_homeDir, _ = os.UserHomeDir()
-	}
-	return _homeDir
-}
+func UserHomeDir() string { _ = "STUB: not implemented"; return "" }
 
 // HomeDir get user home dir path.
-func HomeDir() string { return UserHomeDir() }
+func HomeDir() string { _ = "STUB: not implemented"; return "" }

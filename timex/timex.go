@@ -6,10 +6,6 @@ package timex
 
 import (
 	"time"
-
-	"github.com/gookit/goutil/arrutil"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/strutil"
 )
 
 // provide some common time constants
@@ -58,76 +54,61 @@ type Time struct {
  *************************************************************/
 
 // Now time instance
-func Now() *Time { return &Time{Time: time.Now(), Layout: DefaultLayout} }
+func Now() *Time { _ = "STUB: not implemented"; return nil }
 
 // New instance form given time
-func New(t time.Time) *Time { return &Time{Time: t, Layout: DefaultLayout} }
+func New(t time.Time) *Time { _ = "STUB: not implemented"; return nil }
 
 // Wrap the go time instance. alias of the New()
-func Wrap(t time.Time) *Time { return &Time{Time: t, Layout: DefaultLayout} }
+func Wrap(t time.Time) *Time { _ = "STUB: not implemented"; return nil }
 
 // FromTime new instance form given time.Time. alias of the New()
-func FromTime(t time.Time) *Time { return &Time{Time: t, Layout: DefaultLayout} }
+func FromTime(t time.Time) *Time { _ = "STUB: not implemented"; return nil }
 
 // Local time for now
-func Local() *Time { return New(time.Now().In(time.Local)) }
+func Local() *Time { _ = "STUB: not implemented"; return nil }
 
 // FromUnix create from unix time
-func FromUnix(sec int64) *Time { return New(time.Unix(sec, 0)) }
+func FromUnix(sec int64) *Time { _ = "STUB: not implemented"; return nil }
 
 // FromDate create from datetime string.
 func FromDate(s string, template ...string) (*Time, error) {
-	if len(template) > 0 && template[0] != "" {
-		return FromString(s, ToLayout(template[0]))
-	}
-	return FromString(s)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // FromString create from datetime string. see strutil.ToTime()
 func FromString(s string, layouts ...string) (*Time, error) {
-	t, err := strutil.ToTime(s, layouts...)
-	if err != nil {
-		return nil, err
-	}
-	return New(t), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // LocalByName time for now. eg: "Local", "UTC", "Asia/Shanghai"
-func LocalByName(tzName string) *Time {
-	loc, err := time.LoadLocation(tzName)
-	if err != nil {
-		panic(err)
-	}
-
-	return New(time.Now().In(loc))
-}
+func LocalByName(tzName string) *Time { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * timex usage
  *************************************************************/
 
 // T returns the t.Time
-func (t *Time) T() time.Time { return t.Time }
+func (t *Time) T() time.Time {
+	_ = "STUB: not implemented"
 
-// Format returns a textual representation of the time value formatted according to the layout defined by the argument.
-//
-// see time.Time.Format()
-func (t *Time) Format(layout string) string {
-	if layout == "" {
-		layout = t.Layout
-	}
-	return t.Time.Format(layout)
+	// Format returns a textual representation of the time value formatted according to the layout defined by the argument.
+	//
+	// see time.Time.Format()
+	return *new(time.Time)
 }
+
+func (t *Time) Format(layout string) string { _ = "STUB: not implemented"; return "" }
 
 // Datetime use layout or DefaultLayout format time to date. see Format()
-func (t *Time) Datetime(layout ...string) string {
-	return t.Format(arrutil.FirstOr(layout, t.Layout))
-}
+func (t *Time) Datetime(layout ...string) string { _ = "STUB: not implemented"; return "" }
 
 // TplFormat use input template format time to date.
 //
 // alias of DateFormat()
-func (t *Time) TplFormat(template string) string { return t.DateFormat(template) }
+func (t *Time) TplFormat(template string) string { _ = "STUB: not implemented"; return "" }
 
 // DateFormat use input template format time to date.
 //
@@ -142,36 +123,29 @@ func (t *Time) TplFormat(template string) string { return t.DateFormat(template)
 //	tn.DateFormat("ymd") // Output: 190101
 //
 // see ToLayout() for convert template to layout.
-func (t *Time) DateFormat(template string) string {
-	return t.Format(ToLayout(template))
-}
+func (t *Time) DateFormat(template string) string { _ = "STUB: not implemented"; return "" }
 
 // Yesterday got day ago time for the time
-func (t *Time) Yesterday() *Time { return t.AddSeconds(-OneDaySec) }
+func (t *Time) Yesterday() *Time { _ = "STUB: not implemented"; return nil }
 
 // DayAgo get some day ago time for the time
-func (t *Time) DayAgo(day int) *Time { return t.AddSeconds(-day * OneDaySec) }
+func (t *Time) DayAgo(day int) *Time { _ = "STUB: not implemented"; return nil }
 
 // AddDay add some daytime for the time
-func (t *Time) AddDay(day int) *Time { return t.AddSeconds(day * OneDaySec) }
+func (t *Time) AddDay(day int) *Time { _ = "STUB: not implemented"; return nil }
 
 // SubDay add some day time for the time
-func (t *Time) SubDay(day int) *Time { return t.AddSeconds(-day * OneDaySec) }
+func (t *Time) SubDay(day int) *Time { _ = "STUB: not implemented"; return nil }
 
 // Tomorrow time. get tomorrow time for the time
-func (t *Time) Tomorrow() *Time { return t.AddSeconds(OneDaySec) }
+func (t *Time) Tomorrow() *Time { _ = "STUB: not implemented"; return nil }
 
 // DayAfter get some day after time for the time.
 // alias of Time.AddDay()
-func (t *Time) DayAfter(day int) *Time { return t.AddDay(day) }
+func (t *Time) DayAfter(day int) *Time { _ = "STUB: not implemented"; return nil }
 
 // AddDur some duration time
-func (t *Time) AddDur(dur time.Duration) *Time {
-	return &Time{
-		Time:   t.Add(dur),
-		Layout: DefaultLayout,
-	}
-}
+func (t *Time) AddDur(dur time.Duration) *Time { _ = "STUB: not implemented"; return nil }
 
 // AddString add duration time string.
 //
@@ -180,148 +154,114 @@ func (t *Time) AddDur(dur time.Duration) *Time {
 //	tn := timex.Now() // example as "2019-01-01 12:12:12"
 //	nt := tn.AddString("1h")
 //	nt.Datetime() // Output: 2019-01-01 13:12:12
-func (t *Time) AddString(dur string) *Time {
-	d, err := ToDuration(dur)
-	if err != nil {
-		panic(err)
-	}
-	return t.AddDur(d)
-}
+func (t *Time) AddString(dur string) *Time { _ = "STUB: not implemented"; return nil }
 
 // AddHour add some hour time
-func (t *Time) AddHour(hours int) *Time { return t.AddSeconds(hours * OneHourSec) }
+func (t *Time) AddHour(hours int) *Time { _ = "STUB: not implemented"; return nil }
 
 // SubHour minus some hour time
-func (t *Time) SubHour(hours int) *Time { return t.SubSeconds(hours * OneHourSec) }
+func (t *Time) SubHour(hours int) *Time { _ = "STUB: not implemented"; return nil }
 
 // AddMinutes add some minutes time for the time
-func (t *Time) AddMinutes(minutes int) *Time { return t.AddSeconds(minutes * OneMinSec) }
+func (t *Time) AddMinutes(minutes int) *Time { _ = "STUB: not implemented"; return nil }
 
 // SubMinutes minus some minutes time for the time
-func (t *Time) SubMinutes(minutes int) *Time { return t.AddSeconds(-minutes * OneMinSec) }
+func (t *Time) SubMinutes(minutes int) *Time { _ = "STUB: not implemented"; return nil }
 
 // AddSeconds add some seconds time the time
-func (t *Time) AddSeconds(seconds int) *Time {
-	return &Time{
-		Time: t.Add(time.Duration(seconds) * time.Second),
-		// with layout
-		Layout: DefaultLayout,
-	}
-}
+func (t *Time) AddSeconds(seconds int) *Time { _ = "STUB: not implemented"; return nil }
+
+// with layout
 
 // SubSeconds minus some seconds time the time
-func (t *Time) SubSeconds(seconds int) *Time {
-	return &Time{
-		Time: t.Add(time.Duration(-seconds) * time.Second),
-		// with layout
-		Layout: DefaultLayout,
-	}
-}
+func (t *Time) SubSeconds(seconds int) *Time { _ = "STUB: not implemented"; return nil }
+
+// with layout
 
 // Diff calc diff duration for t - u. alias of time.Time.Sub()
-func (t *Time) Diff(u time.Time) time.Duration { return t.Sub(u) }
+func (t *Time) Diff(u time.Time) time.Duration {
+	_ = "STUB: not implemented"
 
-// DiffSec calc diff seconds for t - u
-func (t *Time) DiffSec(u time.Time) int { return int(t.Sub(u) / time.Second) }
+	// DiffSec calc diff seconds for t - u
+	return *new(time.Duration)
+}
+
+func (t *Time) DiffSec(u time.Time) int { _ = "STUB: not implemented"; return 0 }
 
 // DiffUnix calc diff seconds for t.Unix() - u
-func (t *Time) DiffUnix(u int64) int {
-	return int(t.Unix() - u)
-}
+func (t *Time) DiffUnix(u int64) int { _ = "STUB: not implemented"; return 0 }
 
 // SubUnix calc diff seconds for t - u
-func (t *Time) SubUnix(u time.Time) int {
-	return int(t.Sub(u) / time.Second)
-}
+func (t *Time) SubUnix(u time.Time) int { _ = "STUB: not implemented"; return 0 }
 
 // HourStart time
-func (t *Time) HourStart() *Time {
-	y, m, d := t.Date()
-	newTime := time.Date(y, m, d, t.Hour(), 0, 0, 0, t.Location())
-
-	return New(newTime)
-}
+func (t *Time) HourStart() *Time { _ = "STUB: not implemented"; return nil }
 
 // HourEnd time
-func (t *Time) HourEnd() *Time {
-	y, m, d := t.Date()
-	newTime := time.Date(y, m, d, t.Hour(), 59, 59, int(time.Second-time.Nanosecond), t.Location())
-
-	return New(newTime)
-}
+func (t *Time) HourEnd() *Time { _ = "STUB: not implemented"; return nil }
 
 // DayStart get time at 00:00:00
-func (t *Time) DayStart() *Time {
-	y, m, d := t.Date()
-	newTime := time.Date(y, m, d, 0, 0, 0, 0, t.Location())
-
-	return New(newTime)
-}
+func (t *Time) DayStart() *Time { _ = "STUB: not implemented"; return nil }
 
 // DayEnd get time at 23:59:59
-func (t *Time) DayEnd() *Time {
-	y, m, d := t.Date()
-	newTime := time.Date(y, m, d, 23, 59, 59, int(time.Second-time.Nanosecond), t.Location())
-
-	return New(newTime)
-}
+func (t *Time) DayEnd() *Time { _ = "STUB: not implemented"; return nil }
 
 // CustomHMS custom change the hour, minute, second for create new time.
-func (t *Time) CustomHMS(hour, min, sec int) *Time {
-	y, m, d := t.Date()
-	newTime := time.Date(y, m, d, hour, min, sec, int(time.Second-time.Nanosecond), t.Location())
-
-	return FromTime(newTime)
-}
+func (t *Time) CustomHMS(hour, min, sec int) *Time { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty check if time is empty. alias for t.IsZero
-func (t *Time) IsEmpty() bool { return t.IsZero() }
+func (t *Time) IsEmpty() bool {
+	_ = "STUB: not implemented"
 
-// IsBefore the given time
-func (t *Time) IsBefore(u time.Time) bool { return t.Before(u) }
+	// IsBefore the given time
+	return false
+}
 
-// IsBeforeUnix the given unix timestamp
-func (t *Time) IsBeforeUnix(ux int64) bool { return t.Before(time.Unix(ux, 0)) }
+func (t *Time) IsBefore(u time.Time) bool {
+	_ = "STUB: not implemented"
+
+	// IsBeforeUnix the given unix timestamp
+	return false
+}
+
+func (t *Time) IsBeforeUnix(ux int64) bool { _ = "STUB: not implemented"; return false }
 
 // IsAfter the given time
-func (t *Time) IsAfter(u time.Time) bool { return t.After(u) }
+func (t *Time) IsAfter(u time.Time) bool {
+	_ = "STUB: not implemented"
 
-// IsAfterUnix the given unix timestamp
-func (t *Time) IsAfterUnix(ux int64) bool { return t.After(time.Unix(ux, 0)) }
+	// IsAfterUnix the given unix timestamp
+	return false
+}
+
+func (t *Time) IsAfterUnix(ux int64) bool { _ = "STUB: not implemented"; return false }
 
 // Timestamp value. alias of t.Unix()
-func (t *Time) Timestamp() int64 { return t.Unix() }
+func (t *Time) Timestamp() int64 {
+	_ = "STUB: not implemented"
 
-// HowLongAgo format diff time to string.
-func (t *Time) HowLongAgo(before time.Time) string {
-	return mathutil.HowLongAgo(t.Unix() - before.Unix())
+	// HowLongAgo format diff time to string.
+	return 0
 }
+
+func (t *Time) HowLongAgo(before time.Time) string { _ = "STUB: not implemented"; return "" }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 //
 // Tip: will auto match a format by strutil.ToTime()
 func (t *Time) UnmarshalJSON(data []byte) error {
+	_ = "STUB: not implemented"
 	// Ignore null, like in the main JSON package.
-	if string(data) == "null" {
-		return nil
-	}
-
-	// Fractional seconds are handled implicitly by Parse.
-	tt, err := strutil.ToTime(string(data[1 : len(data)-1]))
-	if err == nil {
-		t.Time = tt
-	}
-	return err
+	return nil
 }
+
+// Fractional seconds are handled implicitly by Parse.
 
 // UnmarshalText implements the encoding.TextUnmarshaler interface.
 //
 // Tip: will auto match a format by strutil.ToTime()
 func (t *Time) UnmarshalText(data []byte) error {
+	_ = "STUB: not implemented"
 	// Fractional seconds are handled implicitly by Parse.
-	tt, err := strutil.ToTime(string(data))
-	if err == nil {
-		t.Time = tt
-	}
-	return err
+	return nil
 }

@@ -1,30 +1,25 @@
 package errorx
 
-import (
-	"errors"
-	"fmt"
-)
-
 // E new a raw go error. alias of errors.New()
-func E(msg string) error { return errors.New(msg) }
+func E(msg string) error { _ = "STUB: not implemented"; return nil }
 
 // Err new a raw go error. alias of errors.New()
-func Err(msg string) error { return errors.New(msg) }
+func Err(msg string) error { _ = "STUB: not implemented"; return nil }
 
 // Raw new a raw go error. alias of errors.New()
-func Raw(msg string) error { return errors.New(msg) }
+func Raw(msg string) error { _ = "STUB: not implemented"; return nil }
 
 // Ef new a raw go error. alias of fmt.Errorf
-func Ef(tpl string, vars ...any) error { return fmt.Errorf(tpl, vars...) }
+func Ef(tpl string, vars ...any) error { _ = "STUB: not implemented"; return nil }
 
 // Errf new a raw go error. alias of fmt.Errorf
-func Errf(tpl string, vars ...any) error { return fmt.Errorf(tpl, vars...) }
+func Errf(tpl string, vars ...any) error { _ = "STUB: not implemented"; return nil }
 
 // Rf new a raw go error. alias of fmt.Errorf
-func Rf(tpl string, vs ...any) error { return fmt.Errorf(tpl, vs...) }
+func Rf(tpl string, vs ...any) error { _ = "STUB: not implemented"; return nil }
 
 // Rawf new a raw go error. alias of fmt.Errorf
-func Rawf(tpl string, vs ...any) error { return fmt.Errorf(tpl, vs...) }
+func Rawf(tpl string, vs ...any) error { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * helper func for error
@@ -32,64 +27,34 @@ func Rawf(tpl string, vs ...any) error { return fmt.Errorf(tpl, vs...) }
 
 // Cause returns the first cause error by call err.Cause().
 // Otherwise, will returns current error.
-func Cause(err error) error {
-	if err == nil {
-		return nil
-	}
-
-	if err, ok := err.(Causer); ok {
-		return err.Cause()
-	}
-	return err
-}
+func Cause(err error) error { _ = "STUB: not implemented"; return nil }
 
 // Unwrap returns previous error by call err.Unwrap().
 // Otherwise, will returns nil.
-func Unwrap(err error) error {
-	if err == nil {
-		return nil
-	}
+func Unwrap(err error) error { _ = "STUB: not implemented"; return nil }
 
-	if err, ok := err.(Unwrapper); ok {
-		return err.Unwrap()
-	}
+// Previous alias of Unwrap()
+func Previous(err error) error {
+	_ = "STUB: not implemented"
+
+	// IsErrorX check
 	return nil
 }
 
-// Previous alias of Unwrap()
-func Previous(err error) error { return Unwrap(err) }
-
-// IsErrorX check
-func IsErrorX(err error) (ok bool) {
-	_, ok = err.(*ErrorX)
-	return
-}
+func IsErrorX(err error) (ok bool) { _ = "STUB: not implemented"; return false }
 
 // ToErrorX convert check. like errors.As()
-func ToErrorX(err error) (ex *ErrorX, ok bool) {
-	ex, ok = err.(*ErrorX)
-	return
-}
+func ToErrorX(err error) (ex *ErrorX, ok bool) { _ = "STUB: not implemented"; return nil, false }
 
 // MustEX convert error to *ErrorX, panic if err check failed.
-func MustEX(err error) *ErrorX {
-	ex, ok := err.(*ErrorX)
-	if !ok {
-		panic("errorx: error is not *ErrorX")
-	}
-	return ex
-}
+func MustEX(err error) *ErrorX { _ = "STUB: not implemented"; return nil }
 
 // Has contains target error, or err is eq target.
 // alias of errors.Is()
-func Has(err, target error) bool {
-	return errors.Is(err, target)
-}
+func Has(err, target error) bool { _ = "STUB: not implemented"; return false }
 
 // Is alias of errors.Is()
-func Is(err, target error) bool {
-	return errors.Is(err, target)
-}
+func Is(err, target error) bool { _ = "STUB: not implemented"; return false }
 
 // To try convert err to target, returns is result.
 //
@@ -102,13 +67,9 @@ func Is(err, target error) bool {
 //	if errorx.To(err, &ex) {
 //		fmt.Println(ex.GoString())
 //	}
-func To(err error, target any) bool {
-	return errors.As(err, target)
-}
+func To(err error, target any) bool { _ = "STUB: not implemented"; return false }
 
 // As same of the To(), alias of errors.As()
 //
 // NOTICE: target must be ptr and not nil
-func As(err error, target any) bool {
-	return errors.As(err, target)
-}
+func As(err error, target any) bool { _ = "STUB: not implemented"; return false }

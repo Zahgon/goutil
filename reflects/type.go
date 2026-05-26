@@ -28,27 +28,16 @@ const (
 
 // ToBaseKind convert reflect.Kind to base kind
 func ToBaseKind(kind reflect.Kind) BKind {
-	return ToBKind(kind)
+	_ = "STUB: not implemented"
+	return *
+
+	// ToBKind convert reflect.Kind to base kind
+	new(BKind)
 }
 
-// ToBKind convert reflect.Kind to base kind
-func ToBKind(kind reflect.Kind) BKind {
-	switch kind {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return Int
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-		return Uint
-	case reflect.Float32, reflect.Float64:
-		return Float
-	case reflect.Complex64, reflect.Complex128:
-		return Complex
-	case reflect.Array, reflect.Slice:
-		return Array
-	default:
-		// like: string, map, struct, ptr, func, interface ...
-		return kind
-	}
-}
+func ToBKind(kind reflect.Kind) BKind { _ = "STUB: not implemented"; return *new(BKind) }
+
+// like: string, map, struct, ptr, func, interface ...
 
 // Type struct
 type Type interface {
@@ -67,26 +56,22 @@ type xType struct {
 }
 
 // TypeOf value
-func TypeOf(v any) Type {
-	rftTyp := reflect.TypeOf(v)
-
-	return &xType{
-		Type:     rftTyp,
-		baseKind: ToBKind(rftTyp.Kind()),
-	}
-}
+func TypeOf(v any) Type { _ = "STUB: not implemented"; return *new(Type) }
 
 // BaseKind value
 func (t *xType) BaseKind() BKind {
-	return t.baseKind
+	_ = "STUB: not implemented"
+
+	// RealType returns a ptr type's real type. otherwise, will return self.
+	return *new(BKind)
 }
 
-// RealType returns a ptr type's real type. otherwise, will return self.
 func (t *xType) RealType() reflect.Type {
-	return TypeReal(t.Type)
+	_ = "STUB: not implemented"
+	return *
+
+	// SafeElem returns the array, slice, chan, map type's element type. otherwise, will return self.
+	new(reflect.Type)
 }
 
-// SafeElem returns the array, slice, chan, map type's element type. otherwise, will return self.
-func (t *xType) SafeElem() reflect.Type {
-	return TypeElem(t.Type)
-}
+func (t *xType) SafeElem() reflect.Type { _ = "STUB: not implemented"; return *new(reflect.Type) }

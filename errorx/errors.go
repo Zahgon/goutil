@@ -2,8 +2,6 @@ package errorx
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 // ErrorCoder interface
@@ -28,93 +26,76 @@ type errorR struct {
 }
 
 // NewR code with error response
-func NewR(code int, msg string) ErrorR {
-	return &errorR{code: code, msg: msg}
-}
+func NewR(code int, msg string) ErrorR { _ = "STUB: not implemented"; return *new(ErrorR) }
 
 // Fail code with error response
-func Fail(code int, msg string) ErrorR {
-	return &errorR{code: code, msg: msg}
-}
+func Fail(code int, msg string) ErrorR { _ = "STUB: not implemented"; return *new(ErrorR) }
 
 // Failf code with error response
-func Failf(code int, tpl string, v ...any) ErrorR {
-	return &errorR{code: code, msg: fmt.Sprintf(tpl, v...)}
-}
+func Failf(code int, tpl string, v ...any) ErrorR { _ = "STUB: not implemented"; return *new(ErrorR) }
 
 // Suc success response reply
-func Suc(msg string) ErrorR {
-	return &errorR{code: 0, msg: msg}
-}
+func Suc(msg string) ErrorR { _ = "STUB: not implemented"; return *new(ErrorR) }
 
 // IsSuc code value check
 func (e *errorR) IsSuc() bool {
-	return e.code == 0
+	_ = "STUB: not implemented"
+
+	// IsFail code value check
+	return false
 }
 
-// IsFail code value check
 func (e *errorR) IsFail() bool {
-	return e.code != 0
+	_ = "STUB: not implemented"
+
+	// Code value
+	return false
 }
 
-// Code value
 func (e *errorR) Code() int {
-	return e.code
+	_ = "STUB: not implemented"
+
+	// Error string
+	return 0
 }
 
-// Error string
 func (e *errorR) Error() string {
-	return e.msg
+	_ = "STUB: not implemented"
+
+	// String get
+	return ""
 }
 
-// String get
-func (e *errorR) String() string {
-	return e.msg + "(code: " + strconv.FormatInt(int64(e.code), 10) + ")"
-}
+func (e *errorR) String() string { _ = "STUB: not implemented"; return "" }
 
 // GoString get.
 func (e *errorR) GoString() string {
-	return e.String()
+	_ = "STUB: not implemented"
+
+	// ErrorM multi error map
+	return ""
 }
 
-// ErrorM multi error map
 type ErrorM map[string]error
 
 // ErrMap alias of ErrorM
 type ErrMap = ErrorM
 
 // Error string
-func (e ErrorM) Error() string {
-	var sb strings.Builder
-	for name, err := range e {
-		sb.WriteString(name)
-		sb.WriteByte(':')
-		sb.WriteString(err.Error())
-		sb.WriteByte('\n')
-	}
-	return sb.String()
-}
+func (e ErrorM) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrorOrNil error
-func (e ErrorM) ErrorOrNil() error {
-	if len(e) == 0 {
-		return nil
-	}
-	return e
-}
+func (e ErrorM) ErrorOrNil() error { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty error
 func (e ErrorM) IsEmpty() bool {
-	return len(e) == 0
+	_ = "STUB: not implemented"
+
+	// One error
+	return false
 }
 
-// One error
-func (e ErrorM) One() error {
-	for _, err := range e {
-		return err
-	}
-	return nil
-}
+func (e ErrorM) One() error { _ = "STUB: not implemented"; return nil }
 
 // Errors multi error list
 type Errors []error
@@ -123,32 +104,13 @@ type Errors []error
 type ErrList = Errors
 
 // Error string
-func (es Errors) Error() string {
-	var sb strings.Builder
-	for _, err := range es {
-		sb.WriteString(err.Error())
-		sb.WriteByte('\n')
-	}
-	return sb.String()
-}
+func (es Errors) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrorOrNil error
-func (es Errors) ErrorOrNil() error {
-	if len(es) == 0 {
-		return nil
-	}
-	return es
-}
+func (es Errors) ErrorOrNil() error { _ = "STUB: not implemented"; return nil }
 
 // IsEmpty error
-func (es Errors) IsEmpty() bool {
-	return len(es) == 0
-}
+func (es Errors) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
 // First error
-func (es Errors) First() error {
-	if len(es) > 0 {
-		return es[0]
-	}
-	return nil
-}
+func (es Errors) First() error { _ = "STUB: not implemented"; return nil }

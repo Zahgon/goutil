@@ -2,13 +2,25 @@ package ptr
 
 // Of returns a pointer to the provided value.
 // It is a generic replacement for previous helper functions.
-func Of[T any](v T) *T { return &v }
+func Of[T any](v T) *T {
+	_ = "STUB: not implemented"
 
-// Int returns a pointer to the provided int value.
-func Int(v int) *int { return &v }
+	// Int returns a pointer to the provided int value.
+	return nil
+}
 
-// String returns a pointer to the provided string value.
-func String(v string) *string { return &v }
+func Int(v int) *int {
+	_ = "STUB: not implemented"
 
-// Bool returns a pointer to the provided bool value.
-func Bool(v bool) *bool { return &v }
+	// String returns a pointer to the provided string value.
+	return nil
+}
+
+func String(v string) *string {
+	_ = "STUB: not implemented"
+
+	// Bool returns a pointer to the provided bool value.
+	return nil
+}
+
+func Bool(v bool) *bool { _ = "STUB: not implemented"; return nil }

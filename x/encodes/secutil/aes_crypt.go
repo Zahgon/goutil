@@ -1,9 +1,6 @@
 package secutil
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-
 	"github.com/gookit/goutil/byteutil"
 )
 
@@ -54,108 +51,36 @@ type AesCrypt struct {
 }
 
 // NewAesCrypt instance
-func NewAesCrypt() *AesCrypt {
-	return &AesCrypt{
-		CryptConfig: CryptConfig{
-			Method:  CryptAes256CBC,
-			PadType: PadTypePKCS5,
-			Encoder: byteutil.B64Encoder,
-		},
-	}
-}
+func NewAesCrypt() *AesCrypt { _ = "STUB: not implemented"; return nil }
 
 // Config crypt instance
-func (p *AesCrypt) Config(fn func(c *CryptConfig)) *AesCrypt {
-	fn(&p.CryptConfig)
-	return p
-}
+func (p *AesCrypt) Config(fn func(c *CryptConfig)) *AesCrypt { _ = "STUB: not implemented"; return nil }
 
 // Init crypt instance
-func (p *AesCrypt) Init() error {
-	if p.init {
-		return nil
-	}
+func (p *AesCrypt) Init() error { _ = "STUB: not implemented"; return nil }
 
-	p.init = true
-	switch p.Method {
-	case CryptAes128CBC:
-		p.keyLen = 16
-		p.encryptType = "cbc"
-	case CryptAes256CBC:
-		p.keyLen = 32
-		p.encryptType = "cbc"
-	}
+// iv length must is 16 = aes.BlockSize
 
-	// iv length must is 16 = aes.BlockSize
-	p.iv = []byte(p.IV)
-
-	// padding ASCII 0(NUL)
-	p.key = make([]byte, p.keyLen)
-	copy(p.key, p.Key)
-
-	return nil
-}
+// padding ASCII 0(NUL)
 
 // Encrypt input source bytes. return error on fail.
-func (p *AesCrypt) Encrypt(src []byte) ([]byte, error) {
-	if err := p.Init(); err != nil {
-		return nil, err
-	}
+func (p *AesCrypt) Encrypt(src []byte) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	// TODO 优化: 在 Init() 创建好 block 和 blockMode
-	block, err := aes.NewCipher(p.key)
-	if err != nil {
-		return nil, err
-	}
-
-	padSrc := PKCS5Padding(src, block.BlockSize())
-
-	encrypted := make([]byte, len(padSrc))
-	blockMode := cipher.NewCBCEncrypter(block, p.iv)
-	blockMode.CryptBlocks(encrypted, padSrc)
-
-	if p.Encoder == nil {
-		return encrypted, nil
-	}
-	return p.Encoder.Encode(encrypted), nil
-}
+// TODO 优化: 在 Init() 创建好 block 和 blockMode
 
 // EncryptString to encoded string. return error on fail.
 func (p *AesCrypt) EncryptString(src string) (string, error) {
-	bs, err := p.Encrypt([]byte(src))
-	return string(bs), err
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Decrypt an encrypt to source data
-func (p *AesCrypt) Decrypt(enc []byte) ([]byte, error) {
-	if err := p.Init(); err != nil {
-		return nil, err
-	}
+func (p *AesCrypt) Decrypt(enc []byte) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	if p.Encoder != nil {
-		var err error
-		enc, err = p.Encoder.Decode(enc)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	// TODO 优化: 在 Init() 创建好 block 和 blockMode
-	block, err := aes.NewCipher(p.key)
-	if err != nil {
-		return nil, err
-	}
-
-	blockMode := cipher.NewCBCDecrypter(block, p.iv)
-
-	srcBytes := make([]byte, len(enc))
-	blockMode.CryptBlocks(srcBytes, enc)
-
-	return PKCS5UnPadding(srcBytes)
-}
+// TODO 优化: 在 Init() 创建好 block 和 blockMode
 
 // DecryptString to source string. return error on fail.
 func (p *AesCrypt) DecryptString(enc string) (string, error) {
-	bs, err := p.Decrypt([]byte(enc))
-	return string(bs), err
+	_ = "STUB: not implemented"
+	return "", nil
 }

@@ -2,7 +2,6 @@
 package secutil
 
 import (
-	"bytes"
 	"errors"
 )
 
@@ -10,36 +9,15 @@ import (
 var ErrUnPadding = errors.New("un-padding decrypted data fail")
 
 // PKCS5Padding input data
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext)%blockSize
-	padText := bytes.Repeat([]byte{byte(padding)}, padding)
-
-	return append(ciphertext, padText...)
-}
+func PKCS5Padding(ciphertext []byte, blockSize int) []byte { _ = "STUB: not implemented"; return nil }
 
 // PKCS5UnPadding input data
-func PKCS5UnPadding(origData []byte) ([]byte, error) {
-	length := len(origData)
-	delLen := int(origData[length-1])
+func PKCS5UnPadding(origData []byte) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	if delLen > length {
-		return nil, ErrUnPadding
-	}
-
-	// fix: 检查删除的填充是否是一样的字符，不一样说明 delLen 值是有问题的，无法解码
-	if delLen > 1 && origData[length-1] != origData[length-2] {
-		return nil, ErrUnPadding
-	}
-
-	return origData[:length-delLen], nil
-}
+// fix: 检查删除的填充是否是一样的字符，不一样说明 delLen 值是有问题的，无法解码
 
 // PKCS7Padding input data
-func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
-	return PKCS5Padding(ciphertext, blockSize)
-}
+func PKCS7Padding(ciphertext []byte, blockSize int) []byte { _ = "STUB: not implemented"; return nil }
 
 // PKCS7UnPadding input data
-func PKCS7UnPadding(origData []byte) ([]byte, error) {
-	return PKCS5UnPadding(origData)
-}
+func PKCS7UnPadding(origData []byte) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }

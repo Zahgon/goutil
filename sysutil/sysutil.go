@@ -1,43 +1,27 @@
 // Package sysutil provide some system util functions. eg: sysenv, exec, user, process
 package sysutil
 
-import (
-	"os"
-	"path/filepath"
-)
-
 // Workdir get
-func Workdir() string {
-	dir, _ := os.Getwd()
-	return dir
-}
+func Workdir() string { _ = "STUB: not implemented"; return "" }
 
 // BinDir get
-func BinDir() string {
-	return filepath.Dir(os.Args[0])
-}
+func BinDir() string { _ = "STUB: not implemented"; return "" }
 
 // BinName get
-func BinName() string {
-	return filepath.Base(os.Args[0])
-}
+func BinName() string { _ = "STUB: not implemented"; return "" }
 
 // BinFile get
 func BinFile() string {
-	return os.Args[0]
+	_ = "STUB: not implemented"
+
+	// Open file or url address
+	return ""
 }
 
-// Open file or url address
-func Open(fileOrURL string) error { return OpenURL(fileOrURL) }
+func Open(fileOrURL string) error { _ = "STUB: not implemented"; return nil }
 
 // OpenBrowser file or url address
-func OpenBrowser(fileOrURL string) error { return OpenURL(fileOrURL) }
+func OpenBrowser(fileOrURL string) error { _ = "STUB: not implemented"; return nil }
 
 // OpenFile open files browser window for the file path.
-func OpenFile(path string) error {
-	fpath, err := filepath.Abs(path)
-	if err != nil {
-		return err
-	}
-	return OpenURL("file://" + fpath)
-}
+func OpenFile(path string) error { _ = "STUB: not implemented"; return nil }

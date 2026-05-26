@@ -1,15 +1,8 @@
 package finder
 
 import (
-	"path"
 	"regexp"
-	"strings"
 	"time"
-
-	"github.com/gookit/goutil/fsutil"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/strutil"
-	"github.com/gookit/goutil/timex"
 )
 
 // ------------------ built in filters ------------------
@@ -25,26 +18,13 @@ var MatchDir = MatcherFunc(func(el Elem) bool {
 })
 
 // StartWithDot match dot file/dir. eg: ".gitignore"
-func StartWithDot() MatcherFunc {
-	return func(el Elem) bool {
-		name := el.Name()
-		return len(name) > 0 && name[0] == '.'
-	}
-}
+func StartWithDot() MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // MatchDotFile match dot filename. eg: ".idea"
-func MatchDotFile() MatcherFunc {
-	return func(el Elem) bool {
-		return !el.IsDir() && el.Name()[0] == '.'
-	}
-}
+func MatchDotFile() MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // MatchDotDir match dot dirname. eg: ".idea"
-func MatchDotDir() MatcherFunc {
-	return func(el Elem) bool {
-		return el.IsDir() && el.Name()[0] == '.'
-	}
-}
+func MatchDotDir() MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // MatchExt match filepath by given file ext.
 //
@@ -53,20 +33,15 @@ func MatchDotDir() MatcherFunc {
 //	f := NewFinder('path/to/dir')
 //	f.Add(MatchExt(".go"))
 //	f.Not(MatchExt(".md"))
-func MatchExt(exts ...string) MatcherFunc { return MatchExts(exts) }
+func MatchExt(exts ...string) MatcherFunc {
+	_ = "STUB: not implemented"
+	return *
 
-// MatchExts filter filepath by given file ext.
-func MatchExts(exts []string) MatcherFunc {
-	return func(el Elem) bool {
-		elExt := path.Ext(el.Name())
-		for _, ext := range exts {
-			if ext == elExt {
-				return true
-			}
-		}
-		return false
-	}
+	// MatchExts filter filepath by given file ext.
+	new(MatcherFunc)
 }
+
+func MatchExts(exts []string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // MatchName match filepath by given names.
 //
@@ -74,24 +49,19 @@ func MatchExts(exts []string) MatcherFunc {
 //
 //	f := NewFinder('path/to/dir')
 //	f.Not(MatchName("README.md", "*_test.go"))
-func MatchName(names ...string) MatcherFunc { return MatchNames(names) }
+func MatchName(names ...string) MatcherFunc {
+	_ = "STUB: not implemented"
+	return *
 
-// MatchNames match filepath by given names or patterns.
-//
-// Usage:
-//
-//	f.Not(MatchNames([]string{"README.md", "*_test.go"}))
-func MatchNames(names []string) MatcherFunc {
-	return func(el Elem) bool {
-		elName := el.Name()
-		for _, name := range names {
-			if name == elName || fsutil.PathMatch(name, elName) {
-				return true
-			}
-		}
-		return false
-	}
+	// MatchNames match filepath by given names or patterns.
+	//
+	// Usage:
+	//
+	//	f.Not(MatchNames([]string{"README.md", "*_test.go"}))
+	new(MatcherFunc)
 }
+
+func MatchNames(names []string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // MatchPrefix match filepath by check given prefixes.
 //
@@ -99,18 +69,15 @@ func MatchNames(names []string) MatcherFunc {
 //
 //	f := NewFinder('path/to/dir')
 //	f.Add(finder.MatchPrefix("app_", "README"))
-func MatchPrefix(prefixes ...string) MatcherFunc { return MatchPrefixes(prefixes) }
+func MatchPrefix(prefixes ...string) MatcherFunc {
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
+}
 
 // MatchPrefixes match filepath by check given prefixes.
 func MatchPrefixes(prefixes []string) MatcherFunc {
-	return func(el Elem) bool {
-		for _, pfx := range prefixes {
-			if strings.HasPrefix(el.Name(), pfx) {
-				return true
-			}
-		}
-		return false
-	}
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
 }
 
 // MatchSuffix match filepath by check path has suffixes.
@@ -120,18 +87,15 @@ func MatchPrefixes(prefixes []string) MatcherFunc {
 //	f := NewFinder('path/to/dir')
 //	f.Add(finder.MatchSuffix("util.go", "en.md"))
 //	f.Not(finder.MatchSuffix("_test.go", ".log"))
-func MatchSuffix(suffixes ...string) MatcherFunc { return MatchSuffixes(suffixes) }
+func MatchSuffix(suffixes ...string) MatcherFunc {
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
+}
 
 // MatchSuffixes match filepath by check path has suffixes.
 func MatchSuffixes(suffixes []string) MatcherFunc {
-	return func(el Elem) bool {
-		for _, sfx := range suffixes {
-			if strings.HasSuffix(el.Path(), sfx) {
-				return true
-			}
-		}
-		return false
-	}
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
 }
 
 // MatchPath match file/dir by given sub paths.
@@ -140,19 +104,10 @@ func MatchSuffixes(suffixes []string) MatcherFunc {
 //
 //	f := NewFinder('path/to/dir')
 //	f.Add(MatchPath("need/path"))
-func MatchPath(subPaths ...string) MatcherFunc { return MatchPaths(subPaths) }
+func MatchPath(subPaths ...string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // MatchPaths match file/dir by given sub paths.
-func MatchPaths(subPaths []string) MatcherFunc {
-	return func(el Elem) bool {
-		for _, subPath := range subPaths {
-			if strings.Contains(el.Path(), subPath) {
-				return true
-			}
-		}
-		return false
-	}
-}
+func MatchPaths(subPaths []string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // GlobMatch file/dir name by given patterns.
 //
@@ -160,18 +115,12 @@ func MatchPaths(subPaths []string) MatcherFunc {
 //
 //	f := NewFinder('path/to/dir')
 //	f.AddFilter(GlobMatch("*_test.go"))
-func GlobMatch(patterns ...string) MatcherFunc { return GlobMatches(patterns) }
+func GlobMatch(patterns ...string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // GlobMatches file/dir name by given patterns.
 func GlobMatches(patterns []string) MatcherFunc {
-	return func(el Elem) bool {
-		for _, pattern := range patterns {
-			if ok, _ := path.Match(pattern, el.Name()); ok {
-				return true
-			}
-		}
-		return false
-	}
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
 }
 
 // RegexMatch match name by given regex pattern
@@ -180,28 +129,18 @@ func GlobMatches(patterns []string) MatcherFunc {
 //
 //	f := NewFinder('path/to/dir')
 //	f.AddFilter(RegexMatch(`[A-Z]\w+`))
-func RegexMatch(pattern string) MatcherFunc {
-	reg := regexp.MustCompile(pattern)
-
-	return func(el Elem) bool {
-		return reg.MatchString(el.Name())
-	}
-}
+func RegexMatch(pattern string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 // NameLike exclude filepath by given name match.
-func NameLike(patterns ...string) MatcherFunc { return NameLikes(patterns) }
+func NameLike(patterns ...string) MatcherFunc {
+	_ = "STUB: not implemented"
+	return *
 
-// NameLikes filter filepath by given name match.
-func NameLikes(patterns []string) MatcherFunc {
-	return func(el Elem) bool {
-		for _, pattern := range patterns {
-			if strutil.LikeMatch(pattern, el.Name()) {
-				return true
-			}
-		}
-		return false
-	}
+	// NameLikes filter filepath by given name match.
+	new(MatcherFunc)
 }
+
+func NameLikes(patterns []string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
 //
 // ----------------- built in file info filters -----------------
@@ -219,22 +158,14 @@ func NameLikes(patterns []string) MatcherFunc {
 //	// before 600 seconds(before 10 minutes)
 //	f.AddFile(MatchMtime(timex.ZeroTime, timex.NowAddSec(-600)))
 func MatchMtime(start, end time.Time) MatcherFunc {
-	return MatchModTime(start, end)
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
 }
 
 // MatchModTime filter file by modify time.
 func MatchModTime(start, end time.Time) MatcherFunc {
-	return func(el Elem) bool {
-		if el.IsDir() {
-			return false
-		}
-
-		fi, err := el.Info()
-		if err != nil {
-			return false
-		}
-		return timex.InRange(fi.ModTime(), start, end)
-	}
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
 }
 
 var timeNumReg = regexp.MustCompile(`(-?\d+)`)
@@ -249,48 +180,21 @@ var timeNumReg = regexp.MustCompile(`(-?\d+)`)
 //	f.Include(HumanModTime("<24h >10m"))
 //	// eq: -10m to Now. Modified in the last 10 minutes
 //	f.Include(HumanModTime("<10m"))
-func HumanModTime(expr string) MatcherFunc {
-	opt := &timex.ParseRangeOpt{AutoSort: true}
-	// convert > to <, < to >
-	expr = strutil.Replaces(expr, map[string]string{">": "<", "<": ">"})
-	expr = timeNumReg.ReplaceAllStringFunc(expr, func(s string) string {
-		if s[0] == '-' {
-			return s
-		}
-		return "-" + s
-	})
+func HumanModTime(expr string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }
 
-	start, end, err := timex.ParseRange(expr, opt)
-	if err != nil {
-		panic(err)
-	}
-	return MatchModTime(start, end)
-}
+// convert > to <, < to >
 
 // FileSize match file by file size. unit: byte
-func FileSize(minSize, maxSize uint64) MatcherFunc { return SizeRange(minSize, maxSize) }
+func FileSize(minSize, maxSize uint64) MatcherFunc {
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
+}
 
 // SizeRange match file by file size. unit: byte
 func SizeRange(minSize, maxSize uint64) MatcherFunc {
-	return func(el Elem) bool {
-		if el.IsDir() {
-			return false
-		}
-
-		fi, err := el.Info()
-		if err != nil {
-			return false
-		}
-		return mathutil.InUintRange(uint64(fi.Size()), minSize, maxSize)
-	}
+	_ = "STUB: not implemented"
+	return *new(MatcherFunc)
 }
 
 // HumanSize match file by file size string. eg: ">1k", "<2m", "1g~3g"
-func HumanSize(expr string) MatcherFunc {
-	minSize, maxSize, err := strutil.ParseSizeRange(expr, nil)
-	if err != nil {
-		panic(err)
-	}
-
-	return SizeRange(minSize, maxSize)
-}
+func HumanSize(expr string) MatcherFunc { _ = "STUB: not implemented"; return *new(MatcherFunc) }

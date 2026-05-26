@@ -2,11 +2,7 @@ package httpreq
 
 import (
 	"bytes"
-	"encoding/json"
-	"errors"
 	"net/http"
-
-	"github.com/gookit/goutil/netutil/httpctype"
 )
 
 // Resp alias of RespX
@@ -23,32 +19,30 @@ type RespX struct {
 
 // WrapResp wrap http.Response to RespX
 func WrapResp(hr *http.Response, err error) (*RespX, error) {
-	if err != nil {
-		return nil, err
-	}
-	return &RespX{Response: hr}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NewResp instance
-func NewResp(hr *http.Response) *RespX { return &RespX{Response: hr} }
+func NewResp(hr *http.Response) *RespX { _ = "STUB: not implemented"; return nil }
 
 // IsFail check status code is not equals to 200
-func (r *RespX) IsFail() bool { return r.StatusCode != http.StatusOK }
+func (r *RespX) IsFail() bool { _ = "STUB: not implemented"; return false }
 
 // IsOk check status code is equals to 200
-func (r *RespX) IsOk() bool { return r.StatusCode == http.StatusOK }
+func (r *RespX) IsOk() bool { _ = "STUB: not implemented"; return false }
 
 // IsSuccessful check status code is in 200-300
-func (r *RespX) IsSuccessful() bool { return IsSuccessful(r.StatusCode) }
+func (r *RespX) IsSuccessful() bool { _ = "STUB: not implemented"; return false }
 
 // IsEmptyBody check response body is empty
-func (r *RespX) IsEmptyBody() bool { return r.ContentLength <= 0 }
+func (r *RespX) IsEmptyBody() bool { _ = "STUB: not implemented"; return false }
 
 // ContentType get response content type
-func (r *RespX) ContentType() string { return r.Header.Get(httpctype.Key) }
+func (r *RespX) ContentType() string { _ = "STUB: not implemented"; return "" }
 
 // BodyString get body as string.
-func (r *RespX) String() string { return ResponseToString(r.Response) }
+func (r *RespX) String() string { _ = "STUB: not implemented"; return "" }
 
 //
 // ------------------------ read body ------------------------
@@ -57,72 +51,33 @@ func (r *RespX) String() string { return ResponseToString(r.Response) }
 // ReadBody read body to buffer. allow reading body multiple times.
 //
 // NOTE: will close the response.Body
-func (r *RespX) ReadBody() error {
-	if r.bodyBuf != nil {
-		return nil
-	}
+func (r *RespX) ReadBody() error { _ = "STUB: not implemented"; return nil }
 
-	// prof: assign memory before read
-	if r.ContentLength > bytes.MinRead {
-		r.bodyBuf = bytes.NewBuffer(make([]byte, 0, r.ContentLength))
-	} else {
-		r.bodyBuf = bytes.NewBuffer(make([]byte, 0, bytes.MinRead))
-	}
+// prof: assign memory before read
 
-	// NOTICE: must close resp body.
-	defer r.SafeCloseBody()
-	_, err := r.bodyBuf.ReadFrom(r.Body)
-	return err
-}
+// NOTICE: must close resp body.
 
 // BodyBuffer read body to buffer. NOTE: will close the response.Body
-func (r *RespX) BodyBuffer() *bytes.Buffer {
-	if err := r.ReadBody(); err != nil {
-		panic(err)
-	}
-	return r.bodyBuf
-}
+func (r *RespX) BodyBuffer() *bytes.Buffer { _ = "STUB: not implemented"; return nil }
 
 // BodyString get body as string.
-func (r *RespX) BodyString() string { return r.BodyBuffer().String() }
+func (r *RespX) BodyString() string { _ = "STUB: not implemented"; return "" }
 
 // BindJSONOnOk body data on response status is in 200-300.
 // If ptr is nil, will do nothing.
-func (r *RespX) BindJSONOnOk(ptr any) error { return r.bindJSON(ptr, true) }
+func (r *RespX) BindJSONOnOk(ptr any) error { _ = "STUB: not implemented"; return nil }
 
 // BindJSON body data to a ptr, will don't check status code.
 // If ptr is nil, will do nothing.
-func (r *RespX) BindJSON(ptr any) error { return r.bindJSON(ptr, false) }
+func (r *RespX) BindJSON(ptr any) error { _ = "STUB: not implemented"; return nil }
 
-func (r *RespX) bindJSON(ptr any, checkStatus bool) error {
-	if checkStatus && !r.IsSuccessful() {
-		return errors.New("response status is not equals to 200")
-	}
-
-	if err := r.ReadBody(); err != nil {
-		return err
-	}
-
-	if ptr == nil {
-		return nil
-	}
-	return json.NewDecoder(r.bodyBuf).Decode(ptr)
-}
+func (r *RespX) bindJSON(ptr any, checkStatus bool) error { _ = "STUB: not implemented"; return nil }
 
 // CloseBuffer close body buffer
-func (r *RespX) CloseBuffer() {
-	if r.bodyBuf != nil {
-		r.bodyBuf.Reset()
-		r.bodyBuf = nil
-	}
-}
+func (r *RespX) CloseBuffer() { _ = "STUB: not implemented"; return }
 
 // CloseBody close resp body
-func (r *RespX) CloseBody() error { return r.Body.Close() }
+func (r *RespX) CloseBody() error { _ = "STUB: not implemented"; return nil }
 
 // SafeCloseBody close resp body, ignore error
-func (r *RespX) SafeCloseBody() {
-	if r.Body != nil {
-		_ = r.Body.Close()
-	}
-}
+func (r *RespX) SafeCloseBody() { _ = "STUB: not implemented"; return }

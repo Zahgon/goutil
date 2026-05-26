@@ -7,7 +7,6 @@
 package ccolor
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -47,34 +46,33 @@ var (
 )
 
 // SetOutput set output writer
-func SetOutput(w io.Writer) { output = w }
+func SetOutput(w io.Writer) {
+	_ = "STUB: not implemented"
 
-// LastErr info
-func LastErr() error {
-	defer func() {
-		lastErr = nil
-	}()
-	return lastErr
+	// LastErr info
+	return
 }
+
+func LastErr() error { _ = "STUB: not implemented"; return nil }
 
 //
 // ---------------- support detect from termenv ----------------
 //
 
 // Disable color of current terminal.
-func Disable() { termenv.DisableColor() }
+func Disable() { _ = "STUB: not implemented"; return }
 
 // Level value of current terminal.
-func Level() termenv.ColorLevel { return termenv.TermColorLevel() }
+func Level() termenv.ColorLevel { _ = "STUB: not implemented"; return *new(termenv.ColorLevel) }
 
 // IsSupportColor returns true if the terminal supports color.
-func IsSupportColor() bool { return termenv.IsSupportColor() }
+func IsSupportColor() bool { _ = "STUB: not implemented"; return false }
 
 // IsSupport256Color returns true if the terminal supports 256 colors.
-func IsSupport256Color() bool { return termenv.IsSupport256Color() }
+func IsSupport256Color() bool { _ = "STUB: not implemented"; return false }
 
 // IsSupportTrueColor returns true if the terminal supports true color.
-func IsSupportTrueColor() bool { return termenv.IsSupportTrueColor() }
+func IsSupportTrueColor() bool { _ = "STUB: not implemented"; return false }
 
 //
 // ---------------- for testing ----------------
@@ -86,54 +84,38 @@ func IsSupportTrueColor() bool { return termenv.IsSupportTrueColor() }
 //
 //	ccolor.ForceEnableColor()
 //	defer ccolor.RevertColorSupport()
-func ForceEnableColor() {
-	termenv.ForceEnableColor()
-}
+func ForceEnableColor() { _ = "STUB: not implemented"; return }
 
 // RevertColorSupport value
-func RevertColorSupport() {
-	termenv.RevertColorSupport()
-}
+func RevertColorSupport() { _ = "STUB: not implemented"; return }
 
 //
 // ---------------- print with color tag style ----------------
 //
 
 // Print parse color tag and print messages
-func Print(v ...any) { Fprint(output, v...) }
+func Print(v ...any) { _ = "STUB: not implemented"; return }
 
 // Printf format and print messages
-func Printf(format string, v ...any) { Fprintf(output, format, v...) }
+func Printf(format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Println messages with new line
-func Println(v ...any) { Fprintln(output, v...) }
+func Println(v ...any) { _ = "STUB: not implemented"; return }
 
 // Sprint parse color tags, return rendered string
-func Sprint(v ...any) string {
-	return ReplaceTag(fmt.Sprint(v...))
-}
+func Sprint(v ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Sprintf format and return rendered string
-func Sprintf(format string, a ...any) string {
-	return ReplaceTag(fmt.Sprintf(format, a...))
-}
+func Sprintf(format string, a ...any) string { _ = "STUB: not implemented"; return "" }
 
 // Fprint auto parse color-tag, print rendered messages to the writer
-func Fprint(w io.Writer, v ...any) {
-	_, lastErr = fmt.Fprint(w, ReplaceTag(fmt.Sprint(v...)))
-}
+func Fprint(w io.Writer, v ...any) { _ = "STUB: not implemented"; return }
 
 // Fprintf auto parse color-tag, print rendered messages to the writer.
-func Fprintf(w io.Writer, format string, v ...any) {
-	_, lastErr = fmt.Fprint(w, ReplaceTag(fmt.Sprintf(format, v...)))
-}
+func Fprintf(w io.Writer, format string, v ...any) { _ = "STUB: not implemented"; return }
 
 // Fprintln auto parse color-tag, print rendered messages to the writer
-func Fprintln(w io.Writer, v ...any) {
-	_, lastErr = fmt.Fprintln(w, ReplaceTag(formatLikePrintln(v)))
-}
+func Fprintln(w io.Writer, v ...any) { _ = "STUB: not implemented"; return }
 
 // Lprint passes colored messages to a log.Logger for printing.
-func Lprint(l *log.Logger, v ...any) {
-	l.Print(ReplaceTag(fmt.Sprint(v...)))
-}
+func Lprint(l *log.Logger, v ...any) { _ = "STUB: not implemented"; return }

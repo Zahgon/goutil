@@ -4,12 +4,12 @@ package clipboard
 
 // GetWriterBin program name
 func GetWriterBin() string {
-	return WriterOnWin
+	_ = "STUB: not implemented"
+
+	// GetReaderBin program name
+	return ""
 }
 
-// GetReaderBin program name
-func GetReaderBin() string {
-	return ReaderOnWin
-}
+func GetReaderBin() string { _ = "STUB: not implemented"; return "" }
 
-func available() bool { return true }
+func available() bool { _ = "STUB: not implemented"; return false }

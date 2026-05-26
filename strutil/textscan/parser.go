@@ -1,9 +1,7 @@
 package textscan
 
 import (
-	"bytes"
 	"io"
-	"strings"
 )
 
 // HandleFn for token
@@ -17,34 +15,16 @@ type Parser struct {
 }
 
 // NewParser instance
-func NewParser(fn HandleFn) *Parser {
-	return &Parser{
-		Func: fn,
-		ts:   &TextScanner{},
-	}
-}
+func NewParser(fn HandleFn) *Parser { _ = "STUB: not implemented"; return nil }
 
 // AddMatchers register token matchers
-func (p *Parser) AddMatchers(ms ...Matcher) {
-	p.ts.AddMatchers(ms...)
-}
+func (p *Parser) AddMatchers(ms ...Matcher) { _ = "STUB: not implemented"; return }
 
 // Parse input bytes
-func (p *Parser) Parse(bs []byte) error {
-	return p.ParseFrom(bytes.NewReader(bs))
-}
+func (p *Parser) Parse(bs []byte) error { _ = "STUB: not implemented"; return nil }
 
 // ParseText input string
-func (p *Parser) ParseText(text string) error {
-	return p.ParseFrom(strings.NewReader(text))
-}
+func (p *Parser) ParseText(text string) error { _ = "STUB: not implemented"; return nil }
 
 // ParseFrom input reader
-func (p *Parser) ParseFrom(r io.Reader) error {
-	ts := NewScanner(r)
-
-	for ts.Scan() {
-		p.Func(ts.Token())
-	}
-	return nil
-}
+func (p *Parser) ParseFrom(r io.Reader) error { _ = "STUB: not implemented"; return nil }

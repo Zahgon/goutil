@@ -1,15 +1,8 @@
 package cflag
 
 import (
-	"fmt"
-	"strconv"
-	"strings"
-
-	"github.com/gookit/goutil/arrutil"
 	"github.com/gookit/goutil/comdef"
 	"github.com/gookit/goutil/maputil"
-	"github.com/gookit/goutil/strutil"
-	"github.com/gookit/goutil/strutil/textutil"
 )
 
 // RepeatableFlag interface.
@@ -31,12 +24,8 @@ type ExtendedFlagType interface {
 
 // LimitInt limit int value range
 func LimitInt(min, max int) comdef.IntCheckFunc {
-	return func(val int) error {
-		if val < min || val > max {
-			return fmt.Errorf("option value must be between %d and %d", min, max)
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(comdef.IntCheckFunc)
 }
 
 // IntVar int value can with a check func
@@ -53,79 +42,69 @@ type IntVar struct {
 }
 
 // NewIntVar create a new IntVar instance with check func
-func NewIntVar(checkFn comdef.IntCheckFunc) IntVar {
-	return IntVar{CheckFn: checkFn}
-}
+func NewIntVar(checkFn comdef.IntCheckFunc) IntVar { _ = "STUB: not implemented"; return *new(IntVar) }
 
 // Get value
-func (o *IntVar) Get() any { return o.val }
+func (o *IntVar) Get() any {
+	_ = "STUB: not implemented"
 
-// Set new value
-func (o *IntVar) Set(value string) error {
-	intVal, err := strconv.Atoi(value)
-	if err != nil {
-		return err
-	}
-
-	if o.CheckFn != nil {
-		if err = o.CheckFn(intVal); err != nil {
-			return err
-		}
-	}
-
-	o.str = value
-	o.val = intVal
-	return nil
+	// Set new value
+	return *new(any)
 }
 
-// String value get
-func (o *IntVar) String() string { return o.str }
+func (o *IntVar) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
-// String a special string
-//
-// Usage:
-//
-//	// case 1:
-//	var names cflag.String
-//	c.VarOpt(&names, "names", "", "multi name by comma split")
-//
-//	--names "tom,john,joy"
-//	names.Split(",") // -> []string{"tom","john","joy"}
-//
-//	// case 2:
-//	var ids cflag.String
-//	c.VarOpt(&ids, "ids", "", "multi id by comma split")
-//
-//	--names "23,34,56"
-//	names.Ints(",") // -> []int{23,34,56}
+// String value get
+func (o *IntVar) String() string {
+	_ = "STUB: not implemented"
+
+	// String a special string
+	//
+	// Usage:
+	//
+	//	// case 1:
+	//	var names cflag.String
+	//	c.VarOpt(&names, "names", "", "multi name by comma split")
+	//
+	//	--names "tom,john,joy"
+	//	names.Split(",") // -> []string{"tom","john","joy"}
+	//
+	//	// case 2:
+	//	var ids cflag.String
+	//	c.VarOpt(&ids, "ids", "", "multi id by comma split")
+	//
+	//	--names "23,34,56"
+	//	names.Ints(",") // -> []int{23,34,56}
+	return ""
+}
+
 type String string
 
 // Get value
-func (s *String) Get() any { return string(*s) }
+func (s *String) Get() any {
+	_ = "STUB: not implemented"
 
-// Set value
-func (s *String) Set(val string) error {
-	*s = String(val)
-	return nil
+	// Set value
+	return *new(any)
 }
+
+func (s *String) Set(val string) error { _ = "STUB: not implemented"; return nil }
 
 // String input value to string
-func (s *String) String() string { return string(*s) }
+func (s *String) String() string {
+	_ = "STUB: not implemented"
 
-// Strings split value to []string by sep ','
-func (s *String) Strings() []string {
-	return strutil.Split(string(*s), ",")
+	// Strings split value to []string by sep ','
+	return ""
 }
+
+func (s *String) Strings() []string { _ = "STUB: not implemented"; return nil }
 
 // Split value to []string
-func (s *String) Split(sep string) []string {
-	return strutil.Split(string(*s), sep)
-}
+func (s *String) Split(sep string) []string { _ = "STUB: not implemented"; return nil }
 
 // Ints value to []int
-func (s *String) Ints(sep string) []int {
-	return strutil.Ints(string(*s), sep)
-}
+func (s *String) Ints(sep string) []int { _ = "STUB: not implemented"; return nil }
 
 // StrVar string value can with a check func
 //
@@ -140,31 +119,28 @@ type StrVar struct {
 }
 
 // NewStrVar create a new StrVar with check func
-func NewStrVar(checkFn comdef.StrCheckFunc) StrVar {
-	return StrVar{CheckFn: checkFn}
-}
+func NewStrVar(checkFn comdef.StrCheckFunc) StrVar { _ = "STUB: not implemented"; return *new(StrVar) }
 
 // Get value string
-func (o *StrVar) Get() any { return o.val }
+func (o *StrVar) Get() any {
+	_ = "STUB: not implemented"
 
-// Set new value
-func (o *StrVar) Set(value string) error {
-	if o.CheckFn != nil {
-		if err := o.CheckFn(value); err != nil {
-			return err
-		}
-	}
-
-	o.val = value
-	return nil
+	// Set new value
+	return *new(any)
 }
 
-// String value get
-func (o *StrVar) String() string { return o.val }
+func (o *StrVar) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
-// IntsString The ints-string flag. eg: --get 1,2,3
-//
-// Implemented the flag.Value interface
+// String value get
+func (o *StrVar) String() string {
+	_ = "STUB: not implemented"
+
+	// IntsString The ints-string flag. eg: --get 1,2,3
+	//
+	// Implemented the flag.Value interface
+	return ""
+}
+
 type IntsString struct {
 	ints []int
 	// value and size validate
@@ -173,41 +149,24 @@ type IntsString struct {
 }
 
 // String input value to string
-func (o *IntsString) String() string {
-	return arrutil.IntsToString(o.ints)
-}
+func (o *IntsString) String() string { _ = "STUB: not implemented"; return "" }
 
 // Get value
 func (o *IntsString) Get() any {
-	return o.ints
+	_ = "STUB: not implemented"
+
+	// Ints value
+	return *new(any)
 }
 
-// Ints value
 func (o *IntsString) Ints() []int {
-	return o.ints
-}
+	_ = "STUB: not implemented"
 
-// Set new value. eg: "12"
-func (o *IntsString) Set(value string) error {
-	intVal, err := strconv.Atoi(value)
-	if err != nil {
-		return err
-	}
-
-	if o.ValueFn != nil {
-		if err = o.ValueFn(intVal); err != nil {
-			return err
-		}
-	}
-	if o.SizeFn != nil {
-		if err = o.SizeFn(len(o.ints) + 1); err != nil {
-			return err
-		}
-	}
-
-	o.ints = append(o.ints, intVal)
+	// Set new value. eg: "12"
 	return nil
 }
+
+func (o *IntsString) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
 // Ints The int flag list, repeatable
 //
@@ -215,130 +174,141 @@ func (o *IntsString) Set(value string) error {
 type Ints []int
 
 // String to string
-func (s *Ints) String() string { return arrutil.ToString(*s) }
+func (s *Ints) String() string { _ = "STUB: not implemented"; return "" }
 
 // Get value
-func (s *Ints) Get() any { return *s }
+func (s *Ints) Get() any {
+	_ = "STUB: not implemented"
 
-// Set new value
-func (s *Ints) Set(value string) error {
-	intVal, err := strconv.Atoi(value)
-	if err == nil {
-		*s = append(*s, intVal)
-	}
-	return err
+	// Set new value
+	return *new(any)
 }
+
+func (s *Ints) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
 // Ints value
-func (s *Ints) Ints() []int { return *s }
+func (s *Ints) Ints() []int {
+	_ = "STUB: not implemented"
 
-// IsRepeatable on input
-func (s *Ints) IsRepeatable() bool { return true }
-
-// Strings The string flag list, repeatable.
-// eg: --names tom --names john
-type Strings []string
-
-// String input value to string
-func (s *Strings) String() string {
-	return strings.Join(*s, ",")
-}
-
-// Get value
-func (s *Strings) Get() any { return []string(*s) }
-
-// Set new value
-func (s *Strings) Set(value string) error {
-	*s = append(*s, value)
+	// IsRepeatable on input
 	return nil
 }
 
+func (s *Ints) IsRepeatable() bool {
+	_ = "STUB: not implemented"
+
+	// Strings The string flag list, repeatable.
+	// eg: --names tom --names john
+	return false
+}
+
+type Strings []string
+
+// String input value to string
+func (s *Strings) String() string { _ = "STUB: not implemented"; return "" }
+
+// Get value
+func (s *Strings) Get() any {
+	_ = "STUB: not implemented"
+
+	// Set new value
+	return *new(any)
+}
+
+func (s *Strings) Set(value string) error { _ = "STUB: not implemented"; return nil }
+
 // Strings value
-func (s *Strings) Strings() []string { return *s }
+func (s *Strings) Strings() []string {
+	_ = "STUB: not implemented"
 
-// IsRepeatable on input
-func (s *Strings) IsRepeatable() bool { return true }
+	// IsRepeatable on input
+	return nil
+}
 
-// Booleans The bool flag list, repeatable.
-// eg: -v -v => []bool{true, true}
+func (s *Strings) IsRepeatable() bool {
+	_ = "STUB: not implemented"
+
+	// Booleans The bool flag list, repeatable.
+	// eg: -v -v => []bool{true, true}
+	return false
+}
+
 type Booleans []bool
 
 // String input value to string
-func (s *Booleans) String() string { return arrutil.ToString(*s) }
+func (s *Booleans) String() string { _ = "STUB: not implemented"; return "" }
 
 // Bools value
-func (s *Booleans) Bools() []bool { return *s }
+func (s *Booleans) Bools() []bool {
+	_ = "STUB: not implemented"
 
-// Set new value
-func (s *Booleans) Set(value string) error {
-	boolVal, err := strconv.ParseBool(value)
-	if err == nil {
-		*s = append(*s, boolVal)
-	}
-	return err
+	// Set new value
+	return nil
 }
 
-// IsRepeatable on input
-func (s *Booleans) IsRepeatable() bool { return true }
+func (s *Booleans) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
-// EnumString limit input value is in the enum list.
-// implemented flag.Value interface
-//
-// Usage:
-//
-//	var enumStr = cflag.NewEnumString("php", "go", "java")
-//	c.VarOpt(&enumStr, "lang", "", "input language name")
+// IsRepeatable on input
+func (s *Booleans) IsRepeatable() bool {
+	_ = "STUB: not implemented"
+
+	// EnumString limit input value is in the enum list.
+	// implemented flag.Value interface
+	//
+	// Usage:
+	//
+	//	var enumStr = cflag.NewEnumString("php", "go", "java")
+	//	c.VarOpt(&enumStr, "lang", "", "input language name")
+	return false
+}
+
 type EnumString struct {
 	val  string
 	enum []string
 }
 
 // NewEnumString instance
-func NewEnumString(enum ...string) EnumString {
-	return EnumString{enum: enum}
-}
+func NewEnumString(enum ...string) EnumString { _ = "STUB: not implemented"; return *new(EnumString) }
 
 // Get value
-func (s *EnumString) Get() any { return s.val }
+func (s *EnumString) Get() any {
+	_ = "STUB: not implemented"
 
-// String input value to string
+	// String input value to string
+	return *new(any)
+}
+
 func (s *EnumString) String() string {
-	return s.val
+	_ = "STUB: not implemented"
+
+	// SetEnum values
+	return ""
 }
 
-// SetEnum values
 func (s *EnumString) SetEnum(enum []string) {
-	s.enum = enum
+	_ = "STUB: not implemented"
+
+	// WithEnum values
+	return
 }
 
-// WithEnum values
-func (s *EnumString) WithEnum(enum []string) *EnumString {
-	s.SetEnum(enum)
-	return s
-}
+func (s *EnumString) WithEnum(enum []string) *EnumString { _ = "STUB: not implemented"; return nil }
 
 // EnumString to string
-func (s *EnumString) EnumString() string {
-	return strings.Join(s.enum, ",")
-}
+func (s *EnumString) EnumString() string { _ = "STUB: not implemented"; return "" }
 
 // Set new value, will check value is right
-func (s *EnumString) Set(value string) error {
-	if !arrutil.InStrings(value, s.enum) {
-		return fmt.Errorf("value must one of the: %v", s.enum)
-	}
+func (s *EnumString) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
-	s.val = value
+// Enum to string
+func (s *EnumString) Enum() []string {
+	_ = "STUB: not implemented"
+
+	// FlagTypeDesc message. will display on the flag description end.
 	return nil
 }
 
-// Enum to string
-func (s *EnumString) Enum() []string { return s.enum }
-
-// FlagTypeDesc message. will display on the flag description end.
-func (s *EnumString) FlagTypeDesc() string {
-	return "Allow: " + strings.Join(s.enum, ",")
-}
+func (s *EnumString) FlagTypeDesc() string { _ = "STUB: not implemented"; return "" }
 
 // KVString The kv-string flag, allow input multi.
 //
@@ -364,90 +334,86 @@ type KVString struct {
 type KVStrMap = KVString
 
 // NewKVString instance
-func NewKVString() KVString {
-	return *(&KVString{}).Init()
-}
+func NewKVString() KVString { _ = "STUB: not implemented"; return *new(KVString) }
 
 // Init settings
-func (s *KVString) Init() *KVString {
-	if s.Sep == "" {
-		s.Sep = comdef.EqualStr
-	}
-	if s.SMap == nil {
-		s.SMap = make(maputil.SMap)
-	}
-	return s
-}
+func (s *KVString) Init() *KVString { _ = "STUB: not implemented"; return nil }
 
 // Get value
-func (s *KVString) Get() any { return s.SMap }
+func (s *KVString) Get() any {
+	_ = "STUB: not implemented"
 
-// Data map get
+	// Data map get
+	return *new(any)
+}
+
 func (s *KVString) Data() maputil.SMap {
-	return s.Init().SMap
+	_ = "STUB: not implemented"
+	return *
+
+	// Set new value, will check value is right
+	new(maputil.SMap)
 }
 
-// Set new value, will check value is right
-func (s *KVString) Set(value string) error {
-	if value != "" {
-		s.Init()
-
-		key, val := strutil.SplitKV(value, s.Sep)
-		if key != "" {
-			s.SMap[key] = val
-		}
-	}
-	return nil
-}
+func (s *KVString) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
 // IsRepeatable on input
-func (s *KVString) IsRepeatable() bool { return true }
+func (s *KVString) IsRepeatable() bool {
+	_ = "STUB: not implemented"
 
-// ConfString The config-string flag, INI format, like nginx-config.
-//
-// Example:
-//
-//	--config 'k0=val0;k1=val1' => string map {k0:val0, k1:val1}
+	// ConfString The config-string flag, INI format, like nginx-config.
+	//
+	// Example:
+	//
+	//	--config 'k0=val0;k1=val1' => string map {k0:val0, k1:val1}
+	return false
+}
+
 type ConfString struct {
 	maputil.SMap
 	val string
 }
 
 // String to string
-func (s *ConfString) String() string { return s.val }
+func (s *ConfString) String() string {
+	_ = "STUB: not implemented"
 
-// SetData value
+	// SetData value
+	return ""
+}
+
 func (s *ConfString) SetData(mp map[string]string) {
-	s.SMap = mp
+	_ = "STUB: not implemented"
+
+	// Data map get
+	return
 }
 
-// Data map get
 func (s *ConfString) Data() maputil.SMap {
-	return s.SMap
+	_ = "STUB: not implemented"
+
+	// Get value
+	return *new(maputil.SMap)
 }
 
-// Get value
-func (s *ConfString) Get() any { return s.SMap }
+func (s *ConfString) Get() any {
+	_ = "STUB: not implemented"
 
-// Set new value, will check value is right
-func (s *ConfString) Set(value string) error {
-	if value != "" {
-		s.val = value
-		mp, err := textutil.ParseInlineINI(value)
-
-		if err != nil {
-			return err
-		}
-		s.SMap = mp
-	}
-	return nil
+	// Set new value, will check value is right
+	return *new(any)
 }
+
+func (s *ConfString) Set(value string) error { _ = "STUB: not implemented"; return nil }
 
 // SafeFuncVar safe func Value
 type SafeFuncVar func(string)
 
 // Set value
-func (f SafeFuncVar) Set(s string) error { f(s); return nil }
+func (f SafeFuncVar) Set(s string) error {
+	_ = "STUB: not implemented"
 
-// String get
-func (f SafeFuncVar) String() string { return "" }
+	// String get
+	return nil
+}
+
+func (f SafeFuncVar) String() string { _ = "STUB: not implemented"; return "" }

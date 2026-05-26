@@ -2,8 +2,6 @@ package finder
 
 import (
 	"bytes"
-
-	"github.com/gookit/goutil/fsutil"
 )
 
 // Matcher for match file path.
@@ -17,10 +15,11 @@ type MatcherFunc func(elem Elem) bool
 
 // Apply check file path. return False will skip this file.
 func (fn MatcherFunc) Apply(elem Elem) bool {
-	return fn(elem)
-}
+	_ = "STUB: not implemented"
 
-// ------------------ Multi matcher wrapper ------------------
+	// ------------------ Multi matcher wrapper ------------------
+	return false
+}
 
 // MultiMatcher wrapper for multi matchers
 type MultiMatcher struct {
@@ -29,39 +28,16 @@ type MultiMatcher struct {
 }
 
 // Add matchers
-func (mf *MultiMatcher) Add(fls ...Matcher) {
-	mf.Matchers = append(mf.Matchers, fls...)
-}
+func (mf *MultiMatcher) Add(fls ...Matcher) { _ = "STUB: not implemented"; return }
 
 // Apply check file path is match.
-func (mf *MultiMatcher) Apply(el Elem) bool {
-	if mf.Before != nil && !mf.Before.Apply(el) {
-		return false
-	}
-
-	for _, fl := range mf.Matchers {
-		if !fl.Apply(el) {
-			return false
-		}
-	}
-	return true
-}
+func (mf *MultiMatcher) Apply(el Elem) bool { _ = "STUB: not implemented"; return false }
 
 // NewDirMatchers create a new dir matchers
-func NewDirMatchers(fls ...Matcher) *MultiMatcher {
-	return &MultiMatcher{
-		Before:   MatchDir,
-		Matchers: fls,
-	}
-}
+func NewDirMatchers(fls ...Matcher) *MultiMatcher { _ = "STUB: not implemented"; return nil }
 
 // NewFileMatchers create a new dir matchers
-func NewFileMatchers(fls ...Matcher) *MultiMatcher {
-	return &MultiMatcher{
-		Before:   MatchFile,
-		Matchers: fls,
-	}
-}
+func NewFileMatchers(fls ...Matcher) *MultiMatcher { _ = "STUB: not implemented"; return nil }
 
 // ------------------ Body Matcher ------------------
 
@@ -75,10 +51,12 @@ type BodyMatcherFunc func(filePath string, body *bytes.Buffer) bool
 
 // Apply for match file contents.
 func (fn BodyMatcherFunc) Apply(filePath string, body *bytes.Buffer) bool {
-	return fn(filePath, body)
+	_ = "STUB: not implemented"
+	return false
+
+	// BodyMatchers multi body matchers as Matcher
 }
 
-// BodyMatchers multi body matchers as Matcher
 type BodyMatchers struct {
 	Matchers []BodyMatcher
 }
@@ -98,42 +76,14 @@ type BodyMatchers struct {
 //	 for el := range es {
 //			fmt.Println(el.Path())
 //	 }
-func NewBodyMatchers(fls ...BodyMatcher) *BodyMatchers {
-	return &BodyMatchers{
-		Matchers: fls,
-	}
-}
+func NewBodyMatchers(fls ...BodyMatcher) *BodyMatchers { _ = "STUB: not implemented"; return nil }
 
 // AddMatcher add matchers
-func (mf *BodyMatchers) AddMatcher(fls ...BodyMatcher) {
-	mf.Matchers = append(mf.Matchers, fls...)
-}
+func (mf *BodyMatchers) AddMatcher(fls ...BodyMatcher) { _ = "STUB: not implemented"; return }
 
 // Apply check file contents is match.
-func (mf *BodyMatchers) Apply(el Elem) bool {
-	if el.IsDir() {
-		return false
-	}
+func (mf *BodyMatchers) Apply(el Elem) bool { _ = "STUB: not implemented"; return false }
 
-	// read file contents
-	buf := bytes.NewBuffer(nil)
-	file, err := fsutil.OpenReadFile(el.Path())
-	if err != nil {
-		return false
-	}
+// read file contents
 
-	_, err = buf.ReadFrom(file)
-	if err != nil {
-		_ = file.Close()
-		return false
-	}
-	_ = file.Close()
-
-	// apply matchers
-	for _, fl := range mf.Matchers {
-		if !fl.Apply(el.Path(), buf) {
-			return false
-		}
-	}
-	return true
-}
+// apply matchers

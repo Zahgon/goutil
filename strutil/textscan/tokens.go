@@ -1,17 +1,10 @@
 package textscan
 
-import (
-	"github.com/gookit/goutil"
-	"github.com/gookit/goutil/errorx"
-)
-
 // Kind type
 type Kind uint8
 
 // String name for kind
-func (k Kind) String() string {
-	return KindString(k)
-}
+func (k Kind) String() string { _ = "STUB: not implemented"; return "" }
 
 // builtin defined kinds
 const (
@@ -30,34 +23,16 @@ var kinds = map[Kind]string{
 }
 
 // AddKind add global kind to kinds
-func AddKind(k Kind, name string) {
-	if _, ok := kinds[k]; ok {
-		goutil.Panicf("cannot repeat register kind(%d): %s", int(k), name)
-	}
-	kinds[k] = name
-}
+func AddKind(k Kind, name string) { _ = "STUB: not implemented"; return }
 
 // HasKind check
-func HasKind(k Kind) bool {
-	_, ok := kinds[k]
-	return ok
-}
+func HasKind(k Kind) bool { _ = "STUB: not implemented"; return false }
 
 // KindString name
-func KindString(k Kind) string {
-	if name, ok := kinds[k]; ok {
-		return name
-	}
-	return "Invalid"
-}
+func KindString(k Kind) string { _ = "STUB: not implemented"; return "" }
 
 // IsKindToken check
-func IsKindToken(k Kind, tok Token) bool {
-	if tok != nil {
-		return tok.Kind() == k
-	}
-	return false
-}
+func IsKindToken(k Kind, tok Token) bool { _ = "STUB: not implemented"; return false }
 
 // LiteToken interface
 type LiteToken interface {
@@ -89,26 +64,23 @@ type BaseToken struct {
 
 // Kind type
 func (t *BaseToken) Kind() Kind {
-	return t.kind
+	_ = "STUB: not implemented"
+
+	// IsValid token
+	return *new(Kind)
 }
 
-// IsValid token
-func (t *BaseToken) IsValid() bool {
-	return t.kind != TokInvalid
-}
+func (t *BaseToken) IsValid() bool { _ = "STUB: not implemented"; return false }
 
 // Value of token
 func (t *BaseToken) Value() string {
-	return t.value
+	_ = "STUB: not implemented"
+
+	// String of token
+	return ""
 }
 
-// String of token
-func (t *BaseToken) String() string {
-	if t.kind == TokInvalid {
-		return "<Invalid>"
-	}
-	return t.value
-}
+func (t *BaseToken) String() string { _ = "STUB: not implemented"; return "" }
 
 // StringToken struct
 type StringToken struct {
@@ -117,28 +89,24 @@ type StringToken struct {
 
 // NewEmptyToken instance.
 // Can use for want skip parse some contents
-func NewEmptyToken() *StringToken {
-	return &StringToken{}
-}
+func NewEmptyToken() *StringToken { _ = "STUB: not implemented"; return nil }
 
 // NewStringToken instance.
-func NewStringToken(k Kind, val string) *StringToken {
-	return &StringToken{
-		BaseToken{kind: k, value: val},
-	}
-}
+func NewStringToken(k Kind, val string) *StringToken { _ = "STUB: not implemented"; return nil }
 
 // HasMore is multi line values
 func (t *StringToken) HasMore() bool {
+	_ = "STUB: not implemented"
+
+	// ScanMore implements
 	return false
 }
 
-// ScanMore implements
 func (t *StringToken) ScanMore(_ *TextScanner) error {
+	_ = "STUB: not implemented"
+
+	// MergeSame implements
 	return nil
 }
 
-// MergeSame implements
-func (t *StringToken) MergeSame(_ Token) error {
-	return errorx.Raw("cannot merge any token to Invalid token")
-}
+func (t *StringToken) MergeSame(_ Token) error { _ = "STUB: not implemented"; return nil }

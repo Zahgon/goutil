@@ -48,10 +48,12 @@ type MatchFunc[T any] func(v T) bool
 
 // Match satisfies the Matcher interface
 func (fn MatchFunc[T]) Match(v T) bool {
-	return fn(v)
+	_ = "STUB: not implemented"
+
+	// StringMatcher interface
+	return false
 }
 
-// StringMatcher interface
 type StringMatcher interface {
 	Match(s string) bool
 }
@@ -61,10 +63,12 @@ type StringMatchFunc func(s string) bool
 
 // Match satisfies the StringMatcher interface
 func (fn StringMatchFunc) Match(s string) bool {
-	return fn(s)
+	_ = "STUB: not implemented"
+
+	// StringHandler interface
+	return false
 }
 
-// StringHandler interface
 type StringHandler interface {
 	Handle(s string) string
 }
@@ -73,6 +77,4 @@ type StringHandler interface {
 type StringHandleFunc func(s string) string
 
 // Handle satisfies the StringHandler interface
-func (fn StringHandleFunc) Handle(s string) string {
-	return fn(s)
-}
+func (fn StringHandleFunc) Handle(s string) string { _ = "STUB: not implemented"; return "" }

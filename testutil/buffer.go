@@ -11,9 +11,7 @@ import (
 type Buffer = byteutil.Buffer
 
 // NewBuffer instance
-func NewBuffer() *byteutil.Buffer {
-	return byteutil.NewBuffer()
-}
+func NewBuffer() *byteutil.Buffer { _ = "STUB: not implemented"; return nil }
 
 // SafeBuffer Thread-safe buffer for testing
 type SafeBuffer struct {
@@ -22,27 +20,16 @@ type SafeBuffer struct {
 }
 
 // NewSafeBuffer instance
-func NewSafeBuffer() *SafeBuffer {
-	return &SafeBuffer{Buffer: bytes.Buffer{}}
-}
+func NewSafeBuffer() *SafeBuffer { _ = "STUB: not implemented"; return nil }
 
 // Write implements io.Writer
-func (sb *SafeBuffer) Write(p []byte) (n int, err error) {
-	sb.mu.Lock()
-	defer sb.mu.Unlock()
-	return sb.Buffer.Write(p)
-}
+func (sb *SafeBuffer) Write(p []byte) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
 
 // WriteString implements io.StringWriter
 func (sb *SafeBuffer) WriteString(s string) (n int, err error) {
-	sb.mu.Lock()
-	defer sb.mu.Unlock()
-	return sb.Buffer.WriteString(s)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // ResetGet get buffer content and reset
-func (sb *SafeBuffer) ResetGet() string {
-	s := sb.String()
-	sb.Reset()
-	return s
-}
+func (sb *SafeBuffer) ResetGet() string { _ = "STUB: not implemented"; return "" }

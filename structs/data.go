@@ -3,22 +3,14 @@ package structs
 import (
 	"sync"
 
-	"github.com/gookit/goutil/internal/comfunc"
 	"github.com/gookit/goutil/maputil"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/strutil"
 )
 
 // LiteData simple map[string]any struct. no lock
 type LiteData = Data
 
 // NewLiteData create, not locked
-func NewLiteData(data map[string]any) *Data {
-	if data == nil {
-		data = make(map[string]any)
-	}
-	return &LiteData{data: data}
-}
+func NewLiteData(data map[string]any) *Data { _ = "STUB: not implemented"; return nil }
 
 /*************************************************************
  * data struct and allow enable lock
@@ -32,121 +24,71 @@ type Data struct {
 }
 
 // NewData create new data instance
-func NewData() *Data {
-	return &Data{
-		lock: true,
-		data: make(map[string]any),
-	}
-}
+func NewData() *Data { _ = "STUB: not implemented"; return nil }
 
 // WithLock for operate data
-func (d *Data) WithLock() *Data {
-	d.lock = true
-	return d
-}
+func (d *Data) WithLock() *Data { _ = "STUB: not implemented"; return nil }
 
 // EnableLock for operate data
-func (d *Data) EnableLock() *Data {
-	return d.WithLock()
-}
+func (d *Data) EnableLock() *Data { _ = "STUB: not implemented"; return nil }
 
 // Data get all
 func (d *Data) Data() map[string]any {
-	return d.data
+	_ = "STUB: not implemented"
+
+	// SetData set all data
+	return nil
 }
 
-// SetData set all data
-func (d *Data) SetData(data map[string]any) {
-	if !d.lock {
-		d.data = data
-		return
-	}
-
-	d.RLock()
-	d.data = data
-	d.RUnlock()
-}
+func (d *Data) SetData(data map[string]any) { _ = "STUB: not implemented"; return }
 
 // DataLen of data
 func (d *Data) DataLen() int {
-	return len(d.data)
+	_ = "STUB: not implemented"
+
+	// ResetData all data
+	return 0
 }
 
-// ResetData all data
-func (d *Data) ResetData() {
-	d.data = make(map[string]any)
-}
+func (d *Data) ResetData() { _ = "STUB: not implemented"; return }
 
 // Merge load new data
-func (d *Data) Merge(mp map[string]any) {
-	d.data = maputil.SimpleMerge(mp, d.data)
-}
+func (d *Data) Merge(mp map[string]any) { _ = "STUB: not implemented"; return }
 
 // Set value to data
-func (d *Data) Set(key string, val any) {
-	d.SetValue(key, val)
-}
+func (d *Data) Set(key string, val any) { _ = "STUB: not implemented"; return }
 
 // SetValue to data
-func (d *Data) SetValue(key string, val any) {
-	if d.lock {
-		d.Lock()
-		defer d.Unlock()
-	}
-
-	d.data[key] = val
-}
+func (d *Data) SetValue(key string, val any) { _ = "STUB: not implemented"; return }
 
 // Value get from data
 func (d *Data) Value(key string) (val any, ok bool) {
-	if d.lock {
-		d.RLock()
-		defer d.RUnlock()
-	}
-
-	val, ok = maputil.GetByPath(key, d.data)
-	return
+	_ = "STUB: not implemented"
+	return *new(any), false
 }
 
 // Get val from data
 func (d *Data) Get(key string) any {
-	return d.GetVal(key)
+	_ = "STUB: not implemented"
+	return *
+
+	// GetVal get from data
+	new(any)
 }
 
-// GetVal get from data
-func (d *Data) GetVal(key string) any {
-	if d.lock {
-		d.RLock()
-		defer d.RUnlock()
-	}
-
-	val, _ := maputil.GetByPath(key, d.data)
-	return val
-}
+func (d *Data) GetVal(key string) any { _ = "STUB: not implemented"; return *new(any) }
 
 // StrVal get from data
-func (d *Data) StrVal(key string) string {
-	return strutil.QuietString(d.GetVal(key))
-}
+func (d *Data) StrVal(key string) string { _ = "STUB: not implemented"; return "" }
 
 // IntVal get from data
-func (d *Data) IntVal(key string) int {
-	return mathutil.QuietInt(d.GetVal(key))
-}
+func (d *Data) IntVal(key string) int { _ = "STUB: not implemented"; return 0 }
 
 // BoolVal get from data
-func (d *Data) BoolVal(key string) bool {
-	val, ok := d.Value(key)
-	if !ok {
-		return false
-	}
-	return comfunc.Bool(val)
-}
+func (d *Data) BoolVal(key string) bool { _ = "STUB: not implemented"; return false }
 
 // String format data
-func (d *Data) String() string {
-	return maputil.ToString(d.data)
-}
+func (d *Data) String() string { _ = "STUB: not implemented"; return "" }
 
 // OrderedData data TODO
 type OrderedData struct {
@@ -157,18 +99,10 @@ type OrderedData struct {
 }
 
 // NewOrderedData instance.
-func NewOrderedData(cap int) *OrderedData {
-	return &OrderedData{cap: cap, Data: make(maputil.Data, cap)}
-}
+func NewOrderedData(cap int) *OrderedData { _ = "STUB: not implemented"; return nil }
 
 // Load data
-func (om *OrderedData) Load(data map[string]any) {
-	om.Data.Load(data)
-	om.keys = om.Data.Keys()
-}
+func (om *OrderedData) Load(data map[string]any) { _ = "STUB: not implemented"; return }
 
 // Set key and value to map
-func (om *OrderedData) Set(key string, val any) {
-	om.keys = append(om.keys, key)
-	om.Data.Set(key, val)
-}
+func (om *OrderedData) Set(key string, val any) { _ = "STUB: not implemented"; return }

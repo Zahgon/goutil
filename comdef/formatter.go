@@ -1,10 +1,7 @@
 package comdef
 
 import (
-	"bytes"
 	"io"
-
-	"github.com/gookit/goutil/x/stdio"
 )
 
 // DataFormatter interface
@@ -38,26 +35,17 @@ type BaseFormatter struct {
 }
 
 // Reset after format
-func (f *BaseFormatter) Reset() {
-	f.Out = nil
-	f.Src = nil
-}
+func (f *BaseFormatter) Reset() { _ = "STUB: not implemented"; return }
 
 // SetOutput writer
 func (f *BaseFormatter) SetOutput(out io.Writer) {
-	f.Out = out
+	_ = "STUB: not implemented"
+
+	// BsWriter warp the Out, build a ByteStringWriter
+	return
 }
 
-// BsWriter warp the Out, build a ByteStringWriter
 func (f *BaseFormatter) BsWriter() ByteStringWriter {
-	if f.ow == nil {
-		if f.Out == nil {
-			f.ow = new(bytes.Buffer)
-		} else if ow, ok := f.Out.(ByteStringWriter); ok {
-			f.ow = ow
-		} else {
-			f.ow = stdio.NewWriteWrapper(f.Out)
-		}
-	}
-	return f.ow
+	_ = "STUB: not implemented"
+	return *new(ByteStringWriter)
 }

@@ -1,11 +1,7 @@
 package fsutil
 
 import (
-	"bytes"
-	"io"
 	"os"
-	"path"
-	"path/filepath"
 )
 
 // perm for create dir or file
@@ -30,92 +26,30 @@ var (
 )
 
 // PathExists reports whether the named file or directory exists.
-func PathExists(path string) bool {
-	if path == "" {
-		return false
-	}
-
-	if _, err := os.Stat(path); err != nil {
-		if os.IsNotExist(err) {
-			return false
-		}
-	}
-	return true
-}
+func PathExists(path string) bool { _ = "STUB: not implemented"; return false }
 
 // IsDir reports whether the named directory exists.
-func IsDir(path string) bool {
-	if path == "" || len(path) > 468 {
-		return false
-	}
-
-	if fi, err := os.Stat(path); err == nil {
-		return fi.IsDir()
-	}
-	return false
-}
+func IsDir(path string) bool { _ = "STUB: not implemented"; return false }
 
 // FileExists reports whether the named file or directory exists.
-func FileExists(path string) bool {
-	return IsFile(path)
-}
+func FileExists(path string) bool { _ = "STUB: not implemented"; return false }
 
 // IsFile reports whether the named file or directory exists.
 //
 // - NOTE: not support symlink file
-func IsFile(path string) bool {
-	if path == "" || len(path) > 468 {
-		return false
-	}
-
-	if fi, err := os.Stat(path); err == nil {
-		return !fi.IsDir()
-	}
-	return false
-}
+func IsFile(path string) bool { _ = "STUB: not implemented"; return false }
 
 // IsSymlink reports whether the named file is a symlink.
-func IsSymlink(path string) bool {
-	fi, err := os.Lstat(path)
-	if err != nil {
-		return false
-	}
-	return fi.Mode()&os.ModeSymlink != 0
-}
+func IsSymlink(path string) bool { _ = "STUB: not implemented"; return false }
 
 // IsAbsPath is abs path check
-func IsAbsPath(aPath string) bool {
-	if len(aPath) > 0 {
-		if aPath[0] == '/' {
-			return true
-		}
-		return filepath.IsAbs(aPath)
-	}
-	return false
-}
+func IsAbsPath(aPath string) bool { _ = "STUB: not implemented"; return false }
 
 // IsAbsPath2 is abs path check. if start withs / OR ~, will direct return true.
-func IsAbsPath2(aPath string) bool {
-	if len(aPath) > 0 {
-		if aPath[0] == '/' || aPath[0] == '~' {
-			return true
-		}
-		return filepath.IsAbs(aPath)
-	}
-	return false
-}
+func IsAbsPath2(aPath string) bool { _ = "STUB: not implemented"; return false }
 
 // IsEmptyDir reports whether the named directory is empty.
-func IsEmptyDir(dirPath string) bool {
-	f, err := os.Open(dirPath)
-	if err != nil {
-		return false
-	}
-	defer f.Close()
-
-	_, err = f.Readdirnames(1)
-	return err == io.EOF
-}
+func IsEmptyDir(dirPath string) bool { _ = "STUB: not implemented"; return false }
 
 // ImageMimeTypes refer net/http package
 var ImageMimeTypes = map[string]string{
@@ -132,42 +66,11 @@ var ImageMimeTypes = map[string]string{
 }
 
 // IsImageFile check file is image file.
-func IsImageFile(path string) bool {
-	mime := MimeType(path)
-	if mime == "" {
-		return false
-	}
-
-	for _, imgMime := range ImageMimeTypes {
-		if imgMime == mime {
-			return true
-		}
-	}
-	return false
-}
+func IsImageFile(path string) bool { _ = "STUB: not implemented"; return false }
 
 // IsZipFile check is zip file.
 // from https://blog.csdn.net/wangshubo1989/article/details/71743374
-func IsZipFile(filepath string) bool {
-	f, err := os.Open(filepath)
-	if err != nil {
-		return false
-	}
-	defer f.Close()
-
-	buf := make([]byte, 4)
-	if n, err := f.Read(buf); err != nil || n < 4 {
-		return false
-	}
-
-	return bytes.Equal(buf, []byte("PK\x03\x04"))
-}
+func IsZipFile(filepath string) bool { _ = "STUB: not implemented"; return false }
 
 // PathMatch check for a string. alias of path.Match()
-func PathMatch(pattern, s string) bool {
-	ok, err := path.Match(pattern, s)
-	if err != nil {
-		ok = false
-	}
-	return ok
-}
+func PathMatch(pattern, s string) bool { _ = "STUB: not implemented"; return false }

@@ -2,16 +2,8 @@ package cmdr
 
 import (
 	"context"
-	"fmt"
 	"io"
-	"os"
 	"os/exec"
-	"path/filepath"
-
-	"github.com/gookit/goutil"
-	"github.com/gookit/goutil/arrutil"
-	"github.com/gookit/goutil/cliutil/cmdline"
-	"github.com/gookit/goutil/internal/comfunc"
 )
 
 // Cmd struct
@@ -33,39 +25,28 @@ type Cmd struct {
 }
 
 // NewGitCmd instance
-func NewGitCmd(subCmd string, args ...string) *Cmd {
-	return NewCmd("git", subCmd).AddArgs(args)
-}
+func NewGitCmd(subCmd string, args ...string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // NewCmdline instance
 //
 // see exec.Command
-func NewCmdline(line string) *Cmd {
-	bin, args := cmdline.NewParser(line).WithParseEnv().BinAndArgs()
-	return NewCmd(bin, args...)
-}
+func NewCmdline(line string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // NewCmd instance
 //
 // see exec.Command
-func NewCmd(bin string, args ...string) *Cmd {
-	return WrapGoCmd(exec.Command(bin, args...))
-}
+func NewCmd(bin string, args ...string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // CmdWithCtx create new instance with context.
 //
 // see exec.CommandContext
 func CmdWithCtx(ctx context.Context, bin string, args ...string) *Cmd {
-	return WrapGoCmd(exec.CommandContext(ctx, bin, args...))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WrapGoCmd instance
-func WrapGoCmd(cmd *exec.Cmd) *Cmd {
-	return &Cmd{
-		Cmd:  cmd,
-		Vars: make(map[string]string),
-	}
-}
+func WrapGoCmd(cmd *exec.Cmd) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // -------------------------------------------------
 // config the command
@@ -73,394 +54,195 @@ func WrapGoCmd(cmd *exec.Cmd) *Cmd {
 
 // Config the command
 func (c *Cmd) Config(fn func(c *Cmd)) *Cmd {
-	fn(c)
-	return c
+	_ = "STUB: not implemented"
+
+	// WithDryRun on exec command
+	return nil
 }
 
-// WithDryRun on exec command
-func (c *Cmd) WithDryRun(dryRun bool) *Cmd {
-	c.DryRun = dryRun
-	return c
-}
+func (c *Cmd) WithDryRun(dryRun bool) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // PrintCmdline on exec command
-func (c *Cmd) PrintCmdline() *Cmd {
-	c.BeforeRun = PrintCmdline
-	return c
-}
+func (c *Cmd) PrintCmdline() *Cmd { _ = "STUB: not implemented"; return nil }
 
 // PrintCmdline2 on exec command
-func (c *Cmd) PrintCmdline2() *Cmd {
-	c.BeforeRun = PrintCmdline2
-	return c
-}
+func (c *Cmd) PrintCmdline2() *Cmd { _ = "STUB: not implemented"; return nil }
 
 // OnBefore exec add hook
-func (c *Cmd) OnBefore(fn func(c *Cmd)) *Cmd {
-	c.BeforeRun = fn
-	return c
-}
+func (c *Cmd) OnBefore(fn func(c *Cmd)) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // OnAfter exec add hook
-func (c *Cmd) OnAfter(fn func(c *Cmd, err error)) *Cmd {
-	c.AfterRun = fn
-	return c
-}
+func (c *Cmd) OnAfter(fn func(c *Cmd, err error)) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithBin name returns the current object
-func (c *Cmd) WithBin(name string) *Cmd {
-	c.Args[0] = name
-	c.lookPath(name)
-	return c
-}
+func (c *Cmd) WithBin(name string) *Cmd { _ = "STUB: not implemented"; return nil }
 
-func (c *Cmd) lookPath(name string) {
-	if filepath.Base(name) == name {
-		lp, err := exec.LookPath(name)
-		if lp != "" {
-			// Update cmd.Path even if err is non-nil.
-			// If err is ErrDot (especially on Windows), lp may include a resolved
-			// extension (like .exe or .bat) that should be preserved.
-			c.Path = lp
-		}
-		if err != nil {
-			goutil.Panicf("cmdr: look %q path error: %v", name, err)
-		}
-	}
-}
+func (c *Cmd) lookPath(name string) { _ = "STUB: not implemented"; return }
+
+// Update cmd.Path even if err is non-nil.
+// If err is ErrDot (especially on Windows), lp may include a resolved
+// extension (like .exe or .bat) that should be preserved.
 
 // WithGoCmd and returns the current instance.
-func (c *Cmd) WithGoCmd(ec *exec.Cmd) *Cmd {
-	c.Cmd = ec
-	return c
-}
+func (c *Cmd) WithGoCmd(ec *exec.Cmd) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithWorkDir returns the current object
-func (c *Cmd) WithWorkDir(dir string) *Cmd {
-	c.Dir = dir
-	return c
-}
+func (c *Cmd) WithWorkDir(dir string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WorkDirOnNE set workdir on input is not empty
-func (c *Cmd) WorkDirOnNE(dir string) *Cmd {
-	if dir != "" {
-		c.Dir = dir
-	}
-	return c
-}
+func (c *Cmd) WorkDirOnNE(dir string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithEnvMap override set new ENV for run
-func (c *Cmd) WithEnvMap(mp map[string]string) *Cmd {
-	if ln := len(mp); ln > 0 {
-		c.Env = make([]string, 0, ln)
-		for key, val := range mp {
-			c.Env = append(c.Env, key+"="+val)
-		}
-	}
-	return c
-}
+func (c *Cmd) WithEnvMap(mp map[string]string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // AppendEnv to the os ENV for run command
 func (c *Cmd) AppendEnv(mp map[string]string) *Cmd {
-	if len(mp) > 0 {
-		// init env data
-		if c.Env == nil {
-			c.Env = os.Environ()
-		}
+	_ = "STUB: not implemented"
 
-		for name, val := range mp {
-			c.Env = append(c.Env, name+"="+val)
-		}
-	}
-
-	return c
+	// init env data
+	return nil
 }
 
 // OutputToOS output to OS stdout and error
-func (c *Cmd) OutputToOS() *Cmd { return c.ToOSStdoutStderr() }
+func (c *Cmd) OutputToOS() *Cmd { _ = "STUB: not implemented"; return nil }
 
 // ToOSStdoutStderr output to OS stdout and error
-func (c *Cmd) ToOSStdoutStderr() *Cmd {
-	c.Stdout = os.Stdout
-	c.Stderr = os.Stderr
-	return c
-}
+func (c *Cmd) ToOSStdoutStderr() *Cmd { _ = "STUB: not implemented"; return nil }
 
 // ToOSStdout output to OS stdout
-func (c *Cmd) ToOSStdout() *Cmd {
-	c.Stdout = os.Stdout
-	c.Stderr = os.Stdout
-	return c
-}
+func (c *Cmd) ToOSStdout() *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithStdin returns the current argument
-func (c *Cmd) WithStdin(in io.Reader) *Cmd {
-	c.Stdin = in
-	return c
-}
+func (c *Cmd) WithStdin(in io.Reader) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithOutput returns the current instance
-func (c *Cmd) WithOutput(out, errOut io.Writer) *Cmd {
-	c.Stdout = out
-	if errOut != nil {
-		c.Stderr = errOut
-	}
-	return c
-}
+func (c *Cmd) WithOutput(out, errOut io.Writer) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithAnyArgs add args and returns the current object.
-func (c *Cmd) WithAnyArgs(args ...any) *Cmd {
-	c.Args = append(c.Args, arrutil.SliceToStrings(args)...)
-	return c
-}
+func (c *Cmd) WithAnyArgs(args ...any) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // AddArg add args and return the current object
-func (c *Cmd) AddArg(args ...string) *Cmd { return c.WithArg(args...) }
+func (c *Cmd) AddArg(args ...string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithArg add args and return the current object. alias of the WithArg()
-func (c *Cmd) WithArg(args ...string) *Cmd {
-	c.Args = append(c.Args, args...)
-	return c
-}
+func (c *Cmd) WithArg(args ...string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // AddArgf add args and return the current object. alias of the WithArgf()
-func (c *Cmd) AddArgf(format string, args ...any) *Cmd { return c.WithArgf(format, args...) }
+func (c *Cmd) AddArgf(format string, args ...any) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithArgf add arg and return the current object
-func (c *Cmd) WithArgf(format string, args ...any) *Cmd {
-	c.Args = append(c.Args, fmt.Sprintf(format, args...))
-	return c
-}
+func (c *Cmd) WithArgf(format string, args ...any) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // ArgIf add arg and return the current object
-func (c *Cmd) ArgIf(arg string, exprOk bool) *Cmd {
-	if exprOk {
-		c.Args = append(c.Args, arg)
-	}
-	return c
-}
+func (c *Cmd) ArgIf(arg string, exprOk bool) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithArgIf add arg and return the current object
-func (c *Cmd) WithArgIf(arg string, exprOk bool) *Cmd {
-	return c.ArgIf(arg, exprOk)
-}
+func (c *Cmd) WithArgIf(arg string, exprOk bool) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // AddArgs for the git. alias of WithArgs()
-func (c *Cmd) AddArgs(args []string) *Cmd { return c.WithArgs(args) }
+func (c *Cmd) AddArgs(args []string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithArgs for the git
-func (c *Cmd) WithArgs(args []string) *Cmd {
-	if len(args) > 0 {
-		c.Args = append(c.Args, args...)
-	}
-	return c
-}
+func (c *Cmd) WithArgs(args []string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithArgsIf add arg and return the current object
-func (c *Cmd) WithArgsIf(args []string, exprOk bool) *Cmd {
-	if exprOk && len(args) > 0 {
-		c.Args = append(c.Args, args...)
-	}
-	return c
-}
+func (c *Cmd) WithArgsIf(args []string, exprOk bool) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // WithVars add vars and return the current object
-func (c *Cmd) WithVars(vs map[string]string) *Cmd {
-	if len(vs) > 0 {
-		c.Vars = vs
-	}
-	return c
-}
+func (c *Cmd) WithVars(vs map[string]string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // SetVar add var and return the current object
-func (c *Cmd) SetVar(name, val string) *Cmd {
-	c.Vars[name] = val
-	return c
-}
+func (c *Cmd) SetVar(name, val string) *Cmd { _ = "STUB: not implemented"; return nil }
 
 // -------------------------------------------------
 // helper command
 // -------------------------------------------------
 
 // IDString of the command
-func (c *Cmd) IDString() string {
-	if c.Name != "" {
-		return c.Name
-	}
-	return c.BinOrPath()
-}
+func (c *Cmd) IDString() string { _ = "STUB: not implemented"; return "" }
 
 // BinName of the command
-func (c *Cmd) BinName() string {
-	if len(c.Args) > 0 {
-		return c.Args[0]
-	}
+func (c *Cmd) BinName() string { _ = "STUB: not implemented"; return "" }
+
+// BinOrPath of the command
+func (c *Cmd) BinOrPath() string { _ = "STUB: not implemented"; return "" }
+
+// OnlyArgs of the command, not contains bin name.
+func (c *Cmd) OnlyArgs() (ss []string) { _ = "STUB: not implemented"; return nil }
+
+// ResetArgs for command, but will keep bin name.
+func (c *Cmd) ResetArgs() { _ = "STUB: not implemented"; return }
+
+// Workdir of the command
+func (c *Cmd) Workdir() string {
+	_ = "STUB: not implemented"
+
+	// Cmdline to command line
 	return ""
 }
 
-// BinOrPath of the command
-func (c *Cmd) BinOrPath() string {
-	if len(c.Args) > 0 {
-		return c.Args[0]
-	}
-	return c.Path
-}
-
-// OnlyArgs of the command, not contains bin name.
-func (c *Cmd) OnlyArgs() (ss []string) {
-	if len(c.Args) > 1 {
-		return c.Args[1:]
-	}
-	return
-}
-
-// ResetArgs for command, but will keep bin name.
-func (c *Cmd) ResetArgs() {
-	if len(c.Args) > 0 {
-		c.Args = c.Args[0:1]
-	} else {
-		c.Args = c.Args[:0]
-	}
-}
-
-// Workdir of the command
-func (c *Cmd) Workdir() string { return c.Dir }
-
-// Cmdline to command line
-func (c *Cmd) Cmdline() string { return comfunc.Cmdline(c.Args) }
+func (c *Cmd) Cmdline() string { _ = "STUB: not implemented"; return "" }
 
 // RawLine raw command line for print show.
-func (c *Cmd) RawLine() string {
-	if c.PrintLine != "" {
-		return c.PrintLine
-	}
-	return comfunc.Cmdline(c.Args)
-}
+func (c *Cmd) RawLine() string { _ = "STUB: not implemented"; return "" }
 
 // Copy new instance from current command, with new args.
 func (c *Cmd) Copy(args ...string) *Cmd {
-	nc := *c
+	_ = "STUB: not implemented"
 
 	// copy bin name.
-	if len(c.Args) > 0 {
-		nc.Args = append([]string{c.Args[0]}, args...)
-	} else {
-		nc.Args = args
-	}
-
-	return &nc
+	return nil
 }
 
 // GoCmd get exec.Cmd
-func (c *Cmd) GoCmd() *exec.Cmd { return c.Cmd }
+func (c *Cmd) GoCmd() *exec.Cmd {
+	_ = "STUB: not implemented"
 
-// -------------------------------------------------
-// run command
-// -------------------------------------------------
+	// -------------------------------------------------
+	// run command
+	// -------------------------------------------------
+	return nil
+}
 
 // Success run and return whether success
-func (c *Cmd) Success() bool {
-	return c.Run() == nil
-}
+func (c *Cmd) Success() bool { _ = "STUB: not implemented"; return false }
 
 // HasStdout output setting.
-func (c *Cmd) HasStdout() bool {
-	return c.Stdout != nil
-}
+func (c *Cmd) HasStdout() bool { _ = "STUB: not implemented"; return false }
 
 // SafeLines run and return output as lines
-func (c *Cmd) SafeLines() []string {
-	ss, _ := c.OutputLines()
-	return ss
-}
+func (c *Cmd) SafeLines() []string { _ = "STUB: not implemented"; return nil }
 
 // OutputLines run and return output as lines
-func (c *Cmd) OutputLines() ([]string, error) {
-	out, err := c.Output()
-	if err != nil {
-		return nil, err
-	}
-	return OutputLines(out), err
-}
+func (c *Cmd) OutputLines() ([]string, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // SafeOutput run and return output
-func (c *Cmd) SafeOutput() string {
-	out, err := c.Output()
-	if err != nil {
-		return ""
-	}
-	return out
-}
+func (c *Cmd) SafeOutput() string { _ = "STUB: not implemented"; return "" }
 
 // Output run and return output
-func (c *Cmd) Output() (string, error) {
-	if c.BeforeRun != nil {
-		c.BeforeRun(c)
-	}
-
-	if c.DryRun {
-		return "DRY-RUN: ok", nil
-	}
-
-	bs, err := c.Cmd.Output()
-
-	if c.AfterRun != nil {
-		c.AfterRun(c, err)
-	}
-	return string(bs), err
-}
+func (c *Cmd) Output() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // AllOutput run and return output, will combine stderr and stdout output
 func (c *Cmd) AllOutput() (string, error) {
-	return c.CombinedOutput()
+	_ = "STUB: not implemented"
+	return "",
+
+		// CombinedOutput run and return output, will combine stderr and stdout output
+		nil
 }
 
-// CombinedOutput run and return output, will combine stderr and stdout output
-func (c *Cmd) CombinedOutput() (string, error) {
-	if c.BeforeRun != nil {
-		c.BeforeRun(c)
-	}
-
-	if c.DryRun {
-		return "DRY-RUN: ok", nil
-	}
-
-	bs, err := c.Cmd.CombinedOutput()
-	if c.AfterRun != nil {
-		c.AfterRun(c, err)
-	}
-	return string(bs), err
-}
+func (c *Cmd) CombinedOutput() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // MustRun a command. will panic on error
-func (c *Cmd) MustRun() {
-	if err := c.Run(); err != nil {
-		panic(err)
-	}
-}
+func (c *Cmd) MustRun() { _ = "STUB: not implemented"; return }
 
 // FlushRun runs command and flush output to stdout
-func (c *Cmd) FlushRun() error {
-	return c.ToOSStdoutStderr().Run()
-}
+func (c *Cmd) FlushRun() error { _ = "STUB: not implemented"; return nil }
 
 // Run runs command
-func (c *Cmd) Run() error {
-	if c.BeforeRun != nil {
-		c.BeforeRun(c)
-	}
+func (c *Cmd) Run() error { _ = "STUB: not implemented"; return nil }
 
-	if c.DryRun {
-		return nil
-	}
-
-	// do running
-	err := c.Cmd.Run()
-	if c.AfterRun != nil {
-		c.AfterRun(c, err)
-	}
-	return err
-}
+// do running
 
 // if IsWindows() {
 // 	return c.Spawn()

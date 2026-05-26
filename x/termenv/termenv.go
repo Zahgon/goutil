@@ -3,11 +3,7 @@
 package termenv
 
 import (
-	"fmt"
 	"os"
-	"strconv"
-
-	"golang.org/x/term"
 )
 
 var (
@@ -29,28 +25,20 @@ var (
 )
 
 // SetDebugMode sets debug mode.
-func SetDebugMode(enable bool) { debugMode = enable }
+func SetDebugMode(enable bool) {
+	_ = "STUB: not implemented"
 
-// LastErr returns the last error.
-func LastErr() error {
-	defer func() {
-		lastErr = nil // reset on get
-	}()
-	return lastErr
+	// LastErr returns the last error.
+	return
 }
 
-func debugf(tpl string, v ...any) {
-	if debugMode {
-		fmt.Printf("TERMENV: "+tpl+"\n", v...)
-	}
-}
+func LastErr() error { _ = "STUB: not implemented"; return nil }
 
-func setLastErr(err error) {
-	if err != nil {
-		debugf("TERMENV: last error: %v", err)
-		lastErr = err
-	}
-}
+// reset on get
+
+func debugf(tpl string, v ...any) { _ = "STUB: not implemented"; return }
+
+func setLastErr(err error) { _ = "STUB: not implemented"; return }
 
 // exec: `stty -a 2>&1`
 // const (
@@ -62,52 +50,13 @@ func setLastErr(err error) {
 var terminalWidth, terminalHeight int
 
 // GetTermSize for current console terminal. will first try to get from environment variables COLUMNS and LINES.
-func GetTermSize(refresh ...bool) (w int, h int) {
-	if terminalWidth > 0 && (len(refresh) == 0 || !refresh[0]) {
-		return terminalWidth, terminalHeight
-	}
+func GetTermSize(refresh ...bool) (w int, h int) { _ = "STUB: not implemented"; return 0, 0 }
 
-	// 首先尝试从环境变量获取
-	if cols := os.Getenv("COLUMNS"); cols != "" {
-		if width, err := strconv.Atoi(cols); err == nil && width > 0 {
-			terminalWidth = width
-		}
-	}
-	if rows := os.Getenv("LINES"); rows != "" {
-		if height, err := strconv.Atoi(rows); err == nil && height > 0 {
-			terminalHeight = height
-		}
-	}
-	if terminalWidth > 0 && terminalHeight > 0 {
-		return terminalWidth, terminalHeight
-	}
+// 首先尝试从环境变量获取
 
-	var err error
-	w, h, err = term.GetSize(syscallStdoutFd())
-	if err != nil {
-		debugf("get terminal size error: %v", err)
-		return
-	}
-
-	// cache result
-	terminalWidth, terminalHeight = w, h
-	debugf("get terminal size: %d,%d", w, h)
-	return
-}
+// cache result
 
 // ReadPassword from console terminal
-func ReadPassword(question ...string) string {
-	if len(question) > 0 {
-		print(question[0])
-	} else {
-		print("Enter Password: ")
-	}
+func ReadPassword(question ...string) string { _ = "STUB: not implemented"; return "" }
 
-	bs, err := term.ReadPassword(syscallStdinFd())
-	if err != nil {
-		return ""
-	}
-
-	println() // new line
-	return string(bs)
-}
+// new line

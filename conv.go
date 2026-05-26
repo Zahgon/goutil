@@ -1,74 +1,72 @@
 package goutil
 
 import (
-	"fmt"
-	"math"
 	"reflect"
-	"strconv"
-
-	"github.com/gookit/goutil/comdef"
-	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/mathutil"
-	"github.com/gookit/goutil/reflects"
-	"github.com/gookit/goutil/strutil"
 )
 
 // Bool convert value to bool
-func Bool(v any) bool {
-	bl, _ := comfunc.ToBool(v)
-	return bl
-}
+func Bool(v any) bool { _ = "STUB: not implemented"; return false }
 
 // ToBool try to convert type to bool
-func ToBool(v any) (bool, error) { return comfunc.ToBool(v) }
+func ToBool(v any) (bool, error) {
+	_ = "STUB: not implemented"
+	return false,
 
-// String func. always converts value to string, will ignore error
-func String(v any) string {
-	s, _ := strutil.AnyToString(v, false)
-	return s
+		// String func. always converts value to string, will ignore error
+		nil
 }
+
+func String(v any) string { _ = "STUB: not implemented"; return "" }
 
 // ToString convert value to string, will return error on fail.
-func ToString(v any) (string, error) { return strutil.AnyToString(v, true) }
+func ToString(v any) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // Int convert value to int
-func Int(v any) int {
-	iv, _ := mathutil.ToInt(v)
-	return iv
-}
+func Int(v any) int { _ = "STUB: not implemented"; return 0 }
 
 // ToInt try to convert value to int
-func ToInt(v any) (int, error) { return mathutil.ToInt(v) }
+func ToInt(v any) (int, error) {
+	_ = "STUB: not implemented"
+	return 0,
 
-// Int64 convert value to int64
-func Int64(v any) int64 {
-	iv, _ := mathutil.ToInt64(v)
-	return iv
+		// Int64 convert value to int64
+		nil
 }
+
+func Int64(v any) int64 { _ = "STUB: not implemented"; return 0 }
 
 // ToInt64 try to convert value to int64
-func ToInt64(v any) (int64, error) { return mathutil.ToInt64(v) }
+func ToInt64(v any) (int64, error) {
+	_ = "STUB: not implemented"
+	return 0,
 
-// Uint convert value to uint
-func Uint(v any) uint {
-	iv, _ := mathutil.ToUint(v)
-	return iv
+		// Uint convert value to uint
+		nil
 }
+
+func Uint(v any) uint { _ = "STUB: not implemented"; return 0 }
 
 // ToUint try to convert value to uint
-func ToUint(v any) (uint, error) { return mathutil.ToUint(v) }
+func ToUint(v any) (uint, error) {
+	_ = "STUB: not implemented"
+	return 0,
 
-// Uint64 convert value to uint64
-func Uint64(v any) uint64 {
-	iv, _ := mathutil.ToUint64(v)
-	return iv
+		// Uint64 convert value to uint64
+		nil
 }
 
-// ToUint64 try to convert value to uint64
-func ToUint64(v any) (uint64, error) { return mathutil.ToUint64(v) }
+func Uint64(v any) uint64 { _ = "STUB: not implemented"; return 0 }
 
-// BoolString convert bool to string
-func BoolString(bl bool) string { return strconv.FormatBool(bl) }
+// ToUint64 try to convert value to uint64
+func ToUint64(v any) (uint64, error) {
+	_ = "STUB: not implemented"
+	return 0,
+
+		// BoolString convert bool to string
+		nil
+}
+
+func BoolString(bl bool) string { _ = "STUB: not implemented"; return "" }
 
 // BaseTypeVal convert custom type or intX,uintX,floatX to generic base type.
 //
@@ -78,35 +76,25 @@ func BoolString(bl bool) string { return strconv.FormatBool(bl) }
 //	string 	    => string
 //
 // returns int64,uint64,string,float or error
-func BaseTypeVal(val any) (value any, err error) {
-	return reflects.BaseTypeVal(reflect.ValueOf(val))
-}
+func BaseTypeVal(val any) (value any, err error) { _ = "STUB: not implemented"; return *new(any), nil }
 
 // SafeKind convert input any value to given reflect.Kind type.
-func SafeKind(val any, kind reflect.Kind) (newVal any) {
-	newVal, _ = ToKind(val, kind, nil)
-	return
-}
+func SafeKind(val any, kind reflect.Kind) (newVal any) { _ = "STUB: not implemented"; return *new(any) }
 
 // SafeConv convert input any value to given reflect.Kind type.
-func SafeConv(val any, kind reflect.Kind) (newVal any) {
-	newVal, _ = ToKind(val, kind, nil)
-	return
-}
+func SafeConv(val any, kind reflect.Kind) (newVal any) { _ = "STUB: not implemented"; return *new(any) }
 
 // ConvTo convert input any value to given reflect.Kind.
 func ConvTo(val any, kind reflect.Kind) (newVal any, err error) {
-	return ToKind(val, kind, nil)
+	_ = "STUB: not implemented"
+	return *new(any), nil
 }
 
 // ConvOrDefault convert input any value to given reflect.Kind.
 // if fail will return default value.
 func ConvOrDefault(val any, kind reflect.Kind, defVal any) any {
-	newVal, err := ToKind(val, kind, nil)
-	if err != nil {
-		return defVal
-	}
-	return newVal
+	_ = "STUB: not implemented"
+	return *new(any)
 }
 
 // ToType
@@ -124,108 +112,6 @@ func ConvOrDefault(val any, kind reflect.Kind, defVal any) any {
 //
 //	val, err := ToKind("123", reflect.Int) // 123
 func ToKind(val any, kind reflect.Kind, fbFunc func(val any) (any, error)) (newVal any, err error) {
-	switch kind {
-	case reflect.Int:
-		var dstV int
-		if dstV, err = mathutil.ToInt(val); err == nil {
-			if dstV > math.MaxInt {
-				return nil, fmt.Errorf("value overflow int. val: %v", val)
-			}
-			newVal = dstV
-		}
-	case reflect.Int8:
-		var dstV int
-		if dstV, err = mathutil.ToInt(val); err == nil {
-			if dstV > math.MaxInt8 {
-				return nil, fmt.Errorf("value overflow int8. val: %v", val)
-			}
-			newVal = int8(dstV)
-		}
-	case reflect.Int16:
-		var dstV int
-		if dstV, err = mathutil.ToInt(val); err == nil {
-			if dstV > math.MaxInt16 {
-				return nil, fmt.Errorf("value overflow int16. val: %v", val)
-			}
-			newVal = int16(dstV)
-		}
-	case reflect.Int32:
-		var dstV int
-		if dstV, err = mathutil.ToInt(val); err == nil {
-			if dstV > math.MaxInt32 {
-				return nil, fmt.Errorf("value overflow int32. val: %v", val)
-			}
-			newVal = int32(dstV)
-		}
-	case reflect.Int64:
-		var dstV int64
-		if dstV, err = mathutil.ToInt64(val); err == nil {
-			newVal = dstV
-		}
-	case reflect.Uint:
-		var dstV uint
-		if dstV, err = mathutil.ToUint(val); err == nil {
-			newVal = dstV
-		}
-	case reflect.Uint8:
-		var dstV uint
-		if dstV, err = mathutil.ToUint(val); err == nil {
-			if dstV > math.MaxUint8 {
-				return nil, fmt.Errorf("value overflow uint8. val: %v", val)
-			}
-			newVal = uint8(dstV)
-		}
-	case reflect.Uint16:
-		var dstV uint
-		if dstV, err = mathutil.ToUint(val); err == nil {
-			if dstV > math.MaxUint16 {
-				return nil, fmt.Errorf("value overflow uint16. val: %v", val)
-			}
-			newVal = uint16(dstV)
-		}
-	case reflect.Uint32:
-		var dstV uint
-		if dstV, err = mathutil.ToUint(val); err == nil {
-			if dstV > math.MaxUint32 {
-				return nil, fmt.Errorf("value overflow uint32. val: %v", val)
-			}
-			newVal = uint32(dstV)
-		}
-	case reflect.Uint64:
-		var dstV uint64
-		if dstV, err = mathutil.ToUint64(val); err == nil {
-			newVal = dstV
-		}
-	case reflect.Float32:
-		var dstV float64
-		if dstV, err = mathutil.ToFloat(val); err == nil {
-			if dstV > math.MaxFloat32 {
-				return nil, fmt.Errorf("value overflow float32. val: %v", val)
-			}
-			newVal = float32(dstV)
-		}
-	case reflect.Float64:
-		var dstV float64
-		if dstV, err = mathutil.ToFloat(val); err == nil {
-			newVal = dstV
-		}
-	case reflect.String:
-		var dstV string
-		if dstV, err = strutil.ToString(val); err == nil {
-			newVal = dstV
-		}
-	case reflect.Bool:
-		if bl, err1 := comfunc.ToBool(val); err1 == nil {
-			newVal = bl
-		} else {
-			err = err1
-		}
-	default:
-		if fbFunc != nil {
-			newVal, err = fbFunc(val)
-		} else {
-			err = comdef.ErrConvType
-		}
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(any), nil
 }

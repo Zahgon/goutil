@@ -2,39 +2,22 @@ package envutil
 
 import (
 	"io"
-	"os"
-	"runtime"
-	"strings"
-
-	"github.com/gookit/goutil/internal/comfunc"
-	"github.com/gookit/goutil/sysutil"
-	"golang.org/x/term"
 )
 
 // IsWin system. linux windows darwin
-func IsWin() bool {
-	return runtime.GOOS == "windows"
-}
+func IsWin() bool { _ = "STUB: not implemented"; return false }
 
 // IsWindows system. alias of IsWin
-func IsWindows() bool {
-	return runtime.GOOS == "windows"
-}
+func IsWindows() bool { _ = "STUB: not implemented"; return false }
 
 // IsMac system
-func IsMac() bool {
-	return runtime.GOOS == "darwin"
-}
+func IsMac() bool { _ = "STUB: not implemented"; return false }
 
 // IsLinux system
-func IsLinux() bool {
-	return runtime.GOOS == "linux"
-}
+func IsLinux() bool { _ = "STUB: not implemented"; return false }
 
 // IsMSys msys(MINGW64) env. alias of the sysutil.IsMSys()
-func IsMSys() bool {
-	return sysutil.IsMSys()
-}
+func IsMSys() bool { _ = "STUB: not implemented"; return false }
 
 // IsTerminal isatty check
 //
@@ -42,19 +25,16 @@ func IsMSys() bool {
 //
 //	envutil.IsTerminal(os.Stdout.Fd())
 func IsTerminal(fd uintptr) bool {
+	_ = "STUB: not implemented"
 	// return isatty.IsTerminal(fd) // "github.com/mattn/go-isatty"
-	return term.IsTerminal(int(fd))
+	return false
 }
 
 // StdIsTerminal os.Stdout is terminal
-func StdIsTerminal() bool {
-	return IsTerminal(os.Stdout.Fd())
-}
+func StdIsTerminal() bool { _ = "STUB: not implemented"; return false }
 
 // IsConsole check out is console env. alias of the sysutil.IsConsole()
-func IsConsole(out io.Writer) bool {
-	return sysutil.IsConsole(out)
-}
+func IsConsole(out io.Writer) bool { _ = "STUB: not implemented"; return false }
 
 // HasShellEnv has shell env check.
 //
@@ -62,9 +42,7 @@ func IsConsole(out io.Writer) bool {
 //
 //	HasShellEnv("sh")
 //	HasShellEnv("bash")
-func HasShellEnv(shell string) bool {
-	return comfunc.HasShellEnv(shell)
-}
+func HasShellEnv(shell string) bool { _ = "STUB: not implemented"; return false }
 
 // Support color:
 //
@@ -91,53 +69,34 @@ var specialColorTerms = map[string]bool{
 // Not support:
 //
 //	windows cmd.exe, powerShell.exe
-func IsSupportColor() bool {
-	envTerm := os.Getenv("TERM")
-	if strings.Contains(envTerm, "xterm") {
-		return true
-	}
+func IsSupportColor() bool { _ = "STUB: not implemented"; return false }
 
-	// it's special color term
-	if _, ok := specialColorTerms[envTerm]; ok {
-		return true
-	}
+// it's special color term
 
-	// like on ConEmu software, e.g "ConEmuANSI=ON"
-	if os.Getenv("ConEmuANSI") == "ON" {
-		return true
-	}
+// like on ConEmu software, e.g "ConEmuANSI=ON"
 
-	// like on ConEmu software, e.g "ANSICON=189x2000 (189x43)"
-	if os.Getenv("ANSICON") != "" {
-		return true
-	}
+// like on ConEmu software, e.g "ANSICON=189x2000 (189x43)"
 
-	// up: if support 256-color, can also support basic color.
-	return IsSupport256Color()
-}
+// up: if support 256-color, can also support basic color.
 
 // IsSupport256Color render
 func IsSupport256Color() bool {
+	_ = "STUB: not implemented"
 	// "TERM=xterm-256color"
 	// "TERM=screen-256color"
 	// "TERM=tmux-256color"
 	// "TERM=rxvt-unicode-256color"
-	supported := strings.Contains(os.Getenv("TERM"), "256color")
-	if !supported {
-		// up: if support true-color, can also support 256-color.
-		supported = IsSupportTrueColor()
-	}
-
-	return supported
+	return false
 }
+
+// up: if support true-color, can also support 256-color.
 
 // IsSupportTrueColor render. IsSupportRGBColor
 func IsSupportTrueColor() bool {
+	_ = "STUB: not implemented"
 	// "COLORTERM=truecolor"
-	return strings.Contains(os.Getenv("COLORTERM"), "truecolor")
+	return false
 }
 
 // IsGithubActions env
-func IsGithubActions() bool {
-	return os.Getenv("GITHUB_ACTIONS") == "true"
-}
+func IsGithubActions() bool { _ = "STUB: not implemented"; return false }

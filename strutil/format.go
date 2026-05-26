@@ -1,10 +1,7 @@
 package strutil
 
 import (
-	"fmt"
-	"regexp"
 	"strings"
-	"unicode"
 )
 
 /*************************************************************
@@ -21,109 +18,34 @@ var (
 )
 
 // Title alias of the strings.ToTitle()
-func Title(s string) string { return strings.ToTitle(s) }
+func Title(s string) string { _ = "STUB: not implemented"; return "" }
 
 // Lower alias of the strings.ToLower()
-func Lower(s string) string { return strings.ToLower(s) }
+func Lower(s string) string { _ = "STUB: not implemented"; return "" }
 
 // Lowercase alias of the strings.ToLower()
-func Lowercase(s string) string { return strings.ToLower(s) }
+func Lowercase(s string) string { _ = "STUB: not implemented"; return "" }
 
 // Upper alias of the strings.ToUpper()
-func Upper(s string) string { return strings.ToUpper(s) }
+func Upper(s string) string { _ = "STUB: not implemented"; return "" }
 
 // Uppercase alias of the strings.ToUpper()
-func Uppercase(s string) string { return strings.ToUpper(s) }
+func Uppercase(s string) string { _ = "STUB: not implemented"; return "" }
 
 // UpperWord Change the first character of each word to uppercase
-func UpperWord(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-
-	if len(s) == 1 {
-		return strings.ToUpper(s)
-	}
-
-	inWord := true
-	buf := make([]byte, 0, len(s))
-
-	i := 0
-	rs := []rune(s)
-	if RuneIsLower(rs[i]) {
-		buf = append(buf, []byte(string(unicode.ToUpper(rs[i])))...)
-	} else {
-		buf = append(buf, []byte(string(rs[i]))...)
-	}
-
-	for j := i + 1; j < len(rs); j++ {
-		if !RuneIsWord(rs[i]) && RuneIsWord(rs[j]) {
-			inWord = false
-		}
-
-		if RuneIsLower(rs[j]) && !inWord {
-			buf = append(buf, []byte(string(unicode.ToUpper(rs[j])))...)
-			inWord = true
-		} else {
-			buf = append(buf, []byte(string(rs[j]))...)
-		}
-
-		if RuneIsWord(rs[j]) {
-			inWord = true
-		}
-
-		i++
-	}
-
-	return string(buf)
-}
+func UpperWord(s string) string { _ = "STUB: not implemented"; return "" }
 
 // LowerFirst lower first char
-func LowerFirst(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-
-	rs := []rune(s)
-	f := rs[0]
-
-	if 'A' <= f && f <= 'Z' {
-		return string(unicode.ToLower(f)) + string(rs[1:])
-	}
-	return s
-}
+func LowerFirst(s string) string { _ = "STUB: not implemented"; return "" }
 
 // UpperFirst upper first char
-func UpperFirst(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-
-	rs := []rune(s)
-	f := rs[0]
-
-	if 'a' <= f && f <= 'z' {
-		return string(unicode.ToUpper(f)) + string(rs[1:])
-	}
-	return s
-}
+func UpperFirst(s string) string { _ = "STUB: not implemented"; return "" }
 
 // SnakeCase convert. eg "RangePrice" -> "range_price"
-func SnakeCase(s string, sep ...string) string {
-	sepChar := "_"
-	if len(sep) > 0 {
-		sepChar = sep[0]
-	}
-
-	str := toSnakeReg.ReplaceAllStringFunc(s, func(s string) string {
-		return sepChar + LowerFirst(s)
-	})
-
-	return strings.TrimLeft(str, sepChar)
-}
+func SnakeCase(s string, sep ...string) string { _ = "STUB: not implemented"; return "" }
 
 // Camel alias of the CamelCase
-func Camel(s string, sep ...string) string { return CamelCase(s, sep...) }
+func Camel(s string, sep ...string) string { _ = "STUB: not implemented"; return "" }
 
 // CamelCase convert string to camel case.
 //
@@ -132,28 +54,11 @@ func Camel(s string, sep ...string) string { return CamelCase(s, sep...) }
 //	"range_price" -> "rangePrice"
 //	"range price" -> "rangePrice"
 //	"range-price" -> "rangePrice"
-func CamelCase(s string, sep ...string) string {
-	sepChar := "_"
-	if len(sep) > 0 {
-		sepChar = sep[0]
-	}
+func CamelCase(s string, sep ...string) string { _ = "STUB: not implemented"; return "" }
 
-	// Not contains sep char
-	if !strings.Contains(s, sepChar) {
-		return s
-	}
+// Not contains sep char
 
-	// Get regexp instance
-	rgx, ok := toCamelRegs[sepChar]
-	if !ok {
-		rgx = regexp.MustCompile(regexp.QuoteMeta(sepChar) + "+[a-zA-Z]")
-	}
-
-	return rgx.ReplaceAllStringFunc(s, func(s string) string {
-		s = strings.TrimLeft(s, sepChar)
-		return UpperFirst(s)
-	})
-}
+// Get regexp instance
 
 //
 // Indent format multi line text
@@ -162,29 +67,11 @@ func CamelCase(s string, sep ...string) string {
 
 // Indent inserts prefix at the beginning of each non-empty line of s. The
 // end-of-line marker is NL.
-func Indent(s, prefix string) string {
-	return string(IndentBytes([]byte(s), []byte(prefix)))
-}
+func Indent(s, prefix string) string { _ = "STUB: not implemented"; return "" }
 
 // IndentBytes inserts prefix at the beginning of each non-empty line of b.
 // The end-of-line marker is NL.
-func IndentBytes(b, prefix []byte) []byte {
-	if len(b) == 0 {
-		return b
-	}
-
-	bol := true
-	res := make([]byte, 0, len(b)+len(prefix)*4)
-
-	for _, c := range b {
-		if bol && c != '\n' {
-			res = append(res, prefix...)
-		}
-		res = append(res, c)
-		bol = c == '\n'
-	}
-	return res
-}
+func IndentBytes(b, prefix []byte) []byte { _ = "STUB: not implemented"; return nil }
 
 // Replaces replace multi strings
 //
@@ -193,44 +80,22 @@ func IndentBytes(b, prefix []byte) []byte {
 // Can also use:
 //
 //	strings.NewReplacer("old1", "new1", "old2", "new2").Replace(str)
-func Replaces(str string, pairs map[string]string) string {
-	return NewReplacer(pairs).Replace(str)
-}
+func Replaces(str string, pairs map[string]string) string { _ = "STUB: not implemented"; return "" }
 
 // ReplaceVars replaces simple variables in a string. format: {varName}
 //
 // Usage:
+//
 //	strutil.ReplaceVars("{name}, age is {age}", map[string]string{
 //		"name": "Joe",
 //		"age": "18"
 //	})
-func ReplaceVars(s string, vars map[string]string) string {
-	if !ContainsByte(s, '{') {
-		return s
-	}
+func ReplaceVars(s string, vars map[string]string) string { _ = "STUB: not implemented"; return "" }
 
-	// format var name to {name}
-	pairs := make(map[string]string)
-	for k, v := range vars {
-		vName := "{" + k + "}"
-		pairs[vName] = v
-	}
-	return NewReplacer(pairs).Replace(s)
-}
+// format var name to {name}
 
 // NewReplacer instance
-func NewReplacer(pairs map[string]string) *strings.Replacer {
-	ss := make([]string, len(pairs)*2)
-	for old, newVal := range pairs {
-		ss = append(ss, old, newVal)
-	}
-	return strings.NewReplacer(ss...)
-}
+func NewReplacer(pairs map[string]string) *strings.Replacer { _ = "STUB: not implemented"; return nil }
 
 // WrapTag for given string.
-func WrapTag(s, tag string) string {
-	if s == "" {
-		return s
-	}
-	return fmt.Sprintf("<%s>%s</%s>", tag, s, tag)
-}
+func WrapTag(s, tag string) string { _ = "STUB: not implemented"; return "" }

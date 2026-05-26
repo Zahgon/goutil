@@ -14,22 +14,17 @@ type Assertions struct {
 //
 //	as := assert.New(t)
 //	as.True(true)
-func New(t TestingT) *Assertions {
-	return &Assertions{t: t}
-}
+func New(t TestingT) *Assertions { _ = "STUB: not implemented"; return nil }
 
 // WithMsg set with prefix message.
-func (as *Assertions) WithMsg(msg string) *Assertions {
-	as.Msg = msg
-	return as
-}
+func (as *Assertions) WithMsg(msg string) *Assertions { _ = "STUB: not implemented"; return nil }
 
 // IsOk for last check
 func (as *Assertions) IsOk() bool {
-	return as.ok
+	_ = "STUB: not implemented"
+
+	// IsFail for last check
+	return false
 }
 
-// IsFail for last check
-func (as *Assertions) IsFail() bool {
-	return !as.ok
-}
+func (as *Assertions) IsFail() bool { _ = "STUB: not implemented"; return false }

@@ -1,14 +1,8 @@
 package maputil
 
 import (
-	"errors"
-	"reflect"
-	"strings"
-
-	"github.com/gookit/goutil/arrutil"
 	"github.com/gookit/goutil/comdef"
 	"github.com/gookit/goutil/reflects"
-	"github.com/gookit/goutil/strutil"
 )
 
 // alias functions
@@ -20,160 +14,62 @@ var (
 )
 
 // KeyToLower convert keys to lower case.
-func KeyToLower(src map[string]string) map[string]string {
-	if len(src) == 0 {
-		return src
-	}
-
-	newMp := make(map[string]string, len(src))
-	for k, v := range src {
-		k = strings.ToLower(k)
-		newMp[k] = v
-	}
-	return newMp
-}
+func KeyToLower(src map[string]string) map[string]string { _ = "STUB: not implemented"; return nil }
 
 // AnyToStrMap try convert any(map[string]any, map[string]string) to map[string]string
-func AnyToStrMap(src any) map[string]string {
-	if src == nil {
-		return nil
-	}
-
-	if m, ok := src.(map[string]string); ok {
-		return m
-	}
-	if m, ok := src.(map[string]any); ok {
-		return ToStringMap(m)
-	}
-	return nil
-}
+func AnyToStrMap(src any) map[string]string { _ = "STUB: not implemented"; return nil }
 
 // ToStringMap simple convert map[string]any to map[string]string
-func ToStringMap(src map[string]any) map[string]string {
-	strMp := make(map[string]string, len(src))
-	for k, v := range src {
-		strMp[k] = strutil.SafeString(v)
-	}
-	return strMp
-}
+func ToStringMap(src map[string]any) map[string]string { _ = "STUB: not implemented"; return nil }
 
 // ToL2StringMap convert map[string]any to map[string]map[string]string
 func ToL2StringMap(groupsMap map[string]any) map[string]map[string]string {
-	if len(groupsMap) == 0 {
-		return nil
-	}
-
-	l2sMap := make(map[string]map[string]string, len(groupsMap))
-
-	for k, v := range groupsMap {
-		if mp, ok := v.(map[string]any); ok {
-			l2sMap[k] = ToStringMap(mp)
-		} else if smp, ok := v.(map[string]string); ok {
-			l2sMap[k] = smp
-		}
-	}
-	return l2sMap
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CombineToSMap combine two string-slices to SMap(map[string]string)
-func CombineToSMap(keys, values []string) SMap {
-	return arrutil.CombineToSMap(keys, values)
-}
+func CombineToSMap(keys, values []string) SMap { _ = "STUB: not implemented"; return *new(SMap) }
 
 // CombineToMap combine two any slice to map[K]V. alias of arrutil.CombineToMap
 func CombineToMap[K comdef.SortedType, V any](keys []K, values []V) map[K]V {
-	return arrutil.CombineToMap(keys, values)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SliceToSMap convert string k-v pairs slice to map[string]string
 //   - eg: []string{k1,v1,k2,v2} -> map[string]string{k1:v1, k2:v2}
 func SliceToSMap(kvPairs ...string) map[string]string {
-	ln := len(kvPairs)
-	// check kvPairs length must be even
-	if ln == 0 || ln%2 != 0 {
-		return nil
-	}
+	_ = "STUB: not implemented"
 
-	sMap := make(map[string]string, ln/2)
-	for i := 0; i < ln; i += 2 {
-		sMap[kvPairs[i]] = kvPairs[i+1]
-	}
-	return sMap
+	// check kvPairs length must be even
+	return nil
 }
 
 // SliceToMap convert any k-v pairs slice to map[string]any
 func SliceToMap(kvPairs ...any) map[string]any {
-	ln := len(kvPairs)
-	// check kvPairs length must be even
-	if ln == 0 || ln%2 != 0 {
-		return nil
-	}
+	_ = "STUB: not implemented"
 
-	mp := make(map[string]any, ln/2)
-	for i := 0; i < ln; i += 2 {
-		kStr := strutil.SafeString(kvPairs[i])
-		mp[kStr] = kvPairs[i+1]
-	}
-	return mp
+	// check kvPairs length must be even
+	return nil
 }
 
 // SliceToTypeMap convert k-v pairs slice to map[string]T
 func SliceToTypeMap[T any](valFunc func(any) T, kvPairs ...any) map[string]T {
-	ln := len(kvPairs)
-	// check kvPairs length must be even
-	if ln == 0 || ln%2 != 0 {
-		return nil
-	}
+	_ = "STUB: not implemented"
 
-	mp := make(map[string]T, ln/2)
-	for i := 0; i < ln; i += 2 {
-		kStr := strutil.SafeString(kvPairs[i])
-		mp[kStr] = valFunc(kvPairs[i+1])
-	}
-	return mp
+	// check kvPairs length must be even
+	return nil
 }
 
 // ToAnyMap convert map[TYPE1]TYPE2 to map[string]any
-func ToAnyMap(mp any) map[string]any {
-	amp, _ := TryAnyMap(mp)
-	return amp
-}
+func ToAnyMap(mp any) map[string]any { _ = "STUB: not implemented"; return nil }
 
 // TryAnyMap convert map[TYPE1]TYPE2 to map[string]any
-func TryAnyMap(mp any) (map[string]any, error) {
-	if aMp, ok := mp.(map[string]any); ok {
-		return aMp, nil
-	}
-	if sMp, ok := mp.(map[string]string); ok {
-		anyMp := make(map[string]any, len(sMp))
-		for k, v := range sMp {
-			anyMp[k] = v
-		}
-		return anyMp, nil
-	}
-
-	rv := reflect.Indirect(reflect.ValueOf(mp))
-	if rv.Kind() != reflect.Map {
-		return nil, errors.New("input is not a map value type")
-	}
-
-	anyMp := make(map[string]any, rv.Len())
-	for _, key := range rv.MapKeys() {
-		keyStr := strutil.SafeString(key.Interface())
-		anyMp[keyStr] = rv.MapIndex(key).Interface()
-	}
-	return anyMp, nil
-}
+func TryAnyMap(mp any) (map[string]any, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // HTTPQueryString convert map[string]any data to http query string.
-func HTTPQueryString(data map[string]any) string {
-	ss := make([]string, 0, len(data))
-	for k, v := range data {
-		ss = append(ss, k+"="+strutil.QuietString(v))
-	}
-
-	return strings.Join(ss, "&")
-}
+func HTTPQueryString(data map[string]any) string { _ = "STUB: not implemented"; return "" }
 
 // StringsMapToAnyMap convert map[string][]string to map[string]any
 //
@@ -184,67 +80,23 @@ func HTTPQueryString(data map[string]any) string {
 //
 //	mp := StringsMapToAnyMap(httpReq.Header)
 func StringsMapToAnyMap(ssMp map[string][]string) map[string]any {
-	if len(ssMp) == 0 {
-		return nil
-	}
-
-	anyMp := make(map[string]any, len(ssMp))
-	for k, v := range ssMp {
-		if len(v) == 1 {
-			anyMp[k] = v[0]
-			continue
-		}
-		anyMp[k] = v
-	}
-	return anyMp
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ToString simple and quickly convert map[string]any to string.
-func ToString(mp map[string]any) string {
-	if mp == nil {
-		return ""
-	}
-	if len(mp) == 0 {
-		return "{}"
-	}
+func ToString(mp map[string]any) string { _ = "STUB: not implemented"; return "" }
 
-	buf := make([]byte, 0, len(mp)*16)
-	buf = append(buf, '{')
-
-	for k, val := range mp {
-		buf = append(buf, k...)
-		buf = append(buf, ':')
-
-		str := strutil.QuietString(val)
-		buf = append(buf, str...)
-		buf = append(buf, ',', ' ')
-	}
-
-	// remove last ', '
-	buf = append(buf[:len(buf)-2], '}')
-	return strutil.Byte2str(buf)
-}
+// remove last ', '
 
 // ToString2 simple and quickly convert a map to string.
-func ToString2(mp any) string { return NewFormatter(mp).Format() }
+func ToString2(mp any) string { _ = "STUB: not implemented"; return "" }
 
 // FormatIndent format map data to string with newline and indent.
-func FormatIndent(mp any, indent string) string {
-	return NewFormatter(mp).WithIndent(indent).Format()
-}
+func FormatIndent(mp any, indent string) string { _ = "STUB: not implemented"; return "" }
 
 // StrMapToText 将 map[string]string 转换为多行 key=value 格式文本
-func StrMapToText(m map[string]string) string {
-	if len(m) == 0 {
-		return ""
-	}
-
-	var lines []string
-	for key, value := range m {
-		lines = append(lines, key+"="+value)
-	}
-	return strings.Join(lines, "\n")
-}
+func StrMapToText(m map[string]string) string { _ = "STUB: not implemented"; return "" }
 
 /*************************************************************
  * Flat convert tree map to flatten key-value map.
@@ -257,23 +109,7 @@ func StrMapToText(m map[string]string) string {
 //	{"top": {"sub": "value", "sub2": "value2"} }
 //	->
 //	{"top.sub": "value", "top.sub2": "value2" }
-func Flatten(mp map[string]any) map[string]any {
-	if mp == nil {
-		return nil
-	}
-
-	flatMp := make(map[string]any, len(mp)*2)
-	reflects.FlatMap(reflect.ValueOf(mp), func(path string, val reflect.Value) {
-		flatMp[path] = val.Interface()
-	})
-
-	return flatMp
-}
+func Flatten(mp map[string]any) map[string]any { _ = "STUB: not implemented"; return nil }
 
 // FlatWithFunc flat a tree-map with custom collect handle func
-func FlatWithFunc(mp map[string]any, fn reflects.FlatFunc) {
-	if mp == nil || fn == nil {
-		return
-	}
-	reflects.FlatMap(reflect.ValueOf(mp), fn)
-}
+func FlatWithFunc(mp map[string]any, fn reflects.FlatFunc) { _ = "STUB: not implemented"; return }

@@ -1,12 +1,8 @@
 package fakeobj
 
 import (
-	"io"
 	"io/fs"
-	"path/filepath"
 	"time"
-
-	"github.com/gookit/goutil/x/basefn"
 )
 
 // DirEntry implements the fs.DirEntry
@@ -19,37 +15,33 @@ type DirEntry struct {
 }
 
 // NewDirEntry create a fs.DirEntry
-func NewDirEntry(fPath string, isDir ...bool) *DirEntry {
-	isd := basefn.FirstOr(isDir, false)
-	return &DirEntry{Nam: filepath.Base(fPath), Dir: isd, Mod: fs.ModePerm}
-}
+func NewDirEntry(fPath string, isDir ...bool) *DirEntry { _ = "STUB: not implemented"; return nil }
 
 // Name get
 func (d *DirEntry) Name() string {
-	return d.Nam
+	_ = "STUB: not implemented"
+
+	// IsDir get
+	return ""
 }
 
-// IsDir get
 func (d *DirEntry) IsDir() bool {
-	return d.Dir
+	_ = "STUB: not implemented"
+
+	// Type get
+	return false
 }
 
-// Type get
 func (d *DirEntry) Type() fs.FileMode {
-	return d.Mod
+	_ = "STUB: not implemented"
+
+	// Info get
+	return *new(fs.FileMode)
 }
 
-// Info get
 func (d *DirEntry) Info() (fs.FileInfo, error) {
-	if d.Fi == nil {
-		d.Fi = &FileInfo{
-			Dir: d.Dir,
-			Nam: d.Nam,
-			Mod: d.Mod,
-		}
-	}
-
-	return d.Fi, d.Err
+	_ = "STUB: not implemented"
+	return *new(fs.FileInfo), nil
 }
 
 // FileInfo implements the fs.FileInfo, fs.File
@@ -68,89 +60,70 @@ type FileInfo struct {
 }
 
 // NewFile instance
-func NewFile(fPath string) *FileInfo {
-	return NewFileInfo(fPath)
-}
+func NewFile(fPath string) *FileInfo { _ = "STUB: not implemented"; return nil }
 
 // NewFileInfo instance
-func NewFileInfo(fPath string, isDir ...bool) *FileInfo {
-	return &FileInfo{
-		Dir:  basefn.FirstOr(isDir, false),
-		Nam:  filepath.Base(fPath),
-		Mod:  fs.ModePerm,
-		Path: fPath,
-	}
-}
+func NewFileInfo(fPath string, isDir ...bool) *FileInfo { _ = "STUB: not implemented"; return nil }
 
 // WithBody set file body contents
-func (f *FileInfo) WithBody(s string) *FileInfo {
-	f.Contents = s
-	return f
-}
+func (f *FileInfo) WithBody(s string) *FileInfo { _ = "STUB: not implemented"; return nil }
 
 // WithMtime set file modify time
-func (f *FileInfo) WithMtime(mt time.Time) *FileInfo {
-	f.Mt = mt
-	return f
-}
+func (f *FileInfo) WithMtime(mt time.Time) *FileInfo { _ = "STUB: not implemented"; return nil }
 
 // Reset prepares a FileInfo for reuse.
-func (f *FileInfo) Reset() *FileInfo {
-	f.offset = 0
-	return f
-}
+func (f *FileInfo) Reset() *FileInfo { _ = "STUB: not implemented"; return nil }
 
 // fs.File methods.
 
 // Stat returns the FileInfo structure describing file.
 func (f *FileInfo) Stat() (fs.FileInfo, error) {
-	return f, nil
+	_ = "STUB: not implemented"
+
+	// Read reads up to len(p) bytes into p.
+	return *new(fs.FileInfo), nil
 }
 
-// Read reads up to len(p) bytes into p.
-func (f *FileInfo) Read(p []byte) (int, error) {
-	if f.offset >= len(f.Contents) {
-		return 0, io.EOF
-	}
-
-	n := copy(p, f.Contents[f.offset:])
-	f.offset += n
-	return n, nil
-}
+func (f *FileInfo) Read(p []byte) (int, error) { _ = "STUB: not implemented"; return 0, nil }
 
 // Close closes the file
 func (f *FileInfo) Close() error {
-	return f.CloseErr
-}
+	_ = "STUB: not implemented"
 
-// fs.FileInfo methods.
+	// fs.FileInfo methods.
+	return nil
+}
 
 // Name returns the base name of the file.
 func (f *FileInfo) Name() string {
-	return f.Nam
+	_ = "STUB: not implemented"
+
+	// Size returns the length in bytes for regular files; system-dependent for others.
+	return ""
 }
 
-// Size returns the length in bytes for regular files; system-dependent for others.
-func (f *FileInfo) Size() int64 {
-	return int64(len(f.Contents))
-}
+func (f *FileInfo) Size() int64 { _ = "STUB: not implemented"; return 0 }
 
 // Mode returns file mode bits.
 func (f *FileInfo) Mode() fs.FileMode {
-	return f.Mod
+	_ = "STUB: not implemented"
+
+	// ModTime returns the modification time.
+	return *new(fs.FileMode)
 }
 
-// ModTime returns the modification time.
 func (f *FileInfo) ModTime() time.Time {
-	return f.Mt
+	_ = "STUB: not implemented"
+
+	// IsDir returns true if the file is a directory.
+	return *new(time.Time)
 }
 
-// IsDir returns true if the file is a directory.
 func (f *FileInfo) IsDir() bool {
-	return f.Dir
+	_ = "STUB: not implemented"
+
+	// Sys returns underlying data source (can return nil).
+	return false
 }
 
-// Sys returns underlying data source (can return nil).
-func (f *FileInfo) Sys() any {
-	return nil
-}
+func (f *FileInfo) Sys() any { _ = "STUB: not implemented"; return *new(any) }

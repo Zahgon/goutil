@@ -2,7 +2,6 @@ package comdef
 
 import (
 	"errors"
-	"strings"
 )
 
 // ErrConvType error
@@ -12,27 +11,10 @@ var ErrConvType = errors.New("convert value type error")
 type Errors []error
 
 // Error string
-func (es Errors) Error() string {
-	var sb strings.Builder
-	for _, err := range es {
-		sb.WriteString(err.Error())
-		sb.WriteByte('\n')
-	}
-	return sb.String()
-}
+func (es Errors) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ErrOrNil error
-func (es Errors) ErrOrNil() error {
-	if len(es) == 0 {
-		return nil
-	}
-	return es
-}
+func (es Errors) ErrOrNil() error { _ = "STUB: not implemented"; return nil }
 
 // First error
-func (es Errors) First() error {
-	if len(es) > 0 {
-		return es[0]
-	}
-	return nil
-}
+func (es Errors) First() error { _ = "STUB: not implemented"; return nil }

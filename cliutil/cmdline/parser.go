@@ -3,11 +3,6 @@ package cmdline
 import (
 	"bytes"
 	"os/exec"
-	"strings"
-
-	"github.com/gookit/goutil/comdef"
-	"github.com/gookit/goutil/internal/varexpr"
-	"github.com/gookit/goutil/strutil"
 )
 
 // LineParser struct
@@ -31,144 +26,59 @@ type LineParser struct {
 }
 
 // NewParser create
-func NewParser(line string) *LineParser {
-	return &LineParser{Line: line}
-}
+func NewParser(line string) *LineParser { _ = "STUB: not implemented"; return nil }
 
 // WithParseEnv with parse ENV var
-func (p *LineParser) WithParseEnv() *LineParser {
-	p.ParseEnv = true
-	return p
-}
+func (p *LineParser) WithParseEnv() *LineParser { _ = "STUB: not implemented"; return nil }
 
 // AlsoEnvParse input command line text to os.Args, will parse ENV var
-func (p *LineParser) AlsoEnvParse() []string {
-	p.ParseEnv = true
-	return p.Parse()
-}
+func (p *LineParser) AlsoEnvParse() []string { _ = "STUB: not implemented"; return nil }
 
 // NewExecCmd quick create exec.Cmd by cmdline string
 func (p *LineParser) NewExecCmd() *exec.Cmd {
+	_ = "STUB: not implemented"
 	// parse get bin and args
-	binName, args := p.BinAndArgs()
-
-	// create a new Cmd instance
-	return exec.Command(binName, args...)
+	return nil
 }
+
+// create a new Cmd instance
 
 // BinAndArgs get binName and args
 func (p *LineParser) BinAndArgs() (bin string, args []string) {
-	p.Parse() // ensure parsed.
-
-	ln := len(p.args)
-	if ln == 0 {
-		return
-	}
-
-	bin = p.args[0]
-	if ln > 1 {
-		args = p.args[1:]
-	}
-	return
+	_ = "STUB: not implemented"
+	// ensure parsed.
+	return "", nil
 }
 
 // Parse input command line text to os.Args
-func (p *LineParser) Parse() []string {
-	if p.parsed {
-		return p.args
-	}
+func (p *LineParser) Parse() []string { _ = "STUB: not implemented"; return nil }
 
-	p.parsed = true
-	p.Line = strings.TrimSpace(p.Line)
-	if p.Line == "" {
-		return p.args
-	}
+// enable parse Env var
 
-	// enable parse Env var
-	if p.ParseEnv {
-		p.Line = varexpr.SafeParse(p.Line)
-	}
+func (p *LineParser) parseNode(node string) { _ = "STUB: not implemented"; return }
 
-	p.nodes = strings.Split(p.Line, " ")
-	if len(p.nodes) == 1 {
-		p.args = p.nodes
-		return p.args
-	}
+// in quotes
 
-	for i := 0; i < len(p.nodes); i++ {
-		node := p.nodes[i]
-		if node == "" {
-			continue
-		}
+// end quotes
 
-		p.parseNode(node)
-	}
+// eg: node="--pretty=format:'one two'"
 
-	p.nodes = p.nodes[:0]
-	if p.tempNode.Len() > 0 {
-		p.appendTempNode()
-	}
-	return p.args
-}
+// remove last quote
 
-func (p *LineParser) parseNode(node string) {
-	maxIdx := len(node) - 1
-	start, end := node[0], node[maxIdx]
+// goon ... write to temp node
 
-	// in quotes
-	if p.quoteChar != 0 {
-		p.tempNode.WriteByte(' ')
+// quote start
 
-		// end quotes
-		if end == p.quoteChar {
-			if p.quoteIndex > 0 {
-				p.tempNode.WriteString(node) // eg: node="--pretty=format:'one two'"
-			} else {
-				p.tempNode.WriteString(node[:maxIdx]) // remove last quote
-			}
-			p.appendTempNode()
-		} else { // goon ... write to temp node
-			p.tempNode.WriteString(node)
-		}
-		return
-	}
+// only one words. eg: `-m "msg"`
 
-	// quote start
-	if start == comdef.DoubleQuote || start == comdef.SingleQuote {
-		// only one words. eg: `-m "msg"`
-		if end == start {
-			p.args = append(p.args, node[1:maxIdx])
-			return
-		}
+// only one node: `msg"`
 
-		p.quoteChar = start
-		p.tempNode.WriteString(node[1:])
-	} else if end == comdef.DoubleQuote || end == comdef.SingleQuote {
-		p.args = append(p.args, node) // only one node: `msg"`
-	} else {
-		// eg: --pretty=format:'one two three'
-		if strutil.ContainsByte(node, comdef.DoubleQuote) {
-			p.quoteIndex = 1 // mark is not on start
-			p.quoteChar = comdef.DoubleQuote
-		} else if strutil.ContainsByte(node, comdef.SingleQuote) {
-			p.quoteIndex = 1
-			p.quoteChar = comdef.SingleQuote
-		}
+// eg: --pretty=format:'one two three'
 
-		// in quote, append to temp-node
-		if p.quoteChar != 0 {
-			p.tempNode.WriteString(node)
-		} else {
-			p.args = append(p.args, node)
-		}
-	}
-}
+// mark is not on start
 
-func (p *LineParser) appendTempNode() {
-	p.args = append(p.args, p.tempNode.String())
+// in quote, append to temp-node
 
-	// reset context value
-	p.quoteChar = 0
-	p.quoteIndex = 0
-	p.tempNode.Reset()
-}
+func (p *LineParser) appendTempNode() { _ = "STUB: not implemented"; return }
+
+// reset context value

@@ -1,15 +1,12 @@
 package textutil
 
 import (
-	"bytes"
 	"io"
 	"strings"
 	"text/template"
 
 	"github.com/gookit/goutil"
-	"github.com/gookit/goutil/fsutil"
 	"github.com/gookit/goutil/strutil"
-	"github.com/gookit/goutil/x/basefn"
 )
 
 var builtInFuncs = template.FuncMap{
@@ -53,38 +50,16 @@ type TextRenderOpt struct {
 type RenderOptFn func(opt *TextRenderOpt)
 
 // NewRenderOpt create a new render options
-func NewRenderOpt(optFns []RenderOptFn) *TextRenderOpt {
-	opt := &TextRenderOpt{}
-	for _, fn := range optFns {
-		fn(opt)
-	}
-	return opt
-}
+func NewRenderOpt(optFns []RenderOptFn) *TextRenderOpt { _ = "STUB: not implemented"; return nil }
 
 // RenderGoTpl render input text or template file.
 func RenderGoTpl(input string, data any, optFns ...RenderOptFn) string {
-	opt := NewRenderOpt(optFns)
-
-	t := template.New("text-renderer")
-	t.Funcs(builtInFuncs)
-	if len(opt.Funcs) > 0 {
-		t.Funcs(opt.Funcs)
-	}
-
-	if !strings.Contains(input, "{{") && fsutil.IsFile(input) {
-		template.Must(t.ParseFiles(input))
-	} else {
-		template.Must(t.Parse(input))
-	}
-
-	// use custom output writer
-	if opt.Output != nil {
-		basefn.MustOK(t.Execute(opt.Output, data))
-		return "" // return empty string
-	}
-
-	// use buffer receive rendered content
-	buf := new(bytes.Buffer)
-	basefn.MustOK(t.Execute(buf, data))
-	return buf.String()
+	_ = "STUB: not implemented"
+	return ""
 }
+
+// use custom output writer
+
+// return empty string
+
+// use buffer receive rendered content

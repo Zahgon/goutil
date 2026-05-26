@@ -1,11 +1,7 @@
 package fsutil
 
 import (
-	"fmt"
-	"io"
 	"os"
-
-	"github.com/gookit/goutil/x/basefn"
 )
 
 // ************************************************************
@@ -17,9 +13,7 @@ import (
 // Usage:
 //
 //	fsutil.OSTempFile("example.*.txt")
-func OSTempFile(pattern string) (*os.File, error) {
-	return os.CreateTemp(os.TempDir(), pattern)
-}
+func OSTempFile(pattern string) (*os.File, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // TempFile is like os.CreateTemp, but can custom temp dir.
 //
@@ -29,18 +23,14 @@ func OSTempFile(pattern string) (*os.File, error) {
 //	fsutil.TempFile("", "example.*.txt")
 //	// create temp file on "testdata" dir
 //	fsutil.TempFile("testdata", "example.*.txt")
-func TempFile(dir, pattern string) (*os.File, error) {
-	return os.CreateTemp(dir, pattern)
-}
+func TempFile(dir, pattern string) (*os.File, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // OSTempDir creates a new temp dir on os.TempDir and return the temp dir path
 //
 // Usage:
 //
 //	fsutil.OSTempDir("example.*")
-func OSTempDir(pattern string) (string, error) {
-	return os.MkdirTemp(os.TempDir(), pattern)
-}
+func OSTempDir(pattern string) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // TempDir creates a new temp dir and return the temp dir path
 //
@@ -48,9 +38,7 @@ func OSTempDir(pattern string) (string, error) {
 //
 //	fsutil.TempDir("", "example.*")
 //	fsutil.TempDir("testdata", "example.*")
-func TempDir(dir, pattern string) (string, error) {
-	return os.MkdirTemp(dir, pattern)
-}
+func TempDir(dir, pattern string) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // ************************************************************
 //	write, copy files
@@ -62,7 +50,8 @@ func TempDir(dir, pattern string) (string, error) {
 //
 // default option see NewOpenOption()
 func MustSave(filePath string, data any, optFns ...OpenOptionFunc) {
-	basefn.MustOK(SaveFile(filePath, data, optFns...))
+	_ = "STUB: not implemented"
+	return
 }
 
 // SaveFile create file and write contents to file. will auto create dir.
@@ -71,13 +60,14 @@ func MustSave(filePath string, data any, optFns ...OpenOptionFunc) {
 //
 // default option see NewOpenOption()
 func SaveFile(filePath string, data any, optFns ...OpenOptionFunc) error {
-	opt := NewOpenOption(optFns...)
-	return WriteFile(filePath, data, opt.Perm, opt.Flag)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteData Quick write any data to file, alias of PutContents
 func WriteData(filePath string, data any, fileFlag ...int) (int, error) {
-	return PutContents(filePath, data, fileFlag...)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // PutContents create file and write contents to file at once. Will auto create dir
@@ -91,11 +81,8 @@ func WriteData(filePath string, data any, fileFlag ...int) (int, error) {
 //	fsutil.PutContents(filePath, contents, fsutil.FsCWAFlags) // append write
 //	fsutil.Must2(fsutil.PutContents(filePath, contents)) // panic on error
 func PutContents(filePath string, data any, fileFlag ...int) (int, error) {
-	f, err := QuickOpenFile(filePath, basefn.FirstOr(fileFlag, FsCWTFlags))
-	if err != nil {
-		return 0, err
-	}
-	return WriteOSFile(f, data)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // WriteFile create file and write contents to file, can set perm for a file.
@@ -108,94 +95,38 @@ func PutContents(filePath string, data any, fileFlag ...int) (int, error) {
 //
 //	fsutil.WriteFile(filePath, contents, fsutil.DefaultFilePerm, fsutil.FsCWAFlags)
 func WriteFile(filePath string, data any, perm os.FileMode, fileFlag ...int) error {
-	flag := basefn.FirstOr(fileFlag, FsCWTFlags)
-	f, err := OpenFile(filePath, flag, perm)
-	if err != nil {
-		return err
-	}
-
-	_, err = WriteOSFile(f, data)
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteOSFile write data to give os.File, then close file.
 //
 // data type allows: string, []byte, io.Reader
-func WriteOSFile(f *os.File, data any) (n int, err error) {
-	switch typData := data.(type) {
-	case []byte:
-		n, err = f.Write(typData)
-	case string:
-		n, err = f.WriteString(typData)
-	case io.Reader: // eg: buffer
-		var n64 int64
-		n64, err = io.Copy(f, typData)
-		n = int(n64)
-	default:
-		_ = f.Close()
-		panic("WriteFile: data type only allow: []byte, string, io.Reader")
-	}
+func WriteOSFile(f *os.File, data any) (n int, err error) { _ = "STUB: not implemented"; return 0, nil }
 
-	if err1 := f.Close(); err1 != nil && err == nil {
-		err = err1
-	}
-	return n, err
-}
+// eg: buffer
 
 // CopyFile copy a file to another file path.
-func CopyFile(srcPath, dstPath string) error {
-	srcFile, err := os.OpenFile(srcPath, FsRFlags, 0)
-	if err != nil {
-		return err
-	}
-	defer srcFile.Close()
+func CopyFile(srcPath, dstPath string) error { _ = "STUB: not implemented"; return nil }
 
-	// create and open file
-	dstFile, err := QuickOpenFile(dstPath, FsCWTFlags)
-	if err != nil {
-		return err
-	}
-	defer dstFile.Close()
-
-	_, err = io.Copy(dstFile, srcFile)
-	return err
-}
+// create and open file
 
 // MustCopyFile copy file to another path.
-func MustCopyFile(srcPath, dstPath string) {
-	err := CopyFile(srcPath, dstPath)
-	if err != nil {
-		panic(err)
-	}
-}
+func MustCopyFile(srcPath, dstPath string) { _ = "STUB: not implemented"; return }
 
 // UpdateContents read file contents, call handleFn(contents) handle, then write updated contents to file
 func UpdateContents(filePath string, handleFn func(bs []byte) []byte) error {
-	osFile, err := os.OpenFile(filePath, os.O_RDWR|os.O_TRUNC, 0600)
-	if err != nil {
-		return err
-	}
-	defer osFile.Close()
-
-	// read file contents
-	if bs, err1 := io.ReadAll(osFile); err1 == nil {
-		bs = handleFn(bs)
-		_, err = osFile.Write(bs)
-	} else {
-		err = err1
-	}
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// read file contents
 
 // CreateSymlink creates a symbolic link
 func CreateSymlink(target, linkPath string) error {
+	_ = "STUB: not implemented"
 	// Check if the link already exists
-	if IsFile(linkPath) {
-		// Remove existing link/file
-		if err := os.Remove(linkPath); err != nil {
-			return fmt.Errorf("failed to remove existing symlink: %w", err)
-		}
-	}
-
-	return os.Symlink(target, linkPath)
+	return nil
 }
+
+// Remove existing link/file

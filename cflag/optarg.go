@@ -1,9 +1,7 @@
 package cflag
 
 import (
-	"github.com/gookit/goutil/errorx"
 	"github.com/gookit/goutil/structs"
-	"github.com/gookit/goutil/strutil"
 )
 
 // OptCheckFn define
@@ -20,9 +18,7 @@ type FlagOpt struct {
 }
 
 // HelpName string
-func (o *FlagOpt) HelpName(name string) string {
-	return AddPrefixes(name, o.Shortcuts)
-}
+func (o *FlagOpt) HelpName(name string) string { _ = "STUB: not implemented"; return "" }
 
 // FlagArg struct
 type FlagArg struct {
@@ -47,38 +43,10 @@ type FlagArg struct {
 }
 
 // NewArg create instance
-func NewArg(name, desc string, required bool) *FlagArg {
-	return &FlagArg{Name: name, Desc: desc, Required: required}
-}
+func NewArg(name, desc string, required bool) *FlagArg { _ = "STUB: not implemented"; return nil }
 
 // check arg config and init
-func (a *FlagArg) check() error {
-	if a.Name == "" {
-		return errorx.Rawf("cflag: arg#%d name cannot be empty", a.Index)
-	}
-
-	if a.Required && a.V != nil {
-		return errorx.Rawf("cflag: cannot set default value for 'required' arg: %s", a.Name)
-	}
-
-	if a.Desc == "" {
-		a.Desc = "no description"
-	}
-
-	a.defVal = a.V
-	a.defStr = a.String()
-	return nil
-}
+func (a *FlagArg) check() error { _ = "STUB: not implemented"; return nil }
 
 // HelpDesc string build
-func (a *FlagArg) HelpDesc() string {
-	desc := strutil.UpperFirst(a.Desc)
-	if a.Required {
-		desc = "<red>*</>" + desc
-	}
-
-	if a.defStr != "" {
-		desc += "(default: <mga>" + a.defStr + "</>)"
-	}
-	return desc
-}
+func (a *FlagArg) HelpDesc() string { _ = "STUB: not implemented"; return "" }
